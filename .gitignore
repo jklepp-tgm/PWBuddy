@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+
+#IntelliJ Files
+.idea
+.idea/
+.idea/*
+PWBuddy.iml
