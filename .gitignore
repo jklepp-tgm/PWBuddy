@@ -11,5 +11,8 @@
 .idea/*
 PWBuddy.iml
 
+#Maven
+target
+
 #Libaries
 lib
