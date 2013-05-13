@@ -10,13 +10,19 @@ public class PBFrame extends JFrame {
     private PBModel m;
     private PBView v;
     private PBControl c;
+
+    private PBMenuBar menu;
     public PBFrame(){
         this.m = new PBModel();
         this.v = new PBView();
         this.c = new PBControl();
 
+        this.menu = new PBMenuBar();
+        this.setJMenuBar(menu);
+
         this.setContentPane(v);
         this.setSize(650, 450);
+        this.setTitle("PWBuddy");
         this.setVisible(true);
     }
 }
