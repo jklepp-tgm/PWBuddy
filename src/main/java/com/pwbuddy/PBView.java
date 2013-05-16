@@ -18,7 +18,7 @@ public class PBView extends JPanel{
         this.gridBag = new GridBagLayout();
         this.con = new GridBagConstraints();
         this.content = new JPanel(gridBag);
-        this.scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollPane.setBackground(Color.CYAN);
         this.add(scrollPane);
 
