@@ -24,6 +24,7 @@ public class PBFrame extends JFrame {
         this.setContentPane(v);
         this.setSize(650, 450);
         this.setTitle("PWBuddy");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
 }
