@@ -32,6 +32,12 @@ public class PBModel {
         return categories.keySet();
     }
 
+    /**
+     * Ermöglicht es ein Kategorie Objekt anhand des Namens zu erhalten.
+     *
+     * @param categorieName Name der Kategorie
+     * @return Kategorie Objekt
+     */
     public PBCategorie getCategorie(String categorieName){
         return categories.get(categorieName);
     }
