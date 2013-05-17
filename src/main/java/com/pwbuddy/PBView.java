@@ -2,6 +2,7 @@ package com.pwbuddy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**
@@ -30,7 +31,7 @@ public class PBView extends JPanel{
         this.con.gridy = 1;
         this.con.gridwidth = this.content.getWidth();
         this.con.weightx = 100;
-
+        /*
         Dimension d = new Dimension(620, 100);
         System.out.println(d);
 
@@ -41,6 +42,19 @@ public class PBView extends JPanel{
             p.setBackground(new Color((int)(Math.random()*0xFFFFCC)));
             this.con.gridy ++;
             this.content.add(p, con);
+        }                                */
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(Iterator<PBCategory> categoryIterator = categories.iterator(); categoryIterator.hasNext();){
+            PBCategory category = categoryIterator.next();
+            if(category.isOpened()){
+                for(Iterator<PBDataSet> dataSetIterator = category.iterator(); dataSetIterator.hasNext();){
+
+                }
+            }
         }
     }
 }
