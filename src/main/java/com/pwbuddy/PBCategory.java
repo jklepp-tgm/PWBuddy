@@ -14,8 +14,20 @@ public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <
         this.cv = new PBCategoryView(this);
     }
 
+    /**
+     * @return Darstellung der Kopfzeile einer Kategorie
+     */
     public PBCategoryView getView(){
         return cv;
+    }
+
+    /**
+     * Wenn eine Kategorie geöffnet ist soll ihr Inhalt gerendert werden.
+     *
+     * @return ist die Kategorie geöffnet
+     */
+    public boolean isOpened(){
+        return opened;
     }
 
     /**

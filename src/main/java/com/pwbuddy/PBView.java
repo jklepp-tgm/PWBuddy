@@ -2,6 +2,7 @@ package com.pwbuddy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.PriorityQueue;
 
 /**
  * @author jakob
@@ -12,6 +13,8 @@ public class PBView extends JPanel{
     private GridBagConstraints con;
     private JPanel content;
     private JScrollPane scrollPane;
+
+    private PriorityQueue <PBCategory> categories;
     public PBView(){
         super(new GridLayout(1, 1));
         this.gridBag = new GridBagLayout();
@@ -32,10 +35,10 @@ public class PBView extends JPanel{
         System.out.println(d);
 
         for(int i=0; i<10; ++i){
-            JPanel p= new JPanel();
+            PBCategory category = new PBCategory();
+            PBCategoryView p = category.getView();
             p.setPreferredSize(d);
             p.setBackground(new Color((int)(Math.random()*0xFFFFCC)));
-            //JButton p = new JButton(Math.random()+"");
             this.con.gridy ++;
             this.content.add(p, con);
         }
