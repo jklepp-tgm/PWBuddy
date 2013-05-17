@@ -28,8 +28,7 @@ public class PBView extends JPanel{
         this.con.gridwidth = this.content.getWidth();
         this.con.weightx = 100;
 
-        Dimension d = new Dimension(this.content.getWidth(), 20);
-        d = new Dimension(620, 100);
+        Dimension d = new Dimension(620, 100);
         System.out.println(d);
         for(int i=0; i<10; ++i){
             JPanel p= new JPanel();
