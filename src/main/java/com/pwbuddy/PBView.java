@@ -34,7 +34,7 @@ public class PBView extends JPanel{
         for(int i=0; i<10; ++i){
             JPanel p= new JPanel();
             p.setPreferredSize(d);
-            p.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
+            p.setBackground(new Color((int)(Math.random()*0xFFFFCC)));
             //JButton p = new JButton(Math.random()+"");
             this.con.gridy ++;
             this.content.add(p, con);
