@@ -6,15 +6,15 @@ import java.util.PriorityQueue;
  * @author jakob
  * @version 2013-05-14
  */
-public class PBCategorie extends PriorityQueue<PBDataSet> implements Comparable <PBCategorie>{
-    private PBCategorieView cv;
+public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <PBCategory>{
+    private PBCategoryView cv;
     private boolean opened;
 
-    public PBCategorie(){
-        this.cv = new PBCategorieView(this);
+    public PBCategory(){
+        this.cv = new PBCategoryView(this);
     }
 
-    public PBCategorieView getView(){
+    public PBCategoryView getView(){
         return cv;
     }
 
@@ -57,7 +57,7 @@ public class PBCategorie extends PriorityQueue<PBDataSet> implements Comparable 
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBCategorie o) {
+    public int compareTo(PBCategory o) {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

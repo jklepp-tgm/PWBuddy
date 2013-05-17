@@ -9,12 +9,12 @@ import java.util.TreeMap;
  * @version 2013-04-09
  */
 public class PBModel {
-    private TreeMap<String, PBCategorie> categories;
+    private TreeMap<String, PBCategory> categories;
 
     public PBModel(File pwFile){
         //TODO File einlese
         //TODO ... parsen
-        categories = new TreeMap<String, PBCategorie>();
+        categories = new TreeMap<String, PBCategory>();
     }
     /**
      * Fügrt eine Kategorie hinzu
@@ -38,7 +38,7 @@ public class PBModel {
      * @param categorieName Name der Kategorie
      * @return Kategorie Objekt
      */
-    public PBCategorie getCategorie(String categorieName){
+    public PBCategory getCategorie(String categorieName){
         return categories.get(categorieName);
     }
 }
