@@ -5,6 +5,27 @@ package com.pwbuddy;
  * @version 2013-05-14
  */
 public class PBDataSet implements Comparable <PBDataSet> {
+    private PBDataSetView dv;
+    private int lineCount;
+
+    public PBDataSet(){
+        this.dv = new PBDataSetView();
+        this.lineCount = 1;
+    }
+
+    /**
+     * @return Grafische darstellung des Datensatzes als JPanel
+     */
+    public PBDataSetView getView(){
+        return this.dv;
+    }
+
+    /**
+     * @return Anzahl der Zeilen welche vom Datensatz belegt werden.
+     */
+    public int getLineCount(){
+        return this.lineCount;
+    }
     /**
      * Compares this object with the specified object for order.  Returns a
      * negative integer, zero, or a positive integer as this object is less

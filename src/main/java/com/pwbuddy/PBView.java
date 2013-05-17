@@ -40,6 +40,4 @@ public class PBView extends JPanel{
             this.content.add(p, con);
         }
     }
-
-
 }
