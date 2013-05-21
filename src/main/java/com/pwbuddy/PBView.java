@@ -43,7 +43,8 @@ public class PBView extends JPanel{
 
     @Override
     protected void paintComponent(Graphics g) {
-        //super.paintComponent(g);
+        super.paintComponent(g);
+        System.out.println("Blub");
         this.scrollPane.removeAll();
         int width = this.getWidth();
 

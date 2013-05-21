@@ -1,6 +1,7 @@
 package com.pwbuddy;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author jakob
@@ -9,6 +10,12 @@ import javax.swing.*;
 public class PBCategoryView extends JPanel {
     private PBCategory categorie;
     public PBCategoryView(PBCategory categorie) {
-        //To change body of created methods use File | Settings | File Templates.
+        this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
+
+
+    }
+    protected void paintComponent(Graphics g) {
+        g.drawString(categorie.getName(), 1, 1);
+        System.out.println(categorie.getName());
     }
 }
