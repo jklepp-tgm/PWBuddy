@@ -3,7 +3,6 @@ package com.pwbuddy;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Iterator;
-import java.util.PriorityQueue;
 
 /**
  * @author jakob
@@ -57,8 +56,8 @@ public class PBView extends JPanel{
         //con.weighty = 1;
 
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
-        for(String categoryName:m.getCategorieNames()){
-            PBCategory category = m.getCategorie(categoryName);
+        for(String categoryName:m.getCategoryNames()){
+            PBCategory category = m.getCategory(categoryName);
 
             //Grösse des category Headers anpassen
             Dimension d = new Dimension(width, category.getView().getHeight());

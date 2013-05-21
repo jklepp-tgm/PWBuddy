@@ -17,10 +17,10 @@ public class PBModel {
         categories = new TreeMap<String, PBCategory>();
     }
     /**
-     * Fügrt eine Kategorie hinzu
-     * @param categorieName
+     * Fügt eine Kategorie hinzu
+     * @param categoryName
      */
-    public void addCategorie(String categorieName){
+    public void addCategory(String categoryName){
 
     }
 
@@ -28,17 +28,17 @@ public class PBModel {
      * Gibt ein Set mit den Namen aller Kategorien zurück.
      * @return Set mit den Namen aller Kategorien
      */
-    public Set<String> getCategorieNames(){
+    public Set<String> getCategoryNames(){
         return categories.keySet();
     }
 
     /**
      * Ermöglicht es ein Kategorie Objekt anhand des Namens zu erhalten.
      *
-     * @param categorieName Name der Kategorie
+     * @param categoryName Name der Kategorie
      * @return Kategorie Objekt
      */
-    public PBCategory getCategorie(String categorieName){
-        return categories.get(categorieName);
+    public PBCategory getCategory(String categoryName){
+        return categories.get(categoryName);
     }
 }
