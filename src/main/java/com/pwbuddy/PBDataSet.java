@@ -1,8 +1,8 @@
 package com.pwbuddy;
 
 /**
- * @author jakob
- * @version 2013-05-14
+ * @author Jakob Klepp
+ * @since 2013-05-14
  */
 public class PBDataSet implements Comparable <PBDataSet> {
     private PBDataSetView dv;

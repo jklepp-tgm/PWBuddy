@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.io.File;
 
 /**
- * @author jakob
- * @version 2013-04-09
+ * @author Jakob Klepp
+ * @since 2013-04-09
  */
 public class PBFrame extends JFrame {
     private PBModel m;

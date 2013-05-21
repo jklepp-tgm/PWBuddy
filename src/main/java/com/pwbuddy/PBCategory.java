@@ -3,8 +3,8 @@ package com.pwbuddy;
 import java.util.PriorityQueue;
 
 /**
- * @author jakob
- * @version 2013-05-14
+ * @author Jakob Klepp
+ * @since 2013-05-14
  */
 public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <PBCategory>{
     private PBCategoryView cv;

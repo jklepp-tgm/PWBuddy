@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author jakob
- * @version 2013-05-14
+ * @author Jakob Klepp
+ * @since 2013-05-14
  */
 public class PBCategoryView extends JPanel {
     private PBCategory categorie;

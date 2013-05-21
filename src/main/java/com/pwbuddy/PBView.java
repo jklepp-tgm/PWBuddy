@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.Iterator;
 
 /**
- * @author jakob
- * @version 2013-04-09
+ * @author Jakob Klepp
+ * @since 2013-04-09
  */
 public class PBView extends JPanel{
     private PBModel m;

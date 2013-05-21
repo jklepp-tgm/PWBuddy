@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * @author jakob
- * @version 2013-04-09
+ * @author Jakob Klepp
+ * @since 2013-04-09
  */
 public class PBControl implements ActionListener{
 
