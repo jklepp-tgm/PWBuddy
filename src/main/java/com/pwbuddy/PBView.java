@@ -25,20 +25,6 @@ public class PBView extends JPanel{
 
         this.scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scrollPane);
-
-
-        /*
-        Dimension d = new Dimension(620, 100);
-        System.out.println(d);
-
-        for(int i=0; i<10; ++i){
-            PBCategory category = new PBCategory();
-            PBCategoryView p = category.getView();
-            p.setPreferredSize(d);
-            p.setBackground(new Color((int)(Math.random()*0xFFFFCC)));
-            this.con.gridy ++;
-            this.content.add(p, con);
-        }                                */
     }
 
     @Override
@@ -52,9 +38,6 @@ public class PBView extends JPanel{
         con.insets = new Insets(1,1,1,1); //Abstand zwischen den Elementen, (oben, unten, links, rechts)
         con.gridx = 0;
         con.gridy = 0;
-        //con.gridwidth = this.content.getWidth();
-        //con.weightx = 1;
-        //con.weighty = 1;
 
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
         for(PBCategory category : m.getCategories()){
