@@ -8,12 +8,13 @@ import java.util.Set;
  * @version 2013-05-21
  */
 public class TestModel extends PBModel {
-    //gekillt
-    private TestModel(File pwFile) {
-        super(pwFile);
-    }
 
     public TestModel(){
         super(new File("."));
+
+        PBCategory category = new PBCategory();
+        category.add(new PBDataSet());
+        category.add(new PBDataSet());
+        super.addCategory("Kategorie 01" ,category);
     }
 }
