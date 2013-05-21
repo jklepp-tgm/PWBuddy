@@ -1,6 +1,7 @@
 package com.pwbuddy;
 
 import java.io.File;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -9,12 +10,12 @@ import java.util.TreeMap;
  * @version 2013-04-09
  */
 public class PBModel {
-    private TreeMap<String, PBCategory> categories;
+    private PriorityQueue<PBCategory> categories;
 
     public PBModel(File pwFile){
         //TODO File einlese
         //TODO ... parsen
-        categories = new TreeMap<String, PBCategory>();
+        this.categories = new PriorityQueue<PBCategory>();
     }
 
     /**
@@ -37,21 +38,11 @@ public class PBModel {
     }
 
     /**
-     * Gibt ein Set mit den Namen aller Kategorien zurück.
+     * Gibt ein Array mit allen Kategorien zurück.
      *
-     * @return Set mit den Namen aller Kategorien
+     * @return Array mit allen Kategorien
      */
-    public Set<String> getCategoryNames(){
-        return categories.keySet();
-    }
-
-    /**
-     * Ermöglicht es ein Kategorie Objekt anhand des Namens zu erhalten.
-     *
-     * @param categoryName Name der Kategorie
-     * @return Kategorie Objekt
-     */
-    public PBCategory getCategory(String categoryName){
-        return categories.get(categoryName);
+    public PBCategory[] getCategories(){
+        return (PBCategory[]) this.categories.toArray();
     }
 }

@@ -10,6 +10,8 @@ public class PBDataSet implements Comparable <PBDataSet> {
     /**Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden*/
     private boolean opened;
 
+    private String name;
+
     public PBDataSet(){
         this.dv = new PBDataSetView();
         this.lineCount = 1;
@@ -45,6 +47,14 @@ public class PBDataSet implements Comparable <PBDataSet> {
 
     public void setOpened(boolean opened) {
         this.opened = opened;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**

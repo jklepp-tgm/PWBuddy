@@ -11,6 +11,8 @@ public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <
     /**Wenn eine Kategorie geöffnet ist soll ihr Inhalt gerendert werden.*/
     private boolean opened;
 
+    private String name;
+
     public PBCategory(){
         this.cv = new PBCategoryView(this);
     }
@@ -33,6 +35,14 @@ public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <
 
     public void setOpened(boolean opened) {
         this.opened = opened;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
