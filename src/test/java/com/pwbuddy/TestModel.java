@@ -1,7 +1,6 @@
 package com.pwbuddy;
 
 import java.io.File;
-import java.util.Set;
 
 /**
  * @author jakob
@@ -12,9 +11,9 @@ public class TestModel extends PBModel {
     public TestModel(){
         super(new File("."));
 
-        PBCategory category = new PBCategory();
-        category.add(new PBDataSet());
-        category.add(new PBDataSet());
-        super.addCategory("Kategorie 01" ,category);
+        PBCategory category = new PBCategory("Kategorie 01");
+        category.add(new PBDataSet("Data 01.01"));
+        category.add(new PBDataSet("Data 01.02"));
+        super.addCategory(category);
     }
 }

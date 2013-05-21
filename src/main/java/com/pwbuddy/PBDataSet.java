@@ -12,7 +12,8 @@ public class PBDataSet implements Comparable <PBDataSet> {
 
     private String name;
 
-    public PBDataSet(){
+    public PBDataSet(String name){
+        this.name = name;
         this.dv = new PBDataSetView();
         this.lineCount = 1;
         this.opened = false;

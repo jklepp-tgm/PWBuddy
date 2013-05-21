@@ -2,8 +2,6 @@ package com.pwbuddy;
 
 import java.io.File;
 import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * @author jakob
@@ -21,10 +19,9 @@ public class PBModel {
     /**
      * Fügt eine Kategorie hinzu
      *
-     * @param categoryName Name der Kategorie
      * @param category Kategorie
      */
-    protected void addCategory(String categoryName, PBCategory category){
+    protected void addCategory(PBCategory category){
 
     }
 
@@ -34,7 +31,7 @@ public class PBModel {
      * @param categoryName Name der Kategorie
      */
     public void addCategory(String categoryName){
-        addCategory(categoryName, new PBCategory());
+        addCategory(new PBCategory(categoryName));
     }
 
     /**

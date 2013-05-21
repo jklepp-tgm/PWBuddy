@@ -13,7 +13,8 @@ public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <
 
     private String name;
 
-    public PBCategory(){
+    public PBCategory(String name){
+        this.name = name;
         this.cv = new PBCategoryView(this);
     }
 
