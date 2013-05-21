@@ -16,16 +16,29 @@ public class PBModel {
         //TODO ... parsen
         categories = new TreeMap<String, PBCategory>();
     }
+
     /**
      * Fügt eine Kategorie hinzu
-     * @param categoryName
+     *
+     * @param categoryName Name der Kategorie
+     * @param category Kategorie
      */
-    public void addCategory(String categoryName){
+    protected void addCategory(String categoryName, PBCategory category){
 
     }
 
     /**
+     * Fügt eine Kategorie hinzu
+     *
+     * @param categoryName Name der Kategorie
+     */
+    public void addCategory(String categoryName){
+        addCategory(categoryName, new PBCategory());
+    }
+
+    /**
      * Gibt ein Set mit den Namen aller Kategorien zurück.
+     *
      * @return Set mit den Namen aller Kategorien
      */
     public Set<String> getCategoryNames(){
