@@ -16,7 +16,7 @@ public class PBFrame extends JFrame {
     private PBMenuBar menu;
     public PBFrame(){
         this.m = new PBModel(new File("./pwds"));
-        this.v = new PBView();
+        this.v = new PBView(m);
         this.c = new PBControl();
 
         this.menu = new PBMenuBar();

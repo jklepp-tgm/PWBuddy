@@ -56,7 +56,7 @@ public class PBView extends JPanel{
         //con.weighty = 1;
 
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
-        for(String categoryName:m.getCategoryNames()){
+        for(String categoryName : (String[])m.getCategoryNames().toArray()){
             PBCategory category = m.getCategory(categoryName);
 
             //Grösse des category Headers anpassen
