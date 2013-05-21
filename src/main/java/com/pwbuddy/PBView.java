@@ -10,13 +10,16 @@ import java.util.PriorityQueue;
  * @version 2013-04-09
  */
 public class PBView extends JPanel{
+    private PBModel m;
+
     private GridBagLayout gridBag;
     private JPanel content;
     private JScrollPane scrollPane;
 
-    private PriorityQueue <PBCategory> categories;
-    public PBView(){
+    public PBView(PBModel m){
         super(new GridLayout(1, 1));
+        this.m = m;
+
         this.gridBag = new GridBagLayout();
         this.content = new JPanel(gridBag);
         this.content.setBackground(Color.CYAN);
@@ -54,8 +57,8 @@ public class PBView extends JPanel{
         //con.weighty = 1;
 
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
-        for(Iterator<PBCategory> categoryIterator = categories.iterator(); categoryIterator.hasNext();){
-            PBCategory category = categoryIterator.next();
+        for(String categoryName:m.getCategorieNames()){
+            PBCategory category = m.getCategorie(categoryName);
 
             //Grösse des category Headers anpassen
             Dimension d = new Dimension(width, category.getView().getHeight());
