@@ -86,6 +86,6 @@ public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <
      */
     @Override
     public int compareTo(PBCategory o) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.getName().compareTo(o.getName());
     }
 }

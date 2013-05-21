@@ -98,6 +98,6 @@ public class PBDataSet implements Comparable <PBDataSet> {
      */
     @Override
     public int compareTo(PBDataSet o) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.getName().compareTo(o.getName());
     }
 }
