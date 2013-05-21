@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
  */
 public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <PBCategory>{
     private PBCategoryView cv;
+    /**Wenn eine Kategorie geöffnet ist soll ihr Inhalt gerendert werden.*/
     private boolean opened;
 
     public PBCategory(){
@@ -28,6 +29,10 @@ public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <
      */
     public boolean isOpened(){
         return opened;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
     }
 
     /**

@@ -7,10 +7,13 @@ package com.pwbuddy;
 public class PBDataSet implements Comparable <PBDataSet> {
     private PBDataSetView dv;
     private int lineCount;
+    /**Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden*/
+    private boolean opened;
 
     public PBDataSet(){
         this.dv = new PBDataSetView();
         this.lineCount = 1;
+        this.opened = false;
     }
 
     /**
@@ -23,9 +26,27 @@ public class PBDataSet implements Comparable <PBDataSet> {
     /**
      * @return Anzahl der Zeilen welche vom Datensatz belegt werden.
      */
-    public int getLineCount(){
-        return this.lineCount;
+    public int getGridHeight(){
+        if(isOpened()){
+            return this.lineCount;
+        } else {
+            return 1; //höhe=1 für die Kopfzeile!
+        }
     }
+
+    /**
+     * Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden
+     *
+     * @return ist der dataSet geöffnet?
+     */
+    public boolean isOpened() {
+        return opened;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
+    }
+
     /**
      * Compares this object with the specified object for order.  Returns a
      * negative integer, zero, or a positive integer as this object is less
