@@ -65,6 +65,7 @@ public class PBView extends JPanel{
                 }
             }
         }
+        this.revalidate();
         this.scrollPane.repaint();
     }
 }
