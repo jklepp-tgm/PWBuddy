@@ -2,7 +2,6 @@ package com.pwbuddy;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 
 /**
  * @author Jakob Klepp
@@ -28,6 +27,5 @@ public class PBView extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        content.repaint();
     }
 }
