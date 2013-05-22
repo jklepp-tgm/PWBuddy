@@ -1,6 +1,7 @@
 package com.pwbuddy;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**
@@ -39,7 +40,7 @@ public class PBModel {
      *
      * @return Array mit allen Kategorien
      */
-    public PBCategory[] getCategories(){
-        return (PBCategory[]) this.categories.toArray();
+    public Iterator<PBCategory> iterator(){
+        return categories.iterator();
     }
 }
