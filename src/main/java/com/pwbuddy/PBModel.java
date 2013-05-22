@@ -23,7 +23,7 @@ public class PBModel {
      * @param category Kategorie
      */
     protected void addCategory(PBCategory category){
-
+        this.categories.add(category);
     }
 
     /**

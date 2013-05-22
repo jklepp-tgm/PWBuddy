@@ -9,9 +9,9 @@ import java.awt.*;
  */
 public class PBCategoryView extends JPanel {
     private PBCategory category;
-    public PBCategoryView(PBCategory categorie) {
+    public PBCategoryView(PBCategory category) {
         this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
-
+        this.category = category;
 
     }
     
