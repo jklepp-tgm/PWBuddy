@@ -42,7 +42,7 @@ public class PBContentView extends JPanel {
                     PBDataSet dataSet = dataSetIterator.next();
 
                     //zum scrollPane hinzufügen
-                    this.add(dataSet.getView());
+                    this.add(dataSet);
                 }
             }
         }

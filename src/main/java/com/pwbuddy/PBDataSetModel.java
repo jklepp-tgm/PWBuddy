@@ -1,26 +1,52 @@
 package com.pwbuddy;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * @author Jakob Klepp
- * @since 2013-05-17
+ * @since 2013-05-14
  */
-public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
-    private PBDataSetModel dataSetModel;
-    public PBDataSet(String name){
-        this.dataSetModel = new PBDataSetModel(name);
+public class PBDataSetModel implements Comparable <PBDataSetModel> {
+    private int lineCount;
+    /**Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden*/
+    private boolean opened;
+
+    private String name;
+
+    public PBDataSetModel(String name){
+        this.name = name;
+        this.lineCount = 1;
+        this.opened = false;
     }
 
-    public PBDataSetModel getModel() {
-        return dataSetModel;
+    /**
+     * @return Anzahl der Zeilen welche vom Datensatz belegt werden.
+     */
+    public int getGridHeight(){
+        if(isOpened()){
+            return this.lineCount;
+        } else {
+            return 1; //höhe=1 für die Kopfzeile!
+        }
     }
 
-    @Override
-    protected void paintComponent(Graphics g){
-        g.drawString(this.dataSetModel.getName(), 1, 1);
-        System.out.println(this.dataSetModel.getName());
+    /**
+     * Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden
+     *
+     * @return ist der dataSet geöffnet?
+     */
+    public boolean isOpened() {
+        return opened;
+    }
+
+    public void setOpened(boolean opened) {
+        this.opened = opened;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -62,7 +88,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBDataSet o) {
-        return this.getModel().compareTo(o.getModel());
+    public int compareTo(PBDataSetModel o) {
+        return this.getName().compareTo(o.getName());
     }
 }
