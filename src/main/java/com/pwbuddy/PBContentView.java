@@ -9,16 +9,21 @@ import java.util.Iterator;
  * @version 2013-05-22
  */
 public class PBContentView extends JPanel {
-    private GridBagLayout gridBag;
+    //private GridBagLayout gridBag;
     private PBModel m;
 
     public PBContentView(PBModel m){
-        this.gridBag = new GridBagLayout();
+        //this.gridBag = new GridBagLayout();
         this.m = m;
-        this.setLayout(gridBag);
+        //this.setLayout(this.gridBag);
         this.setBackground(Color.CYAN);
 
     }
+
+    public PBModel getModel() {
+        return m;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -26,22 +31,24 @@ public class PBContentView extends JPanel {
         int width = this.getWidth();
 
         this.removeAll();
-
+        /*
         GridBagConstraints con = new GridBagConstraints();
         con.insets = new Insets(1,1,1,1); //Abstand zwischen den Elementen, (oben, unten, links, rechts)
         con.gridx = 0;
         con.gridy = 0;
-
+                        */
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
         for(Iterator<PBCategory> categoryIterator = m.iterator(); categoryIterator.hasNext();){
             PBCategory category = categoryIterator.next();
             //Grösse des category Headers anpassen
-            Dimension d = new Dimension(width, category.getView().getHeight());
+            Dimension d = new Dimension(width-10, category.getView().getHeight());
+            System.out.println(d);
             category.getView().setPreferredSize(d);
 
             //category zum scrollPane hinzufügen
-            this.add(category.getView(), con);
-            con.gridy ++;
+            //this.add(category.getView(), con);
+            this.add(category.getView());
+            //con.gridy ++;
 
             //Wenn eine categorie geöffnet ist soll auch ihr Inhalt gezeichnet werden
             if(category.isOpened()){
@@ -53,9 +60,10 @@ public class PBContentView extends JPanel {
                     dataSet.getView().setPreferredSize(d);
 
                     //zum scrollPane hinzufügen
-                    this.add(dataSet.getView(), con);
+                    //this.add(dataSet.getView(), con);
+                    this.add(dataSet.getView());
 
-                    con.gridy += dataSet.getGridHeight();
+                    //con.gridy += dataSet.getGridHeight();
                 }
             }
         }
