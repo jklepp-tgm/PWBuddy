@@ -12,7 +12,8 @@ public class PBCategoryView extends JPanel {
     public PBCategoryView(PBCategory category) {
         this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
         this.category = category;
-
+        this.add(new JLabel(this.category.getName()));
+        this.setPreferredSize(new Dimension(100, 100));
     }
     
     @Override
