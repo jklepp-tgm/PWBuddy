@@ -16,6 +16,7 @@ public class PBContentView extends JPanel {
         //this.gridBag = new GridBagLayout();
         this.m = m;
         //this.setLayout(this.gridBag);
+        this.setLayout(new PBRowLayout());
         this.setBackground(Color.CYAN);
 
     }
@@ -41,7 +42,7 @@ public class PBContentView extends JPanel {
         for(Iterator<PBCategory> categoryIterator = m.iterator(); categoryIterator.hasNext();){
             PBCategory category = categoryIterator.next();
             //Grösse des category Headers anpassen
-            Dimension d = new Dimension(width-10, category.getView().getHeight());
+            Dimension d = new Dimension(width-10, category.getView().getHeight()); //ToDo eleganter Lösung als -10 Finden; diese Funktioniert nicht!
             System.out.println(d);
             category.getView().setPreferredSize(d);
 

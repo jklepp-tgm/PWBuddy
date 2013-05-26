@@ -54,7 +54,7 @@ public class PBRowLayout implements LayoutManager {
     public Dimension preferredLayoutSize(Container target) {
         int height, width;
 
-        width = target.getPreferredSize().width;
+        width = 0;
 
         height = 0;
         for(Component component : target.getComponents()){
@@ -62,8 +62,8 @@ public class PBRowLayout implements LayoutManager {
 
             //Bevorzugt ist die prferredSize des targets, wenn die minimumSize einer der componenten aber größer ist
             // wird diese als Breite genommen.
-            if(component.getMinimumSize().width > width){
-                width = component.getMinimumSize().width;
+            if(component.getPreferredSize().width > width){
+                width = component.getPreferredSize().width;
             }
         }
 
@@ -81,7 +81,7 @@ public class PBRowLayout implements LayoutManager {
     public Dimension minimumLayoutSize(Container target) {
         int height, width;
 
-        width = target.getMinimumSize().width;
+        width = 0;
 
         height = 0;
         for(Component component : target.getComponents()){
