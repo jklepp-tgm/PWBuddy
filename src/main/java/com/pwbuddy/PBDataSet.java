@@ -10,22 +10,32 @@ import java.awt.*;
 public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
     private PBDataSetModel dataSetModel;
     private JToggleButton toggle;
+    private PBDataSetControl dataSetControl;
     public PBDataSet(String name){
         this.dataSetModel = new PBDataSetModel(name);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout(20, 0));
+
         this.toggle = new JToggleButton();
         this.add(toggle, BorderLayout.EAST);
+
+        this.dataSetControl = new PBDataSetControl(this);
+        this.toggle.addActionListener(this.dataSetControl);
+
         this.add(new JLabel(getModel().getName()), BorderLayout.CENTER);
-        //this.setPreferredSize(new Dimension(200, 50));
     }
 
     public PBDataSetModel getModel() {
         return dataSetModel;
     }
 
+    public JToggleButton getToggle() {
+        return toggle;
+    }
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+        this.getModel().setOpened(this.toggle.isSelected());
     }
 
     /**
