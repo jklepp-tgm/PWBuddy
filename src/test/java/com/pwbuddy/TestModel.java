@@ -15,6 +15,7 @@ public class TestModel extends PBModel {
         category = new PBCategory("Kategorie 01");
         category.getModel().add(new PBDataSet("Data 01.01"));
         category.getModel().add(new PBDataSet("Data 01.02"));
+        category.getModel().setOpened(true);
         super.addCategory(category);
 
         category = new PBCategory("Kategorie 02");
@@ -26,6 +27,7 @@ public class TestModel extends PBModel {
         category = new PBCategory("Kategorie 03");
         category.getModel().add(new PBDataSet("Data 03.01"));
         category.getModel().add(new PBDataSet("Data 03.02"));
+        category.getModel().setOpened(true);
         super.addCategory(category);
 
         category = new PBCategory("Kategorie 04");
@@ -45,6 +47,7 @@ public class TestModel extends PBModel {
         category.getModel().add(new PBDataSet("Data 06.02"));
         category.getModel().add(new PBDataSet("Data 06.03"));
         category.getModel().add(new PBDataSet("Data 06.04"));
+        category.getModel().setOpened(true);
         super.addCategory(category);
 
         category = new PBCategory("Kategorie 07");
@@ -82,6 +85,7 @@ public class TestModel extends PBModel {
         super.addCategory(category);
 
         category = new PBCategory("Kategorie 13");
+        category.getModel().setOpened(true);
         super.addCategory(category);
 
         category = new PBCategory("Kategorie 14");
@@ -93,11 +97,13 @@ public class TestModel extends PBModel {
 
         category = new PBCategory("Kategorie 15");
         category.getModel().add(new PBDataSet("Data 15.01"));
+        category.getModel().setOpened(true);
         super.addCategory(category);
 
         category = new PBCategory("Kategorie 16");
         category.getModel().add(new PBDataSet("Data 16.01"));
         category.getModel().add(new PBDataSet("Data 16.02"));
+        category.getModel().setOpened(true);
         super.addCategory(category);
     }
 }

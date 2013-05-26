@@ -14,6 +14,7 @@ public class PBCategoryModel extends PriorityQueue<PBDataSet> implements Compara
 
     public PBCategoryModel(String name){
         this.name = name;
+        this.opened = false;
     }
 
     /**

@@ -11,6 +11,8 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
     private PBDataSetModel dataSetModel;
     public PBDataSet(String name){
         this.dataSetModel = new PBDataSetModel(name);
+        this.add(new JLabel(getModel().getName()));
+        this.setPreferredSize(new Dimension(200, 50));
     }
 
     public PBDataSetModel getModel() {
