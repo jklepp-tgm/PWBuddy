@@ -9,20 +9,38 @@ import java.awt.*;
  */
 public class PBCategory extends JPanel implements Comparable<PBCategory>{
     private PBCategoryModel categoryModel;
+    private JToggleButton toggle;
+    private PBCategoryControl categoryControl;
     public PBCategory(String name) {
         this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
         this.categoryModel = new PBCategoryModel(name);
-        this.add(new JLabel(this.getModel().getName()));
-        this.setPreferredSize(new Dimension(100, 50));
+        this.setLayout(new BorderLayout(20, 0));
+
+        this.toggle = new JToggleButton("+");
+        this.add(this.toggle, BorderLayout.EAST);
+
+        this.categoryControl = new PBCategoryControl(this);
+        this.toggle.addActionListener(this.categoryControl);
+
+        this.add(new JLabel(this.getModel().getName()), BorderLayout.CENTER);
     }
 
     public PBCategoryModel getModel() {
         return categoryModel;
     }
 
+    public JToggleButton getToggle() {
+        return toggle;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Container contentView = SwingUtilities.getAncestorOfClass(PBContentView.class, this); //etwas unschön
+        if(contentView != null){
+            contentView.revalidate();
+            contentView.repaint();
+        }
     }
 
     /**

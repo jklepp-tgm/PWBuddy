@@ -15,7 +15,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
         this.dataSetModel = new PBDataSetModel(name);
         this.setLayout(new BorderLayout(20, 0));
 
-        this.toggle = new JToggleButton();
+        this.toggle = new JToggleButton("+");
         this.add(toggle, BorderLayout.EAST);
 
         this.dataSetControl = new PBDataSetControl(this);
@@ -35,7 +35,11 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        this.getModel().setOpened(this.toggle.isSelected());
+        Container contentView = SwingUtilities.getAncestorOfClass(PBContentView.class, this); //etwas unschön
+        if(contentView != null){
+            contentView.revalidate();
+            contentView.repaint();
+        }
     }
 
     /**

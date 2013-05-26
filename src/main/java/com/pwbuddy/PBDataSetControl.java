@@ -21,6 +21,12 @@ public class PBDataSetControl implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(this.dataSet.getToggle().equals(e.getSource())){
             this.dataSet.getModel().setOpened(this.dataSet.getToggle().isSelected());
+            if(this.dataSet.getToggle().isSelected()){
+                this.dataSet.getToggle().setText("-");
+            } else {
+                this.dataSet.getToggle().setText("+");
+            }
         }
+        this.dataSet.repaint();
     }
 }
