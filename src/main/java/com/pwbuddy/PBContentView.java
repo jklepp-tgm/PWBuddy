@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.Iterator;
 
 /**
- * @author jakob
- * @version 2013-05-22
+ * @author Jakob Klepp
+ * @since 2013-05-22
  */
 public class PBContentView extends JPanel {
     //private GridBagLayout gridBag;
