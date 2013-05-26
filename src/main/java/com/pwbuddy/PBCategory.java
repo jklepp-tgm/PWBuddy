@@ -13,7 +13,7 @@ public class PBCategory extends JPanel implements Comparable<PBCategory>{
         this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
         this.categoryModel = new PBCategoryModel(name);
         this.add(new JLabel(this.categoryModel.getName()));
-        this.setPreferredSize(new Dimension(100, 100));
+        this.setPreferredSize(new Dimension(100, 50));
     }
 
     public PBCategoryModel getModel() {
