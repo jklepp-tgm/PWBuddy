@@ -19,8 +19,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
 
     @Override
     protected void paintComponent(Graphics g){
-        g.drawString(this.dataSetModel.getName(), 1, 1);
-        System.out.println(this.dataSetModel.getName());
+        super.paintComponent(g);
     }
 
     /**

@@ -17,6 +17,5 @@ public class TestModelRunner {
         frame.setSize(650, 450);
         frame.setTitle("PWBuddy _-_ TestModelRunner");
         frame.setVisible(true);
-        System.out.println("_-_1_-_");
     }
 }

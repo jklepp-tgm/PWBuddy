@@ -22,8 +22,7 @@ public class PBCategory extends JPanel implements Comparable<PBCategory>{
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawString(this.categoryModel.getName(), 1, 1);
-        System.out.println(this.categoryModel.getName());
+        super.paintComponent(g);
     }
 
     /**

@@ -25,7 +25,6 @@ public class PBContentView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("Blub");
 
         this.removeAll();
 
