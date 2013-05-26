@@ -41,10 +41,6 @@ public class PBContentView extends JPanel {
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
         for(Iterator<PBCategory> categoryIterator = m.iterator(); categoryIterator.hasNext();){
             PBCategory category = categoryIterator.next();
-            //Grösse des category Headers anpassen
-            Dimension d = new Dimension(width-10, category.getView().getHeight()); //ToDo eleganter Lösung als -10 Finden; diese Funktioniert nicht!
-            System.out.println(d);
-            category.getView().setPreferredSize(d);
 
             //category zum scrollPane hinzufügen
             //this.add(category.getView(), con);
@@ -55,10 +51,6 @@ public class PBContentView extends JPanel {
             if(category.isOpened()){
                 for(Iterator<PBDataSet> dataSetIterator = category.iterator(); dataSetIterator.hasNext();){
                     PBDataSet dataSet = dataSetIterator.next();
-
-                    //Größe des dataset headers anpassen
-                    d = new Dimension(width, dataSet.getView().getHeight());
-                    dataSet.getView().setPreferredSize(d);
 
                     //zum scrollPane hinzufügen
                     //this.add(dataSet.getView(), con);
