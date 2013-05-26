@@ -9,10 +9,14 @@ import java.awt.*;
  */
 public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
     private PBDataSetModel dataSetModel;
+    private JToggleButton toggle;
     public PBDataSet(String name){
         this.dataSetModel = new PBDataSetModel(name);
-        this.add(new JLabel(getModel().getName()));
-        this.setPreferredSize(new Dimension(200, 50));
+        this.setLayout(new BorderLayout());
+        this.toggle = new JToggleButton();
+        this.add(toggle, BorderLayout.EAST);
+        this.add(new JLabel(getModel().getName()), BorderLayout.CENTER);
+        //this.setPreferredSize(new Dimension(200, 50));
     }
 
     public PBDataSetModel getModel() {
