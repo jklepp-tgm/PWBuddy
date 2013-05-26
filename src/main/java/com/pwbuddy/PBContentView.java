@@ -9,13 +9,10 @@ import java.util.Iterator;
  * @since 2013-05-22
  */
 public class PBContentView extends JPanel {
-    //private GridBagLayout gridBag;
     private PBModel m;
 
     public PBContentView(PBModel m){
-        //this.gridBag = new GridBagLayout();
         this.m = m;
-        //this.setLayout(this.gridBag);
         this.setLayout(new PBRowLayout());
         this.setBackground(Color.CYAN);
 
@@ -29,23 +26,15 @@ public class PBContentView extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         System.out.println("Blub");
-        int width = this.getWidth();
 
         this.removeAll();
-        /*
-        GridBagConstraints con = new GridBagConstraints();
-        con.insets = new Insets(1,1,1,1); //Abstand zwischen den Elementen, (oben, unten, links, rechts)
-        con.gridx = 0;
-        con.gridy = 0;
-                        */
+
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
         for(Iterator<PBCategory> categoryIterator = m.iterator(); categoryIterator.hasNext();){
             PBCategory category = categoryIterator.next();
 
             //category zum scrollPane hinzufügen
-            //this.add(category.getView(), con);
             this.add(category);
-            //con.gridy ++;
 
             //Wenn eine categorie geöffnet ist soll auch ihr Inhalt gezeichnet werden
             if(category.getModel().isOpened()){
@@ -53,10 +42,7 @@ public class PBContentView extends JPanel {
                     PBDataSet dataSet = dataSetIterator.next();
 
                     //zum scrollPane hinzufügen
-                    //this.add(dataSet.getView(), con);
                     this.add(dataSet.getView());
-
-                    //con.gridy += dataSet.getGridHeight();
                 }
             }
         }
