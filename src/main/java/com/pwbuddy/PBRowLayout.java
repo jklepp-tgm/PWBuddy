@@ -103,8 +103,10 @@ public class PBRowLayout implements LayoutManager {
     @Override
     public void layoutContainer(Container target) {
         int yPos = 0;
+        Dimension dimension = this.preferredLayoutSize(target);
+        System.out.println(dimension);
         for (Component component : target.getComponents()){
-            component.setLocation(0, yPos);
+            component.setBounds(0, yPos, dimension.width, dimension.height);
             yPos += component.getPreferredSize().height;
         }
     }
