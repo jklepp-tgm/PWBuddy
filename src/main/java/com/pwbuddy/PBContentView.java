@@ -44,12 +44,12 @@ public class PBContentView extends JPanel {
 
             //category zum scrollPane hinzufügen
             //this.add(category.getView(), con);
-            this.add(category.getView());
+            this.add(category);
             //con.gridy ++;
 
             //Wenn eine categorie geöffnet ist soll auch ihr Inhalt gezeichnet werden
-            if(category.isOpened()){
-                for(Iterator<PBDataSet> dataSetIterator = category.iterator(); dataSetIterator.hasNext();){
+            if(category.getModel().isOpened()){
+                for(Iterator<PBDataSet> dataSetIterator = category.getModel().iterator(); dataSetIterator.hasNext();){
                     PBDataSet dataSet = dataSetIterator.next();
 
                     //zum scrollPane hinzufügen

@@ -106,7 +106,7 @@ public class PBRowLayout implements LayoutManager {
         Dimension dimension = this.preferredLayoutSize(target);
         System.out.println(dimension);
         for (Component component : target.getComponents()){
-            component.setBounds(0, yPos, dimension.width, dimension.height);
+            component.setBounds(0, yPos, dimension.width, component.getPreferredSize().height);
             yPos += component.getPreferredSize().height;
         }
     }

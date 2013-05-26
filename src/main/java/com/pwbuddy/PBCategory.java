@@ -1,49 +1,29 @@
 package com.pwbuddy;
 
-import java.util.PriorityQueue;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <PBCategory>{
-    private PBCategoryView cv;
-    /**Wenn eine Kategorie geöffnet ist soll ihr Inhalt gerendert werden.*/
-    private boolean opened;
-
-    private String name;
-
-    public PBCategory(String name){
-        this.name = name;
-        this.cv = new PBCategoryView(this);
+public class PBCategory extends JPanel implements Comparable<PBCategory>{
+    private PBCategoryModel categoryModel;
+    public PBCategory(String name) {
+        this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
+        this.categoryModel = new PBCategoryModel(name);
+        this.add(new JLabel(this.categoryModel.getName()));
+        this.setPreferredSize(new Dimension(100, 100));
     }
 
-    /**
-     * @return Darstellung der Kopfzeile einer Kategorie
-     */
-    public PBCategoryView getView(){
-        return cv;
+    public PBCategoryModel getModel() {
+        return categoryModel;
     }
 
-    /**
-     * Wenn eine Kategorie geöffnet ist soll ihr Inhalt gerendert werden.
-     *
-     * @return ist die Kategorie geöffnet
-     */
-    public boolean isOpened(){
-        return opened;
-    }
-
-    public void setOpened(boolean opened) {
-        this.opened = opened;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawString(this.categoryModel.getName(), 1, 1);
+        System.out.println(this.categoryModel.getName());
     }
 
     /**
@@ -86,6 +66,6 @@ public class PBCategory extends PriorityQueue<PBDataSet> implements Comparable <
      */
     @Override
     public int compareTo(PBCategory o) {
-        return this.getName().compareTo(o.getName());
+        return this.getModel().compareTo(o.getModel());
     }
 }
