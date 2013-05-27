@@ -44,6 +44,11 @@ public class PBContentView extends JPanel {
                     this.add(dataSet);
                 }
             }
+            if(categoryIterator.hasNext()){
+                JSeparator separator = new JSeparator();
+                separator.setPreferredSize(new Dimension(this.getSize().width, 3));
+                this.add(separator);
+            }
         }
         this.validate();
     }
