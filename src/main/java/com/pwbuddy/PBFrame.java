@@ -1,7 +1,7 @@
 package com.pwbuddy;
 
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
 
 /**
  * @author Jakob Klepp
@@ -14,7 +14,11 @@ public class PBFrame extends JFrame {
 
     private PBMenuBar menu;
     public PBFrame(){
-        this.m = new PBModel(new File("./pwds"));
+        try {
+            this.m = new PBModel(getReader());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         this.v = new PBView(m);
         this.c = new PBControl();
 
@@ -26,5 +30,11 @@ public class PBFrame extends JFrame {
         this.setTitle("PWBuddy");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+
+    protected Reader getReader() throws FileNotFoundException {
+        String filepath = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
+        File file = new File(filepath);
+        return new FileReader(file);
     }
 }

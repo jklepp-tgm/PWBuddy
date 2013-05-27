@@ -1,6 +1,6 @@
 package com.pwbuddy;
 
-import java.io.File;
+import java.io.*;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 public class PBModel {
     private PriorityQueue<PBCategory> categories;
 
-    public PBModel(File pwFile){
+    public PBModel(Reader reader){
         //TODO File einlese
         //TODO ... parsen
         this.categories = new PriorityQueue<PBCategory>();

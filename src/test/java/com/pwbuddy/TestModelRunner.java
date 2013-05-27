@@ -1,6 +1,7 @@
 package com.pwbuddy;
 
 import javax.swing.*;
+import java.io.FileNotFoundException;
 
 /**
  * @author Jakob Klepp
@@ -9,7 +10,12 @@ import javax.swing.*;
 public class TestModelRunner {
     public static void main(String [] args){
         JFrame frame = new JFrame();
-        PBModel m = new TestModel();
+        PBModel m = null;
+        try {
+            m = new TestModel();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         PBView v = new PBView(m);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

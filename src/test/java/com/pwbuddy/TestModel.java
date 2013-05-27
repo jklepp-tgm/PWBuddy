@@ -1,6 +1,6 @@
 package com.pwbuddy;
 
-import java.io.File;
+import java.io.*;
 
 /**
  * @author Jakob Klepp
@@ -8,8 +8,8 @@ import java.io.File;
  */
 public class TestModel extends PBModel {
 
-    public TestModel(){
-        super(new File("."));
+    public TestModel() throws FileNotFoundException {
+        super(new FileReader(new File(System.getProperty("user.home") + "/.pwbuddy/testmodel/passwords.json")));
         PBCategory category;
 
         category = new PBCategory("Kategorie 01");
