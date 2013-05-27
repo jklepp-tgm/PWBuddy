@@ -6,15 +6,15 @@ package com.pwbuddy;
  */
 public class PBDataSetModel implements Comparable <PBDataSetModel> {
     private int lineCount;
-    /**Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden*/
-    private boolean opened;
+
+    private PBDataSet dataSet;
 
     private String name;
 
-    public PBDataSetModel(String name){
+    public PBDataSetModel(PBDataSet dataSet, String name){
+        this.dataSet = dataSet;
         this.name = name;
         this.lineCount = 1;
-        this.opened = false;
     }
 
     /**
@@ -34,11 +34,11 @@ public class PBDataSetModel implements Comparable <PBDataSetModel> {
      * @return ist der dataSet geöffnet?
      */
     public boolean isOpened() {
-        return opened;
+        return this.getDataSet().getToggle().isSelected();
     }
 
     public void setOpened(boolean opened) {
-        this.opened = opened;
+        this.getDataSet().getToggle().setSelected(opened);
     }
 
     public String getName() {
@@ -47,6 +47,10 @@ public class PBDataSetModel implements Comparable <PBDataSetModel> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    protected PBDataSet getDataSet() {
+        return dataSet;
     }
 
     /**

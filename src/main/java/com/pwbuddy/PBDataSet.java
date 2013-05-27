@@ -13,7 +13,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
     private PBDataSetControl dataSetControl;
     private JLabel label;
     public PBDataSet(String name){
-        this.dataSetModel = new PBDataSetModel(name);
+        this.dataSetModel = new PBDataSetModel(this, name);
         this.setLayout(new BorderLayout());
 
         this.label = new JLabel(".");
