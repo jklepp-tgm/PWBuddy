@@ -7,14 +7,13 @@ import java.util.PriorityQueue;
  * @since 2013-05-14
  */
 public class PBCategoryModel extends PriorityQueue<PBDataSet> implements Comparable <PBCategoryModel>{
-    /**Wenn eine Kategorie geöffnet ist soll ihr Inhalt gerendert werden.*/
-    private boolean opened;
+    private PBCategory category;
 
     private String name;
 
-    public PBCategoryModel(String name){
+    public PBCategoryModel(PBCategory category, String name){
+        this.category = category;
         this.name = name;
-        this.opened = false;
     }
 
     /**
@@ -23,11 +22,11 @@ public class PBCategoryModel extends PriorityQueue<PBDataSet> implements Compara
      * @return ist die Kategorie geöffnet
      */
     public boolean isOpened(){
-        return opened;
+        return this.category.getToggle().isSelected();
     }
 
     public void setOpened(boolean opened) {
-        this.opened = opened;
+        this.category.getToggle().setSelected(opened);
     }
 
     public String getName() {
