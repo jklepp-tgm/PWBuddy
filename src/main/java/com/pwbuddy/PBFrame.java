@@ -14,11 +14,7 @@ public class PBFrame extends JFrame {
 
     private PBMenuBar menu;
     public PBFrame(){
-        try {
-            this.m = new PBModel(getReader());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        this.m = new PBModel(getReader());
         this.v = new PBView(m);
         this.c = new PBControl();
 
@@ -32,9 +28,34 @@ public class PBFrame extends JFrame {
         this.setVisible(true);
     }
 
-    protected Reader getReader() throws FileNotFoundException {
+    protected Reader getReader() {
         String filepath = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
-        File file = new File(filepath);
-        return new FileReader(file);
+        FileReader fileReader = null;
+        while(fileReader == null){ //Wenn die Datei erst erstellt werden muss soll ein zweiter anlauf versucht werden
+            File file = new File(filepath);
+            if(file.isFile()){
+                if(file.canRead() && file.canWrite()){
+                    try {
+                        fileReader = new FileReader(file);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else { //Kann nicht gelesen oder geschrieben werden
+                    //Entsprechende Fehlermeldung ausgeben
+                    if(!file.canRead()){
+                        System.out.println("Datei: " + filepath + " kann nicht gelesen werden.");
+                    }
+                    if(!file.canWrite()){
+                        System.out.println("Datei: " + filepath + " kann nicht geschrieben werden.");
+                    }
+                    //Program beenden
+                    System.exit(1);
+                }
+            } else {
+                System.out.println("Datei: " + filepath + " existiert nicht. Wird erstellt.");
+            }
+        }
+
+        return fileReader;
     }
 }

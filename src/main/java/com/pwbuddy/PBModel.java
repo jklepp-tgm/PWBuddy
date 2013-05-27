@@ -1,4 +1,6 @@
 package com.pwbuddy;
+import argo.jdom.*;
+import argo.saj.InvalidSyntaxException;
 
 import java.io.*;
 import java.util.Iterator;
@@ -10,11 +12,25 @@ import java.util.PriorityQueue;
  */
 public class PBModel {
     private PriorityQueue<PBCategory> categories;
+    private JsonRootNode jsonRootNode;
 
     public PBModel(Reader reader){
-        //TODO File einlese
-        //TODO ... parsen
         this.categories = new PriorityQueue<PBCategory>();
+
+        //JsonRootNode erzeugen
+        JdomParser jdomParser = new JdomParser();
+        try {
+            this.jsonRootNode = jdomParser.parse(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (InvalidSyntaxException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        JsonNode categoriesNode = this.jsonRootNode.getNode("categories");
+        JsonNode dataSetsNode = this.jsonRootNode.getNode("datasets");
     }
 
     /**
