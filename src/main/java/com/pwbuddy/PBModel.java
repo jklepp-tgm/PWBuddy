@@ -17,14 +17,28 @@ public class PBModel {
     public PBModel(Reader reader){
         this.categories = new PriorityQueue<PBCategory>();
 
-        //JsonRootNode erzeugen
         JdomParser jdomParser = new JdomParser();
+
+        //Überprüfen ob Json gültig ist
+        try{
+            jdomParser.parse(reader);
+        } catch (InvalidSyntaxException e) {
+            //json ungültig
+        } catch (IOException e) {
+            //Wenn der Reader Probleme macht
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        //JsonRootNode erzeugen
         try {
             this.jsonRootNode = jdomParser.parse(reader);
         } catch (IOException e) {
+            //wenn der Reader Probleme macht.
             e.printStackTrace();
             System.exit(1);
         } catch (InvalidSyntaxException e) {
+            //Sollte nicht vorkommen
             e.printStackTrace();
             System.exit(1);
         }

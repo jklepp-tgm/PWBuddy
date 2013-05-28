@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.freedesktop.tango:tango-icon-theme:0.8.90" type="repository">
+    <properties maven-id="org.freedesktop.tango:tango-icon-theme:0.8.90" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/tango-icon-theme-0.8.90.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

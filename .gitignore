@@ -6,9 +6,9 @@
 *.ear
 
 #IntelliJ Files
-.idea
-.idea/
-.idea/*
+#.idea
+#.idea/
+#.idea/*
 PWBuddy.iml
 
 #Maven
