@@ -59,4 +59,50 @@ public class PBModel {
     public Iterator<PBCategory> iterator(){
         return categories.iterator();
     }
+
+    public static Reader getDefaultReader(){
+        String filepath = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
+        FileReader fileReader = null;
+        boolean ersterDurchlauf = true;
+        while(fileReader == null){ //Wenn die Datei erst erstellt werden muss soll ein zweiter anlauf versucht werden
+            File file = new File(filepath);
+            if(file.isFile()){
+                if(file.canRead() && file.canWrite()){
+                    try {
+                        fileReader = new FileReader(file);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else { //Kann nicht gelesen oder geschrieben werden
+                    //Entsprechende Fehlermeldung ausgeben
+                    if(!file.canRead()){
+                        System.out.println("Datei: " + filepath + " kann nicht gelesen werden.");
+                    }
+                    if(!file.canWrite()){
+                        System.out.println("Datei: " + filepath + " kann nicht geschrieben werden.");
+                    }
+                    //Program beenden
+                    System.exit(1);
+                }
+            } else {
+                try {
+                    //Dateipfad erstellen
+                    File path = file.getParentFile();
+                    path.mkdirs();
+                    //Datei erstellen
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (ersterDurchlauf) {
+                    System.out.println("Datei: " + filepath + " existiert nicht. Wird erstellt.");
+                } else {
+                    System.exit(1);
+                }
+                ersterDurchlauf = false;
+            }
+        }
+
+        return fileReader;
+    }
 }
