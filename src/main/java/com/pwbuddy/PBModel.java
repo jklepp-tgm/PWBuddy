@@ -15,6 +15,9 @@ public class PBModel {
     private PriorityQueue<PBCategory> categories;
     private JsonRootNode jsonRootNode;
 
+    private Reader reader;
+    private Writer writer;
+
     /** Sollte bei jeder änderung am Dokumenten Modell um 1 inkrementiert werden */
     public static final int JSON_DOCUMENT_VERSION = 1;
 
@@ -24,12 +27,15 @@ public class PBModel {
     public PBModel(Reader reader, Writer writer){
         this.categories = new PriorityQueue<PBCategory>();
 
+        this.reader = reader;
+        this.writer = writer;
+
         JdomParser jdomParser = new JdomParser();
 
         //Überprüfen ob Json gültig ist
         try{
             //json Objekt aus Reader laden
-            this.jsonRootNode = jdomParser.parse(reader);
+            this.jsonRootNode = jdomParser.parse(this.reader);
         } catch (InvalidSyntaxException e) {
             //json ungültig, erstelle backup des aktuellen json Dokument und erstelle eine valide json Struktur
             //TODO json Backupen
@@ -46,7 +52,9 @@ public class PBModel {
         PrettyJsonFormatter jsonFormatter = new PrettyJsonFormatter();
         String output = jsonFormatter.format(jsonRootNode);
         try {
-            writer.write(output);
+            this.writer.write(output);
+            this.writer.flush();
+            System.out.println(output);
         } catch (IOException e) {
             //Im falle eines Problematischen writers
             e.printStackTrace();
