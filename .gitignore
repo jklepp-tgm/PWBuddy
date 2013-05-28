@@ -6,8 +6,8 @@
 *.ear
 
 #IntelliJ Files
-.idea
-- .idea/libraries
+.idea/*
+!.idea/libraries
 PWBuddy.iml
 
 #Maven
