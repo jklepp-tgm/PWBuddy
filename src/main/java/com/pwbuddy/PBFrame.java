@@ -15,7 +15,7 @@ public class PBFrame extends JFrame {
 
     private PBMenuBar menu;
     public PBFrame(){
-        this.m = new PBModel(PBModel.getDefaultReader());
+        this.m = new PBModel();
         this.v = new PBView(m);
         this.c = new PBControl();
 

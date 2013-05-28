@@ -9,7 +9,7 @@ import java.io.*;
 public class TestModel extends PBModel {
 
     public TestModel() throws FileNotFoundException {
-        super(new FileReader(new File(System.getProperty("user.home") + "/.pwbuddy/testmodel/passwords.json")));
+        super();
         PBCategory category;
 
         category = new PBCategory("Kategorie 01");

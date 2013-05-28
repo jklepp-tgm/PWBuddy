@@ -1,4 +1,5 @@
 package com.pwbuddy;
+import argo.format.PrettyJsonFormatter;
 import argo.jdom.*;
 import argo.saj.InvalidSyntaxException;
 
@@ -14,41 +15,48 @@ public class PBModel {
     private PriorityQueue<PBCategory> categories;
     private JsonRootNode jsonRootNode;
 
-    public PBModel(Reader reader){
+    /** Sollte bei jeder änderung am Dokumenten Modell um 1 inkrementiert werden */
+    public static final int JSON_DOCUMENT_VERSION = 1;
+
+    /** Der Dateipfad welcher im Normalfall verwendet werden soll */
+    public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
+
+    public PBModel(Reader reader, Writer writer){
         this.categories = new PriorityQueue<PBCategory>();
 
         JdomParser jdomParser = new JdomParser();
 
         //Überprüfen ob Json gültig ist
         try{
-            jdomParser.parse(reader);
+            //json Objekt aus Reader laden
+            this.jsonRootNode = jdomParser.parse(reader);
         } catch (InvalidSyntaxException e) {
             //json ungültig, erstelle backup des aktuellen json Dokument und erstelle eine valide json Struktur
             //TODO json Backupen
 
-            //TODO json Dokument erstellen.
-
+            //default json Dokument erstellen.
+            this.jsonRootNode = getDefaultJsonDocument();
         } catch (IOException e) {
             //Wenn der Reader Probleme macht
             e.printStackTrace();
             System.exit(1);
         }
 
-        //JsonRootNode erzeugen
+        //Zustand des Json Dokuments in Datei schreiben
+        PrettyJsonFormatter jsonFormatter = new PrettyJsonFormatter();
+        String output = jsonFormatter.format(jsonRootNode);
         try {
-            this.jsonRootNode = jdomParser.parse(reader);
+            writer.write(output);
         } catch (IOException e) {
-            //wenn der Reader Probleme macht.
+            //Im falle eines Problematischen writers
             e.printStackTrace();
-            System.exit(1);
-        } catch (InvalidSyntaxException e) {
-            //Sollte nicht vorkommen
-            e.printStackTrace();
-            System.exit(1);
         }
 
-        JsonNode categoriesNode = this.jsonRootNode.getNode("categories");
-        JsonNode dataSetsNode = this.jsonRootNode.getNode("datasets");
+        JsonNode dataSetsNode = this.jsonRootNode.getNode("DataSets");
+    }
+
+    public PBModel(){
+        this(getDefaultReader(), getDefaultWriter());
     }
 
     /**
@@ -78,8 +86,8 @@ public class PBModel {
         return categories.iterator();
     }
 
-    public static Reader getDefaultReader(){
-        String filepath = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
+    public static FileReader getDefaultReader(){
+        String filepath = DEFAULT_JSON_DOCUMENT_PATH;
         FileReader fileReader = null;
         boolean ersterDurchlauf = true;
         while(fileReader == null){ //Wenn die Datei erst erstellt werden muss soll ein zweiter anlauf versucht werden
@@ -124,6 +132,20 @@ public class PBModel {
         return fileReader;
     }
 
+    public static BufferedWriter getDefaultWriter(){
+        //sicherstellen das die Datei existiert
+        getDefaultReader();
+        try {
+            FileWriter fileWriter = new FileWriter(DEFAULT_JSON_DOCUMENT_PATH);
+            return new BufferedWriter(fileWriter);
+        } catch (IOException e) {
+            //sollte nicht passieren
+            e.printStackTrace();
+            System.exit(1);
+            return null;
+        }
+    }
+
     /**
      * Erstellt die Struktur eines Jsondokuments für den Fall das
      * ein Dokuent eine ungültige Struktur hat.
@@ -134,6 +156,11 @@ public class PBModel {
         JsonObjectNodeBuilder builder;
         builder = JsonNodeBuilders.anObjectBuilder();
 
-        return builder.build();
+        builder.withField("DataSets", JsonNodeBuilders.anArrayBuilder());
+        builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + JSON_DOCUMENT_VERSION));
+        builder.withField("id_incrementer", JsonNodeBuilders.aNumberBuilder("1"));
+
+        JsonRootNode node = builder.build();
+        return node;
     }
 }
