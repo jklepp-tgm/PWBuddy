@@ -1,7 +1,8 @@
 package com.pwbuddy;
 
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
+import java.util.Formatter;
 
 /**
  * @author Jakob Klepp
@@ -14,7 +15,7 @@ public class PBFrame extends JFrame {
 
     private PBMenuBar menu;
     public PBFrame(){
-        this.m = new PBModel(new File("./pwds"));
+        this.m = new PBModel(PBModel.getDefaultReader());
         this.v = new PBView(m);
         this.c = new PBControl();
 

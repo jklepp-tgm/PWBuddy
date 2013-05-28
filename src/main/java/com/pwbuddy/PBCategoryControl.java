@@ -21,11 +21,12 @@ public class PBCategoryControl implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(this.category.getToggle().equals(e.getSource())){
             this.category.getModel().setOpened(this.category.getToggle().isSelected());
-            if(this.category.getToggle().isSelected()){
+            System.out.println(this.category.getModel().getName());
+            /*if(this.category.getToggle().isSelected()){
                 this.category.getToggle().setText("-");
             } else {
                 this.category.getToggle().setText("+");
-            }
+            }*/
         }
         this.category.repaint();
     }

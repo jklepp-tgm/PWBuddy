@@ -1,6 +1,8 @@
 package com.pwbuddy;
+import argo.jdom.*;
+import argo.saj.InvalidSyntaxException;
 
-import java.io.File;
+import java.io.*;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -10,11 +12,39 @@ import java.util.PriorityQueue;
  */
 public class PBModel {
     private PriorityQueue<PBCategory> categories;
+    private JsonRootNode jsonRootNode;
 
-    public PBModel(File pwFile){
-        //TODO File einlese
-        //TODO ... parsen
+    public PBModel(Reader reader){
         this.categories = new PriorityQueue<PBCategory>();
+
+        JdomParser jdomParser = new JdomParser();
+
+        //Überprüfen ob Json gültig ist
+        try{
+            jdomParser.parse(reader);
+        } catch (InvalidSyntaxException e) {
+            //json ungültig
+        } catch (IOException e) {
+            //Wenn der Reader Probleme macht
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        //JsonRootNode erzeugen
+        try {
+            this.jsonRootNode = jdomParser.parse(reader);
+        } catch (IOException e) {
+            //wenn der Reader Probleme macht.
+            e.printStackTrace();
+            System.exit(1);
+        } catch (InvalidSyntaxException e) {
+            //Sollte nicht vorkommen
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        JsonNode categoriesNode = this.jsonRootNode.getNode("categories");
+        JsonNode dataSetsNode = this.jsonRootNode.getNode("datasets");
     }
 
     /**
@@ -42,5 +72,51 @@ public class PBModel {
      */
     public Iterator<PBCategory> iterator(){
         return categories.iterator();
+    }
+
+    public static Reader getDefaultReader(){
+        String filepath = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
+        FileReader fileReader = null;
+        boolean ersterDurchlauf = true;
+        while(fileReader == null){ //Wenn die Datei erst erstellt werden muss soll ein zweiter anlauf versucht werden
+            File file = new File(filepath);
+            if(file.isFile()){
+                if(file.canRead() && file.canWrite()){
+                    try {
+                        fileReader = new FileReader(file);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else { //Kann nicht gelesen oder geschrieben werden
+                    //Entsprechende Fehlermeldung ausgeben
+                    if(!file.canRead()){
+                        System.out.println("Datei: " + filepath + " kann nicht gelesen werden.");
+                    }
+                    if(!file.canWrite()){
+                        System.out.println("Datei: " + filepath + " kann nicht geschrieben werden.");
+                    }
+                    //Program beenden
+                    System.exit(1);
+                }
+            } else {
+                try {
+                    //Dateipfad erstellen
+                    File path = file.getParentFile();
+                    path.mkdirs();
+                    //Datei erstellen
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (ersterDurchlauf) {
+                    System.out.println("Datei: " + filepath + " existiert nicht. Wird erstellt.");
+                } else {
+                    System.exit(1);
+                }
+                ersterDurchlauf = false;
+            }
+        }
+
+        return fileReader;
     }
 }

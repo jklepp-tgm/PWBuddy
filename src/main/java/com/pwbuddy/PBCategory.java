@@ -13,16 +13,14 @@ public class PBCategory extends JPanel implements Comparable<PBCategory>{
     private PBCategoryControl categoryControl;
     public PBCategory(String name) {
         this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
-        this.categoryModel = new PBCategoryModel(name);
-        this.setLayout(new BorderLayout(20, 0));
+        this.categoryModel = new PBCategoryModel(this, name);
+        this.setLayout(new BorderLayout());
 
-        this.toggle = new JToggleButton("+");
-        this.add(this.toggle, BorderLayout.EAST);
+        this.toggle = new JToggleButton(this.getModel().getName());
+        this.add(this.toggle, BorderLayout.CENTER);
 
         this.categoryControl = new PBCategoryControl(this);
         this.toggle.addActionListener(this.categoryControl);
-
-        this.add(new JLabel(this.getModel().getName()), BorderLayout.CENTER);
     }
 
     public PBCategoryModel getModel() {
