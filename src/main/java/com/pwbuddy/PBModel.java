@@ -23,7 +23,11 @@ public class PBModel {
         try{
             jdomParser.parse(reader);
         } catch (InvalidSyntaxException e) {
-            //json ungültig
+            //json ungültig, erstelle backup des aktuellen json Dokument und erstelle eine valide json Struktur
+            //TODO json Backupen
+
+            //TODO json Dokument erstellen.
+
         } catch (IOException e) {
             //Wenn der Reader Probleme macht
             e.printStackTrace();
@@ -118,5 +122,18 @@ public class PBModel {
         }
 
         return fileReader;
+    }
+
+    /**
+     * Erstellt die Struktur eines Jsondokuments für den Fall das
+     * ein Dokuent eine ungültige Struktur hat.
+     *
+     * @return Gültiges Json Dokument mit der benötigten Struktur;
+     */
+    public static JsonRootNode getDefaultJsonDocument(){
+        JsonObjectNodeBuilder builder;
+        builder = JsonNodeBuilders.anObjectBuilder();
+
+        return builder.build();
     }
 }
