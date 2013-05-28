@@ -2,6 +2,7 @@ package com.pwbuddy;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.Formatter;
 
 /**
  * @author Jakob Klepp
@@ -31,6 +32,7 @@ public class PBFrame extends JFrame {
     protected Reader getReader() {
         String filepath = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
         FileReader fileReader = null;
+        boolean ersterDurchlauf = true;
         while(fileReader == null){ //Wenn die Datei erst erstellt werden muss soll ein zweiter anlauf versucht werden
             File file = new File(filepath);
             if(file.isFile()){
@@ -52,7 +54,21 @@ public class PBFrame extends JFrame {
                     System.exit(1);
                 }
             } else {
-                System.out.println("Datei: " + filepath + " existiert nicht. Wird erstellt.");
+                try {
+                    //Dateipfad erstellen
+                    File path = file.getParentFile();
+                    path.mkdirs();
+                    //Datei erstellen
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+                if (ersterDurchlauf) {
+                    System.out.println("Datei: " + filepath + " existiert nicht. Wird erstellt.");
+                } else {
+                    System.exit(1);
+                }
+                ersterDurchlauf = false;
             }
         }
 
