@@ -54,6 +54,7 @@ public class PBEncryptionCore {
 
             // Base64 repräsentation des verschlüsselten Passwortes
             String encPW = new BASE64Encoder().encode(encrypted);
+
             // Base64 repräsentation des IV
             String encIV = new BASE64Encoder().encode(iv);
 
