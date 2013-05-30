@@ -16,7 +16,7 @@ import javax.crypto.Cipher;
 /**
  * Verschlüsselungs Kern
  *
- * @author Andreas Willinger
+ * @author Andreas Willinger, Jakob Klepp
  * @since 2013-05-28
  */
 public class PBEncryptionCore {
@@ -62,6 +62,9 @@ public class PBEncryptionCore {
         return new String(decryptedByte);
     }
 
+    /**
+     * @return Initialisierungs Vektor
+     */
     public String getIV() {
         return new BASE64Encoder().encode(this.cipher.getIV());
     }

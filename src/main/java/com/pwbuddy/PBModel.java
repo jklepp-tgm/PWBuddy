@@ -141,7 +141,7 @@ public class PBModel {
     }
 
     public static BufferedWriter getDefaultWriter(){
-        //sicherstellen das die Datei existiert
+        //sicherstellen das die Datei existiert und sie den ansprüchen entsprechend zugreifbar ist.
         getDefaultReader();
         try {
             FileWriter fileWriter = new FileWriter(DEFAULT_JSON_DOCUMENT_PATH);
