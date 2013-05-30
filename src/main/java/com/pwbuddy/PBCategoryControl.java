@@ -28,6 +28,5 @@ public class PBCategoryControl implements ActionListener{
                 this.category.getToggle().setText("+");
             }*/
         }
-        this.category.repaint();
     }
 }

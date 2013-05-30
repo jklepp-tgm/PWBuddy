@@ -27,6 +27,7 @@ public class PBCategoryModel extends PriorityQueue<PBDataSet> implements Compara
 
     public void setOpened(boolean opened) {
         this.category.getToggle().setSelected(opened);
+        this.category.repaint();
     }
 
     public String getName() {
