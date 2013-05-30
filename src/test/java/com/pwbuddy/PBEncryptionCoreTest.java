@@ -33,6 +33,8 @@ public class PBEncryptionCoreTest {
     /**
      * PBEncryptionCore#encrypt(String)
      *
+     * @throws Exception Muh ... PBEncryptionCore
+     *
      * Funktioniert nicht Initialisierungsvektor Random
      * TODO Wieder aktivieren wenn IV festgelegt werden kann
      */
@@ -44,6 +46,11 @@ public class PBEncryptionCoreTest {
         this.initVector = this.encryptionCore.getIV();
     }
 
+    /**
+     * PBEncryptionCore#encrypt(String, String)
+     *
+     * @throws Exception Muh ... PBEncryptionCore
+     */
     @Test
     public void testDecrypt() throws Exception {
         String out = this.encryptionCore.decrypt(this.encryptedString, this.initVector);
