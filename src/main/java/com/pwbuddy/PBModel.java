@@ -5,6 +5,7 @@ import argo.saj.InvalidSyntaxException;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
 
 /**
@@ -24,6 +25,7 @@ public class PBModel {
     /** Der Dateipfad welcher im Normalfall verwendet werden soll */
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
 
+    //ToDo node.has und node.is verwenden um unkontrollierte Abstürze zu vermeiden sollte das json Dokument invalid sein
     public PBModel(Reader reader, Writer writer){
         this.categories = new PriorityQueue<PBCategory>();
 
@@ -68,7 +70,41 @@ public class PBModel {
             System.exit(1);
         }
 
+        //Existierende DataSets auslesen
         JsonNode dataSetsNode = this.jsonRootNode.getNode("DataSets");
+        List <JsonNode> dataSetsList = dataSetsNode.getArrayNode();
+
+        //Über nodes in dataSetsNode iterieren um DataSet und Category Objekte zu erzeugen
+        for(Iterator<JsonNode> dataSetsIterator = dataSetsList.iterator(); dataSetsIterator.hasNext(); ){
+            JsonNode dataSetNode = dataSetsIterator.next();
+            String categoryName = dataSetNode.getStringValue("Category");
+
+            //Wird noch gefunden oder erzeugt.
+            PBCategory pbCategory = null;
+
+            //Überprüfen ob die Category des aktuellen DataSet bereits existiert
+            boolean namedCategoryExists = false;
+            for(Iterator <PBCategory> categoryIterator = this.categories.iterator(); categoryIterator.hasNext();){
+                PBCategory category = categoryIterator.next();
+                if(category.getModel().getName().equals(categoryName)){
+                    namedCategoryExists = true;
+                    pbCategory = category;
+                    break;
+                }
+            }
+
+            //Falls die Category noch nicht existiert
+            if(!namedCategoryExists){
+                //Category hinzufügen
+                pbCategory = new PBCategory(categoryName);
+                this.addCategory(pbCategory);
+            }
+
+            //DataSet Objekt erzeugen und zur passenden Category hinzufügen
+            String dataSetName = dataSetNode.getStringValue("Title");
+            PBDataSet pbDataSet = new PBDataSet(dataSetName);
+            pbCategory.getModel().add(pbDataSet);
+        }
     }
 
     public PBModel(){

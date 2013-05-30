@@ -3,7 +3,7 @@
         [
             {
                 "Category":"Cat 3",
-                "id_12345/Title":"bla",
+                "Title":"bla",
                 "id_12346/Username":"blubb",
                 "id_12347/Password":"1C0BDD78AEEA93",
                 "id_12348/e-Mail":"blub@bla.net",
@@ -11,7 +11,7 @@
             },
             {
                 "Category":"Cat 1",
-                "id_12350/Title":"bla2",
+                "Title":"bla2",
                 "id_12351/Username":"blabb",
                 "id_12352/Password":"1C0BDD78AEEA93",
                 "id_12353/key":"value"
