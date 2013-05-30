@@ -60,6 +60,14 @@ public class PBModel {
             e.printStackTrace();
         }
 
+        //TODO lösen von Versionskompatiblitätsproblemen
+        //Version des Json Dokuments mit der unterstützten Version vergleichen
+        if(Integer.parseInt(this.jsonRootNode.getNumberValue("Version")) != JSON_DOCUMENT_VERSION){
+            //Andere Version
+            System.out.println("Json Dokument mit den Passwörtern hat nicht die unterstützte Version.");
+            System.exit(1);
+        }
+
         JsonNode dataSetsNode = this.jsonRootNode.getNode("DataSets");
     }
 
