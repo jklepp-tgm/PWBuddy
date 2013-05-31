@@ -20,7 +20,7 @@ public class PBModel {
     private Writer writer;
 
     /** Sollte bei jeder änderung am Dokumenten Modell um 1 inkrementiert werden */
-    public static final int JSON_DOCUMENT_VERSION = 1;
+    public static final int JSON_DOCUMENT_VERSION = 2;
 
     /** Der Dateipfad welcher im Normalfall verwendet werden soll */
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
@@ -129,6 +129,14 @@ public class PBModel {
         addCategory(new PBCategory(categoryName));
     }
 
+    protected synchronized String elementID(){
+        int id = Integer.parseInt(this.jsonRootNode.getNumberValue("id_incrementer"));
+        String elementID = "id_" + id + "/";
+        ++id;
+        //Todo id änderung zurück ins json dokument schreiben
+        return elementID;
+    }
+
     /**
      * Gibt ein Array mit allen Kategorien zurück.
      *
@@ -210,7 +218,6 @@ public class PBModel {
 
         builder.withField("DataSets", JsonNodeBuilders.anArrayBuilder());
         builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + JSON_DOCUMENT_VERSION));
-        builder.withField("id_incrementer", JsonNodeBuilders.aNumberBuilder("1"));
 
         JsonRootNode node = builder.build();
         return node;

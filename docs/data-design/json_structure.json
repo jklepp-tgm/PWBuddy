@@ -4,19 +4,18 @@
             {
                 "Category":"Cat 3",
                 "Title":"bla",
-                "id_12346/Username":"blubb",
-                "id_12347/Password":"1C0BDD78AEEA93",
-                "id_12348/e-Mail":"blub@bla.net",
-                "id_12349/key":"value"
+                "Username":"blubb",
+                "Password":"1C0BDD78AEEA93",
+                "e-Mail":"blub@bla.net",
+                "key":"value"
             },
             {
                 "Category":"Cat 1",
                 "Title":"bla2",
-                "id_12351/Username":"blabb",
-                "id_12352/Password":"1C0BDD78AEEA93",
-                "id_12353/key":"value"
+                "Username":"blabb",
+                "Password":"1C0BDD78AEEA93",
+                "key":"value"
             }
         ],
-    "Version":0.1,
-    "id_incrementer":12354
+    "Version":0.1
 }
