@@ -80,6 +80,8 @@ public class PBRootNode extends AccessibleJsonRootNode {
         }
 
         this.fields.putAll(rootNode.getFields());
+
+        this.flush();
     }
 
     /**
@@ -87,6 +89,11 @@ public class PBRootNode extends AccessibleJsonRootNode {
      */
     public void flush(){
         String json = this.jsonFormatter.format(this);
+        try {
+            this.writeStringToFile(this.file, json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
