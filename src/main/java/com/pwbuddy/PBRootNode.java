@@ -107,16 +107,16 @@ public class PBRootNode extends AccessibleJsonRootNode {
      * die Datei nicht existiert und es Probleme beim erstellen gibt
      */
     private void writeStringToFile(File file, String string) throws IOException {
-        if(!file.canWrite()){
-            throw new AccessDeniedException(file.getAbsolutePath());
-        }
-
         if(!file.exists()){
             //Dateipfad erstellen
             File path = file.getParentFile();
             path.mkdirs();
             //Datei erstellen
             file.createNewFile();
+        }
+
+        if(!file.canWrite()){
+            throw new AccessDeniedException(file.getAbsolutePath());
         }
 
         if(file.isDirectory()){
