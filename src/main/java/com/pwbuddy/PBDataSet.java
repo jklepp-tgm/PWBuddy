@@ -2,16 +2,19 @@ package com.pwbuddy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashSet;
 
 /**
  * @author Jakob Klepp
  * @since 2013-05-17
  */
-public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
+public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObservable<PBDataSet>{
     private PBDataSetModel dataSetModel;
     private JToggleButton toggle;
     private PBDataSetControl dataSetControl;
     private JLabel label;
+
+    private HashSet <IPBObserver<PBDataSet>> observers;
     public PBDataSet(String name){
         this.dataSetModel = new PBDataSetModel(this, name);
         this.setLayout(new BorderLayout());
@@ -25,6 +28,8 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
 
         this.dataSetControl = new PBDataSetControl(this);
         this.toggle.addActionListener(this.dataSetControl);
+
+        this.observers = new HashSet<IPBObserver<PBDataSet>>();
     }
 
     public PBDataSetModel getModel() {
@@ -86,5 +91,37 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>{
     @Override
     public int compareTo(PBDataSet o) {
         return this.getModel().compareTo(o.getModel());
+    }
+
+    /**
+     * Einen Observer hinzufügen
+     *
+     * @param observer welcher hinzugefügt werden soll
+     */
+    @Override
+    public void addPBObserver(IPBObserver observer) {
+        this.observers.add(observer);
+    }
+
+    /**
+     * Einen Observer entfernen
+     *
+     * @param observer welcher entfernt werden soll
+     */
+    @Override
+    public void removePBObserver(IPBObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    /**
+     * Alle Observer über ein Ereignis benachrichtigen
+     *
+     * @param eventType
+     */
+    @Override
+    public void notifyPBObservers(IPBObserver.PBEventType eventType) {
+        for(IPBObserver<PBDataSet> observer : this.observers){
+            observer.eventOcurred(this, eventType);
+        }
     }
 }
