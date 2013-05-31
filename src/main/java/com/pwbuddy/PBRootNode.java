@@ -1,5 +1,7 @@
 package com.pwbuddy;
 
+import argo.format.JsonFormatter;
+import argo.format.PrettyJsonFormatter;
 import argo.jdom.*;
 import argo.saj.InvalidSyntaxException;
 
@@ -23,8 +25,10 @@ import java.util.Map;
  * @author Jakob Klepp
  * @since 2013-05-31
  */
-public class PBRootNode extends AccessibleJsonNode {
+public class PBRootNode extends AccessibleJsonRootNode {
     private HashMap <JsonStringNode, JsonNode> fields;
+
+    private JsonFormatter jsonFormatter;
 
     private File file;
 
@@ -42,6 +46,8 @@ public class PBRootNode extends AccessibleJsonNode {
      */
     public PBRootNode(File file){
         this.file = file;
+
+        this.jsonFormatter = new PrettyJsonFormatter();
 
         String jsonString = null;
         try {
@@ -74,6 +80,13 @@ public class PBRootNode extends AccessibleJsonNode {
         }
 
         this.fields.putAll(rootNode.getFields());
+    }
+
+    /**
+     * Schreibt Json in File
+     */
+    public void flush(){
+        String json = this.jsonFormatter.format(this);
     }
 
     /**
