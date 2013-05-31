@@ -40,6 +40,7 @@ public class PBModel {
             this.jsonRootNode = jdomParser.parse(this.reader);
         } catch (InvalidSyntaxException e) {
             //json ungültig, erstelle backup des aktuellen json Dokument und erstelle eine valide json Struktur
+            System.out.println("Json Dokument hat eine ungültige Syntax. Ein neues Dokument wird erstellt.");
             //TODO json Backupen
 
             //default json Dokument erstellen.
