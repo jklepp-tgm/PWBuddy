@@ -45,6 +45,8 @@ public class PBRootNode extends AccessibleJsonRootNode {
      * @param file Daten werden aus diesen File eingelesen und in ebendieses geschrieben.
      */
     public PBRootNode(File file){
+        this.fields = new HashMap<JsonStringNode, JsonNode>();
+
         this.file = file;
 
         this.jsonFormatter = new PrettyJsonFormatter();

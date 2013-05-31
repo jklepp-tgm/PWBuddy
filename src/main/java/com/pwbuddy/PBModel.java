@@ -14,10 +14,7 @@ import java.util.PriorityQueue;
  */
 public class PBModel {
     private PriorityQueue<PBCategory> categories;
-    private JsonRootNode jsonRootNode;
-
-    private Reader reader;
-    private Writer writer;
+    private PBRootNode jsonRootNode;
 
     /** Sollte bei jeder änderung am Dokumenten Modell um 1 inkrementiert werden */
     public static final int JSON_DOCUMENT_VERSION = 2;
@@ -30,39 +27,7 @@ public class PBModel {
         super();
         this.categories = new PriorityQueue<PBCategory>();
 
-        this.reader = reader;
-        this.writer = writer;
-
-        JdomParser jdomParser = new JdomParser();
-
-        //Überprüfen ob Json gültig ist
-        try{
-            //json Objekt aus Reader laden
-            this.jsonRootNode = jdomParser.parse(this.reader);
-        } catch (InvalidSyntaxException e) {
-            //json ungültig, erstelle backup des aktuellen json Dokument und erstelle eine valide json Struktur
-            System.out.println("Json Dokument hat eine ungültige Syntax. Ein neues Dokument wird erstellt.");
-            //TODO json Backupen
-
-            //default json Dokument erstellen.
-            this.jsonRootNode = getDefaultJsonDocument();
-        } catch (IOException e) {
-            //Wenn der Reader Probleme macht
-            e.printStackTrace();
-            System.exit(1);
-        }
-
-        //Zustand des Json Dokuments in Datei schreiben
-        PrettyJsonFormatter jsonFormatter = new PrettyJsonFormatter();
-        String output = jsonFormatter.format(jsonRootNode);
-        try {
-            this.writer.write(output);
-            this.writer.flush();
-            System.out.println(output);
-        } catch (IOException e) {
-            //Im falle eines Problematischen writers
-            e.printStackTrace();
-        }
+        this.jsonRootNode = new PBRootNode(file);
 
         //TODO lösen von Versionskompatiblitätsproblemen
         //Version des Json Dokuments mit der unterstützten Version vergleichen
@@ -129,14 +94,6 @@ public class PBModel {
         addCategory(new PBCategory(categoryName));
     }
 
-    protected synchronized String elementID(){
-        int id = Integer.parseInt(this.jsonRootNode.getNumberValue("id_incrementer"));
-        String elementID = "id_" + id + "/";
-        ++id;
-        //Todo id änderung zurück ins json dokument schreiben
-        return elementID;
-    }
-
     /**
      * Gibt ein Array mit allen Kategorien zurück.
      *
@@ -144,66 +101,5 @@ public class PBModel {
      */
     public Iterator<PBCategory> iterator(){
         return categories.iterator();
-    }
-
-    public static Reader getDefaultReader(){
-        String filepath = DEFAULT_JSON_DOCUMENT_PATH;
-        FileReader fileReader = null;
-        boolean ersterDurchlauf = true;
-        while(fileReader == null){ //Wenn die Datei erst erstellt werden muss soll ein zweiter anlauf versucht werden
-            File file = new File(filepath);
-            if(file.isFile()){
-                if(file.canRead() && file.canWrite()){
-                    try {
-                        fileReader = new FileReader(file);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                } else { //Kann nicht gelesen oder geschrieben werden
-                    //Entsprechende Fehlermeldung ausgeben
-                    if(!file.canRead()){
-                        System.out.println("Datei: " + filepath + " kann nicht gelesen werden.");
-                    }
-                    if(!file.canWrite()){
-                        System.out.println("Datei: " + filepath + " kann nicht geschrieben werden.");
-                    }
-                    //Program beenden
-                    System.exit(1);
-                }
-            } else {
-                try {
-                    //Dateipfad erstellen
-                    File path = file.getParentFile();
-                    path.mkdirs();
-                    //Datei erstellen
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (ersterDurchlauf) {
-                    System.out.println("Datei: " + filepath + " existiert nicht. Wird erstellt.");
-                } else {
-                    System.exit(1);
-                }
-                ersterDurchlauf = false;
-            }
-        }
-
-        return fileReader;
-    }
-
-
-    public static Writer getDefaultWriter(){
-        //sicherstellen das die Datei existiert und sie den ansprüchen entsprechend zugreifbar ist.
-        getDefaultReader();
-        try {
-            FileWriter fileWriter = new FileWriter(DEFAULT_JSON_DOCUMENT_PATH);
-            return new BufferedWriter(fileWriter);
-        } catch (IOException e) {
-            //sollte nicht passieren
-            e.printStackTrace();
-            System.exit(1);
-            return null;
-        }
     }
 }
