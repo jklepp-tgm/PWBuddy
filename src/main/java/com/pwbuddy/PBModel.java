@@ -1,7 +1,5 @@
 package com.pwbuddy;
-import argo.format.PrettyJsonFormatter;
 import argo.jdom.*;
-import argo.saj.InvalidSyntaxException;
 
 import java.io.*;
 import java.util.Iterator;
