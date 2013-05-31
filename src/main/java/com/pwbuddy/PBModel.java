@@ -147,7 +147,7 @@ public class PBModel {
         return categories.iterator();
     }
 
-    public static FileReader getDefaultReader(){
+    public static Reader getDefaultReader(){
         String filepath = DEFAULT_JSON_DOCUMENT_PATH;
         FileReader fileReader = null;
         boolean ersterDurchlauf = true;
@@ -193,7 +193,8 @@ public class PBModel {
         return fileReader;
     }
 
-    public static BufferedWriter getDefaultWriter(){
+
+    public static Writer getDefaultWriter(){
         //sicherstellen das die Datei existiert und sie den ansprüchen entsprechend zugreifbar ist.
         getDefaultReader();
         try {
