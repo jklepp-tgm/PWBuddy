@@ -76,8 +76,7 @@ public class PBModel {
         List <JsonNode> dataSetsList = dataSetsNode.getArrayNode();
 
         //Über nodes in dataSetsNode iterieren um DataSet und Category Objekte zu erzeugen
-        for(Iterator<JsonNode> dataSetsIterator = dataSetsList.iterator(); dataSetsIterator.hasNext(); ){
-            JsonNode dataSetNode = dataSetsIterator.next();
+        for (JsonNode dataSetNode : dataSetsList) {
             String categoryName = dataSetNode.getStringValue("Category");
 
             //Wird noch gefunden oder erzeugt.
@@ -85,9 +84,8 @@ public class PBModel {
 
             //Überprüfen ob die Category des aktuellen DataSet bereits existiert
             boolean namedCategoryExists = false;
-            for(Iterator <PBCategory> categoryIterator = this.categories.iterator(); categoryIterator.hasNext();){
-                PBCategory category = categoryIterator.next();
-                if(category.getModel().getName().equals(categoryName)){
+            for (PBCategory category : this.categories) {
+                if (category.getModel().getName().equals(categoryName)) {
                     namedCategoryExists = true;
                     pbCategory = category;
                     break;
@@ -95,7 +93,7 @@ public class PBModel {
             }
 
             //Falls die Category noch nicht existiert
-            if(!namedCategoryExists){
+            if (!namedCategoryExists) {
                 //Category hinzufügen
                 pbCategory = new PBCategory(categoryName);
                 this.addCategory(pbCategory);

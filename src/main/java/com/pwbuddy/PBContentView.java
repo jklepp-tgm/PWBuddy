@@ -37,9 +37,7 @@ public class PBContentView extends JPanel {
 
             //Wenn eine categorie geöffnet ist soll auch ihr Inhalt gezeichnet werden
             if(category.getModel().isOpened()){
-                for(Iterator<PBDataSet> dataSetIterator = category.getModel().iterator(); dataSetIterator.hasNext();){
-                    PBDataSet dataSet = dataSetIterator.next();
-
+                for (PBDataSet dataSet : category.getModel()) {
                     //zum scrollPane hinzufügen
                     this.add(dataSet);
                 }
