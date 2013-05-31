@@ -26,7 +26,8 @@ public class PBModel {
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
 
     //ToDo node.has und node.is verwenden um unkontrollierte Abstürze zu vermeiden sollte das json Dokument invalid sein
-    public PBModel(Reader reader, Writer writer){
+    public PBModel(File file){
+        super();
         this.categories = new PriorityQueue<PBCategory>();
 
         this.reader = reader;
@@ -107,7 +108,7 @@ public class PBModel {
     }
 
     public PBModel(){
-        this(getDefaultReader(), getDefaultWriter());
+        this(new File(DEFAULT_JSON_DOCUMENT_PATH));
     }
 
     /**
@@ -204,22 +205,5 @@ public class PBModel {
             System.exit(1);
             return null;
         }
-    }
-
-    /**
-     * Erstellt die Struktur eines Jsondokuments für den Fall das
-     * ein Dokuent eine ungültige Struktur hat.
-     *
-     * @return Gültiges Json Dokument mit der benötigten Struktur;
-     */
-    public static JsonRootNode getDefaultJsonDocument(){
-        JsonObjectNodeBuilder builder;
-        builder = JsonNodeBuilders.anObjectBuilder();
-
-        builder.withField("DataSets", JsonNodeBuilders.anArrayBuilder());
-        builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + JSON_DOCUMENT_VERSION));
-
-        JsonRootNode node = builder.build();
-        return node;
     }
 }

@@ -1,9 +1,18 @@
 package com.pwbuddy;
 
 import argo.jdom.*;
+import argo.saj.InvalidSyntaxException;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +24,16 @@ import java.util.Map;
  * @since 2013-05-31
  */
 public class PBRootNode extends AccessibleJsonNode {
+    private HashMap <JsonStringNode, JsonNode> fields;
+
+    private File file;
+
+    /**
+     * Es gibt viele Schreibzugriffe deshalb sollte nicht jedes mal ein neuer writer erstellt werden müssen
+     * Wird von writerStringToFile erzeugt und benutzt
+     */
+    private BufferedWriter bufferedWriter;
+
     /** Soll nicht verwendet werden */
     protected PBRootNode(){}
 
@@ -22,7 +41,127 @@ public class PBRootNode extends AccessibleJsonNode {
      * @param file Daten werden aus diesen File eingelesen und in ebendieses geschrieben.
      */
     public PBRootNode(File file){
+        this.file = file;
 
+        String jsonString = null;
+        try {
+            jsonString = readFileContent(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JsonRootNode defaultRootNode = this.getDefaultJsonDocument();
+        JsonRootNode rootNode;
+
+        if(jsonString == null || jsonString.equals("")){
+            rootNode = defaultRootNode;
+        } else {
+            JdomParser jdomParser = new JdomParser();
+            try {
+                rootNode = jdomParser.parse(jsonString);
+            } catch (InvalidSyntaxException e) {
+                //e.printStackTrace();
+                Timestamp tstamp = new Timestamp(System.currentTimeMillis());
+                File newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
+                System.out.println("Json Dokument ungültig, default Dokument wird verwendet. Aktuelles Dokument wir nach " + newFile + "verschoben.");
+                try {
+                    Files.move(Paths.get(this.file.toURI()), Paths.get(newFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+                rootNode = defaultRootNode;
+            }
+        }
+
+        this.fields.putAll(rootNode.getFields());
+    }
+
+    /**
+     * Schreibt den Inhalt von string in file
+     *
+     * @param file Zieldatei
+     * @param string Zeug was geschrieben werden soll.
+     * @throws IOException Wenn die Datei nicht beschrieben werden kann | die Datei ein Verzeichnis ist |
+     * die Datei nicht existiert und es Probleme beim erstellen gibt
+     */
+    private void writeStringToFile(File file, String string) throws IOException {
+        if(!file.canWrite()){
+            throw new AccessDeniedException(file.getAbsolutePath());
+        }
+
+        if(!file.exists()){
+            //Dateipfad erstellen
+            File path = file.getParentFile();
+            path.mkdirs();
+            //Datei erstellen
+            file.createNewFile();
+        }
+
+        if(file.isDirectory()){
+            throw new IOException(file.getAbsolutePath() + " ist ein Verzeichnis.");
+        }
+
+        //String --> File; Wenn es sich beim file um this.file handelt soll der default writer verwendet werden
+        BufferedWriter writer = null;
+        if(file == this.file){
+            if(this.bufferedWriter == null){
+                FileWriter fileWriter = new FileWriter(file);
+                this.bufferedWriter = new BufferedWriter(fileWriter);
+            }
+            writer = this.bufferedWriter;
+        } else {
+            FileWriter fileWriter = new FileWriter(file);
+            writer = new BufferedWriter(fileWriter);
+        }
+        writer.write(string);
+        writer.flush();
+
+        if(file != this.file){
+            writer.close();
+        }
+    }
+
+    /**
+     * Liest den Inhalt von file aus
+     *
+     * @param file Datei welche ausgelesen werden soll
+     * @return Inhalt von file
+     * @throws IOException Wenn die Datei nicht existiert | sie ein Verzeichnis ist | nicht gelesen werden kann
+     */
+    private String readFileContent(File file) throws IOException {
+        if(!file.exists()){
+            throw new NoSuchFileException(file.getAbsolutePath());
+        }
+
+        if(file.isDirectory()){
+            throw new IOException(file.getAbsolutePath() + " ist ein Verzeichnis.");
+        }
+
+        if(!file.canRead()){
+            throw new AccessDeniedException(file.getAbsolutePath());
+        }
+
+        byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+        String fileContent = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encoded)).toString();
+
+        return fileContent;
+    }
+
+    /**
+     * Erstellt die Struktur eines Jsondokuments für den Fall das
+     * ein Dokuent eine ungültige Struktur hat.
+     *
+     * @return Gültiges Json Dokument mit der benötigten Struktur;
+     */
+    public JsonRootNode getDefaultJsonDocument(){
+        JsonObjectNodeBuilder builder;
+        builder = JsonNodeBuilders.anObjectBuilder();
+
+        builder.withField("DataSets", JsonNodeBuilders.anArrayBuilder());
+        builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + PBModel.JSON_DOCUMENT_VERSION));
+
+        JsonRootNode node = builder.build();
+        return node;
     }
 
     /**
@@ -70,7 +209,7 @@ public class PBRootNode extends AccessibleJsonNode {
      */
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.fields;
     }
 
     /**
@@ -83,7 +222,13 @@ public class PBRootNode extends AccessibleJsonNode {
      */
     @Override
     public List<JsonField> getFieldList() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        ArrayList <JsonField> fieldList = new ArrayList<JsonField>();
+
+        //Fields aus den Map.Entries zusammensetzten und zur fieldList hinzufügen
+        for(Map.Entry <JsonStringNode, JsonNode> fieldEntry : this.getFields().entrySet()){
+            fieldList.add(new JsonField(fieldEntry.getKey(), fieldEntry.getValue()));
+        }
+        return new ArrayList<JsonField>();
     }
 
     /**
