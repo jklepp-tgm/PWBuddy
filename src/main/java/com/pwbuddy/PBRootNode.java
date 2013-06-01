@@ -45,9 +45,15 @@ public class PBRootNode extends AccessibleJsonRootNode {
 
         this.jsonFormatter = new PrettyJsonFormatter();
 
+        //Eine mögliche no such file exception soll vermerkt werden
+        //Sie währe ein Grund eine neue Datei zu erstellen
+        boolean noSuchFile = false;
+
         String jsonString = null;
         try {
             jsonString = readFileContent(file);
+        } catch (NoSuchFileException e){
+            noSuchFile = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,7 +61,9 @@ public class PBRootNode extends AccessibleJsonRootNode {
         JsonRootNode defaultRootNode = this.getDefaultJsonDocument();
         JsonRootNode rootNode;
 
-        if(jsonString == null || jsonString.equals("")){
+
+
+        if(jsonString == null || jsonString.equals("") || noSuchFile){
             rootNode = defaultRootNode;
         } else {
             JdomParser jdomParser = new JdomParser();
@@ -82,6 +90,9 @@ public class PBRootNode extends AccessibleJsonRootNode {
 
     /**
      * Schreibt Json in File
+     *
+     * ToDo herausfinden warum anstatt des richtigen Jsondokuments nur {} geschrieben wird
+     * ToDo fixen
      */
     public void flush(){
         String json = this.jsonFormatter.format(this);
