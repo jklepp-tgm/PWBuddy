@@ -85,7 +85,9 @@ public class PBRootNode extends AccessibleJsonRootNode {
         //Überprüfen ob das Json Objekt eine ArrayNode "DataSets" hat
         JsonField dataSetsField = this.getField("DataSets");
         if(dataSetsField == null){
-            //Wenn nicht "DataSets"; node erstellen
+            //ArrayNode aus defaultRootNode kopieren
+            JsonNode dataSetsArrayNode = defaultRootNode.getNode(dataSetsField.getName());
+            this.getFields().put(dataSetsField.getName(), dataSetsArrayNode);
 
         } else if(!dataSetsField.getValue().isArrayNode()){
             //Wenn DataSets node keine Arraynode ist
@@ -348,5 +350,16 @@ public class PBRootNode extends AccessibleJsonRootNode {
             nodes.add(entry.getValue());
         }
         return nodes;
+    }
+
+    public class PBDataSetsArrayNode extends AccessibleAbstractJsonArray {
+        /**
+         * @return the elements associated with this node
+         * @throws IllegalStateException if hasElements() returns false, indicating this type of node doesn't support elements.
+         */
+        @Override
+        public List<JsonNode> getElements() {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
     }
 }
