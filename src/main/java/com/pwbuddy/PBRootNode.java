@@ -87,6 +87,12 @@ public class PBRootNode extends AccessibleJsonRootNode {
             }
         }
 
+        //Überprüfen ob das Json Objekt eine ArrayNode "DataSets" hat
+        //Wenn nicht "DataSets" node erstellen
+
+        //Überprüfen ob Json Objekt eine "Version" Node hat
+        //Überprüfen ob "Version" Node mit der aktuellen Version übereinstimmt
+
         this.fields.putAll(rootNode.getFields());
 
         this.flush();
