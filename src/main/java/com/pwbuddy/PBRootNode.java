@@ -83,11 +83,35 @@ public class PBRootNode extends AccessibleJsonRootNode {
         }
 
         //Überprüfen ob das Json Objekt eine ArrayNode "DataSets" hat
+        JsonField dataSetsField = this.getField("DataSets");
+        if(dataSetsField == null){
+            //Wenn nicht "DataSets"; node erstellen
 
-        //Wenn nicht "DataSets" node erstellen
+        } else if(!dataSetsField.getValue().isArrayNode()){
+            //Wenn DataSets node keine Arraynode ist
+            //backup erstellen
+            this.backupJsonDokument();
+            //entfernen
+            this.getFields().remove(dataSetsField.getName());
+            //ArrayNode aus defaultRootNode kopieren
+            JsonNode dataSetsArrayNode = defaultRootNode.getNode(dataSetsField.getName());
+            this.getFields().put(dataSetsField.getName(), dataSetsArrayNode);
+        }
 
         //Überprüfen ob Json Objekt eine "Version" Node hat
-        //Überprüfen ob "Version" Node mit der aktuellen Version übereinstimmt
+        JsonField versionField = this.getField("Version");
+        if(versionField == null){
+            System.out.println("Version Field existiert nicht, verwendung auf eigene Gefahr.");
+            backupJsonDokument();
+        } else {
+            //Überprüfen ob "Version" Node mit der aktuellen Version übereinstimmt
+            if(versionField.getValue().isNumberValue() && Integer.parseInt(versionField.getValue().getNumberValue()) == PBModel.JSON_DOCUMENT_VERSION){
+
+            } else {
+                System.out.println("Json Dokument hat die Falsche Version, verwendung auf eigene Gefahr.");
+                backupJsonDokument();
+            }
+        }
 
         this.fields.putAll(rootNode.getFields());
 
