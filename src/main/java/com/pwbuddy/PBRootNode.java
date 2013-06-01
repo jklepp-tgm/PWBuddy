@@ -86,10 +86,10 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
         }
 
         this.dataSetsArrayNodeName = JsonNodeFactories.string("DataSets");
-        this.dataSetsArrayNode = new PBDataSetsArrayNode(rootNode.getArrayNode(this.dataSetsArrayNodeName));
+        this.dataSetsArrayNode = new PBDataSetsArrayNode(rootNode.getArrayNode(this.dataSetsArrayNodeName.getText()));
 
         this.versionName = JsonNodeFactories.string("Version");
-        this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName));
+        this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName.getText()));
 
         this.flush();
     }
