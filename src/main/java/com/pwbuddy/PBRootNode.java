@@ -96,9 +96,6 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
 
     /**
      * Schreibt Json in File
-     *
-     * ToDo herausfinden warum anstatt des richtigen Jsondokuments nur {} geschrieben wird
-     * ToDo fixen
      */
     public void flush(){
         String json = this.jsonFormatter.format(this);

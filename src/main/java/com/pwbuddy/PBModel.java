@@ -20,7 +20,6 @@ public class PBModel {
     /** Der Dateipfad welcher im Normalfall verwendet werden soll */
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
 
-    //ToDo node.has und node.is verwenden um unkontrollierte Abstürze zu vermeiden sollte das json Dokument invalid sein
     public PBModel(File file){
         super();
         this.categories = new PriorityQueue<PBCategory>();
