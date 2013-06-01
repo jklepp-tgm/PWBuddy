@@ -42,6 +42,7 @@ public class PBEncryptionCore {
         }
         catch (Exception e)
         {
+            // ToDo schönere Lösung
             e.printStackTrace();
         }
     }

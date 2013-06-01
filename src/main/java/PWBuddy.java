@@ -9,5 +9,6 @@ import com.pwbuddy.PBFrame;
 public class PWBuddy {
     public static void main(String [] args){
         new PBFrame();
+
     }
 }
