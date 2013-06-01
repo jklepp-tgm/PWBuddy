@@ -74,20 +74,16 @@ public class PBRootNode extends AccessibleJsonRootNode {
             } catch (InvalidSyntaxException e) {
                 //Json Dokument ist ungültig
                 //Backup erstellen
-                Timestamp tstamp = new Timestamp(System.currentTimeMillis());
-                File newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
+                File newFile = backupJsonDokument();
                 System.out.println("Json Dokument ungültig, default Dokument wird verwendet. Aktuelles Dokument wir nach " + newFile + "verschoben.");
-                try {
-                    Files.move(Paths.get(this.file.toURI()), Paths.get(newFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+
                 //Neues erstellen
                 rootNode = defaultRootNode;
             }
         }
 
         //Überprüfen ob das Json Objekt eine ArrayNode "DataSets" hat
+
         //Wenn nicht "DataSets" node erstellen
 
         //Überprüfen ob Json Objekt eine "Version" Node hat
@@ -111,6 +107,29 @@ public class PBRootNode extends AccessibleJsonRootNode {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Kopiert die Json Dokumentdatei nach *alter Pfad*.*Timestamp*
+     *
+     * @return Ort wo backup erstellt wurde, null wenn kein backup erstellt werden konnte
+     */
+    public File backupJsonDokument(){
+        Timestamp tstamp = new Timestamp(System.currentTimeMillis());
+        File newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
+        boolean problemLos = false;
+        while(!problemLos){
+            try {
+                Files.copy(this.file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                problemLos = true;
+            } catch (FileAlreadyExistsException | DirectoryNotEmptyException e) {
+                tstamp = new Timestamp(System.currentTimeMillis());
+                newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
+            } catch (IOException ioe) {
+                return null;
+            }
+        }
+        return newFile;
     }
 
     /**
@@ -182,6 +201,15 @@ public class PBRootNode extends AccessibleJsonRootNode {
         String fileContent = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encoded)).toString();
 
         return fileContent;
+    }
+
+    public boolean hasField(String name){
+        for(JsonField field : this.getFieldList()){
+            if(field.getName().getText().equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
