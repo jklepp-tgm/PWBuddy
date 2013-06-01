@@ -19,7 +19,7 @@ import java.util.*;
  * @author Jakob Klepp
  * @since 2013-05-31
  */
-public class PBRootNode extends AccessibleJsonRootNode {
+public class PBRootNode extends AccessibleAbstractJsonObject {
     private HashMap <JsonStringNode, JsonNode> fields;
 
     private JsonFormatter jsonFormatter;
@@ -262,41 +262,6 @@ public class PBRootNode extends AccessibleJsonRootNode {
     }
 
     /**
-     * @return OBJECT
-     */
-    @Override
-    public JsonNodeType getType() {
-        return JsonNodeType.OBJECT;
-    }
-
-    /**
-     * k.T.
-     * @return false
-     */
-    @Override
-    public boolean hasText() {
-        return false;
-    }
-
-    /**
-     * @return the text associated with this node
-     * @throws IllegalStateException if hasText() returns false, indicating this type of node doesn't have text.
-     */
-    @Override
-    public String getText() {
-        throw new IllegalStateException("Nope, kein Text");
-    }
-
-    /**
-     * Ja hats wenn auch vielleicht 0
-     * @return true
-     */
-    @Override
-    public boolean hasFields() {
-        return true;
-    }
-
-    /**
      * Gets the fields associated with this node as a map of name to value.  Note that JSON permits
      * duplicated keys in an object, though in practice this is rare, and in this case, this method
      * will return a map containing a single entry of each unique key.
@@ -326,30 +291,6 @@ public class PBRootNode extends AccessibleJsonRootNode {
             fieldList.add(new JsonField(fieldEntry.getKey(), fieldEntry.getValue()));
         }
         return fieldList;
-    }
-
-    /**
-     * Ja hats wenn auch vielleicht 0
-     * @return true
-     */
-    @Override
-    public boolean hasElements() {
-        return true;
-    }
-
-    /**
-     * Keine Garantie für Ordnung oder Unordnung
-     *
-     * @return the elements associated with this node
-     * @throws IllegalStateException if hasElements() returns false, indicating this type of node doesn't support elements.
-     */
-    @Override
-    public List<JsonNode> getElements() {
-        ArrayList <JsonNode> nodes= new ArrayList<JsonNode>();
-        for(Map.Entry <JsonStringNode, JsonNode> entry : this.getFields().entrySet()) {
-            nodes.add(entry.getValue());
-        }
-        return nodes;
     }
 
     public class PBDataSetsArrayNode extends AccessibleAbstractJsonArray {
