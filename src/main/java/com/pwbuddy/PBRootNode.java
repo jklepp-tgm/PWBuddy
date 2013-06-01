@@ -5,18 +5,12 @@ import argo.format.PrettyJsonFormatter;
 import argo.jdom.*;
 import argo.saj.InvalidSyntaxException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Eine JsonRootNode an den Bedarf von PWBuddy zugeschnitten.
