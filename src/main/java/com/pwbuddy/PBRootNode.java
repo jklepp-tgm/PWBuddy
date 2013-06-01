@@ -255,7 +255,7 @@ public class PBRootNode extends AccessibleJsonRootNode {
         for(Map.Entry <JsonStringNode, JsonNode> fieldEntry : this.getFields().entrySet()){
             fieldList.add(new JsonField(fieldEntry.getKey(), fieldEntry.getValue()));
         }
-        return new ArrayList<JsonField>();
+        return fieldList;
     }
 
     /**
