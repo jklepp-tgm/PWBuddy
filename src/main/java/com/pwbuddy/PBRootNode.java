@@ -64,13 +64,16 @@ public class PBRootNode extends AccessibleJsonRootNode {
 
 
         if(jsonString == null || jsonString.equals("") || noSuchFile){
+            //Json Dokument gibt nix her, neues erstellen
             rootNode = defaultRootNode;
         } else {
             JdomParser jdomParser = new JdomParser();
             try {
+                //Versuchen Json Dokument zu parsen
                 rootNode = jdomParser.parse(jsonString);
             } catch (InvalidSyntaxException e) {
-                //e.printStackTrace();
+                //Json Dokument ist ungültig
+                //Backup erstellen
                 Timestamp tstamp = new Timestamp(System.currentTimeMillis());
                 File newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
                 System.out.println("Json Dokument ungültig, default Dokument wird verwendet. Aktuelles Dokument wir nach " + newFile + "verschoben.");
@@ -79,6 +82,7 @@ public class PBRootNode extends AccessibleJsonRootNode {
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 }
+                //Neues erstellen
                 rootNode = defaultRootNode;
             }
         }
