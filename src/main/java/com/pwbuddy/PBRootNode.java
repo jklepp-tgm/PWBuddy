@@ -204,18 +204,18 @@ public class PBRootNode extends AccessibleJsonRootNode {
     }
 
     /**
-     * Überprüft ob ein Field mit dem bestimmten Namen existiert
+     * Sucht ein Field mit einen bestimmten Namen
      *
      * @param name gesuchter Name
-     * @return true wenn fundhaft
+     * @return field wenn Fundhaft, null wenn nicht
      */
-    public boolean hasField(String name){
+    public JsonField getField(String name){
         for(JsonField field : this.getFieldList()){
             if(field.getName().getText().equals(name)){
-                return true;
+                return field;
             }
         }
-        return false;
+        return null;
     }
 
     /**
