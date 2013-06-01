@@ -20,7 +20,11 @@ import java.util.*;
  * @since 2013-05-31
  */
 public class PBRootNode extends AccessibleAbstractJsonObject {
-    private HashMap <JsonStringNode, JsonNode> fields;
+    private PBDataSetsArrayNode dataSetsArrayNode;
+    private JsonStringNode dataSetsArrayNodeName;
+
+    private JsonNode version;
+    private JsonStringNode versionName;
 
     private JsonFormatter jsonFormatter;
 
@@ -39,7 +43,6 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
      * @param file Daten werden aus diesen File eingelesen und in ebendieses geschrieben.
      */
     public PBRootNode(File file){
-        this.fields = new HashMap<JsonStringNode, JsonNode>();
 
         this.file = file;
 
@@ -82,40 +85,11 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
             }
         }
 
-        //Überprüfen ob das Json Objekt eine ArrayNode "DataSets" hat
-        JsonField dataSetsField = this.getField("DataSets");
-        if(dataSetsField == null){
-            //ArrayNode aus defaultRootNode kopieren
-            JsonNode dataSetsArrayNode = defaultRootNode.getNode(dataSetsField.getName());
-            this.getFields().put(dataSetsField.getName(), dataSetsArrayNode);
+        this.dataSetsArrayNodeName = JsonNodeFactories.string("DataSets");
+        this.dataSetsArrayNode = new PBDataSetsArrayNode(rootNode.getArrayNode(this.dataSetsArrayNodeName));
 
-        } else if(!dataSetsField.getValue().isArrayNode()){
-            //Wenn DataSets node keine Arraynode ist
-            //backup erstellen
-            this.backupJsonDokument();
-            //entfernen
-            this.getFields().remove(dataSetsField.getName());
-            //ArrayNode aus defaultRootNode kopieren
-            JsonNode dataSetsArrayNode = defaultRootNode.getNode(dataSetsField.getName());
-            this.getFields().put(dataSetsField.getName(), dataSetsArrayNode);
-        }
-
-        //Überprüfen ob Json Objekt eine "Version" Node hat
-        JsonField versionField = this.getField("Version");
-        if(versionField == null){
-            System.out.println("Version Field existiert nicht, verwendung auf eigene Gefahr.");
-            backupJsonDokument();
-        } else {
-            //Überprüfen ob "Version" Node mit der aktuellen Version übereinstimmt
-            if(versionField.getValue().isNumberValue() && Integer.parseInt(versionField.getValue().getNumberValue()) == PBModel.JSON_DOCUMENT_VERSION){
-
-            } else {
-                System.out.println("Json Dokument hat die Falsche Version, verwendung auf eigene Gefahr.");
-                backupJsonDokument();
-            }
-        }
-
-        this.fields.putAll(rootNode.getFields());
+        this.versionName = JsonNodeFactories.string("Version");
+        this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName));
 
         this.flush();
     }
@@ -230,21 +204,6 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
     }
 
     /**
-     * Sucht ein Field mit einen bestimmten Namen
-     *
-     * @param name gesuchter Name
-     * @return field wenn Fundhaft, null wenn nicht
-     */
-    public JsonField getField(String name){
-        for(JsonField field : this.getFieldList()){
-            if(field.getName().getText().equals(name)){
-                return field;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Erstellt die Struktur eines Jsondokuments für den Fall das
      * ein Dokuent eine ungültige Struktur hat.
      *
@@ -271,7 +230,11 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
      */
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
-        return this.fields;
+        HashMap <JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
+        //Muss im falle einer Dokumentstruckturänderung geändert werden.
+        fields.put(this.dataSetsArrayNodeName, this.dataSetsArrayNode);
+        fields.put(this.versionName, this.version);
+        return fields;
     }
 
     /**
@@ -294,13 +257,33 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
     }
 
     public class PBDataSetsArrayNode extends AccessibleAbstractJsonArray {
+        private ArrayList <JsonNode> elements;
+
+        /**
+         * ArrayNode mit einer List befüllen
+         * gut als "Kopierkonstruktor" geeignet um Daten von einer anderen ArrayNode zu übertragen
+         *
+         * @param elements Liste mit Elementen
+         */
+        public PBDataSetsArrayNode(Collection <JsonNode> elements){
+            this.elements = new ArrayList<JsonNode>();
+            this.elements.addAll(elements);
+        }
+
+        /**
+         * @see ArrayList#add(Object)
+         */
+        public boolean addElement(JsonNode element){
+            return this.elements.add(element);
+        }
+
         /**
          * @return the elements associated with this node
          * @throws IllegalStateException if hasElements() returns false, indicating this type of node doesn't support elements.
          */
         @Override
         public List<JsonNode> getElements() {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return this.elements;
         }
     }
 }
