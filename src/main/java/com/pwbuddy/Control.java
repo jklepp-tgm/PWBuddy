@@ -7,11 +7,11 @@ import java.awt.event.ActionListener;
  * @author Jakob Klepp
  * @since 2013-04-09
  */
-public class PBControl implements ActionListener{
-    PBModel m;
-    PBView v;
+public class Control implements ActionListener{
+    Model m;
+    View v;
 
-    public PBControl(PBModel m, PBView v) {
+    public Control(Model m, View v) {
         this.m = m;
         this.v = v;
     }

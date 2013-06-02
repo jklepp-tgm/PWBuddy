@@ -4,14 +4,14 @@ package com.pwbuddy;
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class PBDataSetModel implements Comparable <PBDataSetModel> {
+public class DataSetModel implements Comparable <DataSetModel> {
     private int lineCount;
 
-    private PBDataSet dataSet;
+    private DataSet dataSet;
 
     private String name;
 
-    public PBDataSetModel(PBDataSet dataSet, String name){
+    public DataSetModel(DataSet dataSet, String name){
         this.dataSet = dataSet;
         this.name = name;
         this.lineCount = 1;
@@ -49,7 +49,7 @@ public class PBDataSetModel implements Comparable <PBDataSetModel> {
         this.name = name;
     }
 
-    protected PBDataSet getDataSet() {
+    protected DataSet getDataSet() {
         return dataSet;
     }
 
@@ -92,7 +92,7 @@ public class PBDataSetModel implements Comparable <PBDataSetModel> {
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBDataSetModel o) {
+    public int compareTo(DataSetModel o) {
         return this.getName().compareTo(o.getName());
     }
 }

@@ -19,7 +19,7 @@ import java.util.*;
  * @author Jakob Klepp
  * @since 2013-05-31
  */
-public class PBRootNode extends AccessibleAbstractJsonObject {
+public class RootNode extends AccessibleAbstractJsonObject {
     private PBDataSetsArrayNode dataSetsArrayNode;
     private JsonStringNode dataSetsArrayNodeName;
 
@@ -37,12 +37,12 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
     private BufferedWriter bufferedWriter;
 
     /** Soll nicht verwendet werden */
-    protected PBRootNode(){}
+    protected RootNode(){}
 
     /**
      * @param file Daten werden aus diesen File eingelesen und in ebendieses geschrieben.
      */
-    public PBRootNode(File file){
+    public RootNode(File file){
 
         this.file = file;
 
@@ -211,7 +211,7 @@ public class PBRootNode extends AccessibleAbstractJsonObject {
         builder = JsonNodeBuilders.anObjectBuilder();
 
         builder.withField("DataSets", JsonNodeBuilders.anArrayBuilder());
-        builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + PBModel.JSON_DOCUMENT_VERSION));
+        builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + Model.JSON_DOCUMENT_VERSION));
 
         JsonRootNode node = builder.build();
         return node;

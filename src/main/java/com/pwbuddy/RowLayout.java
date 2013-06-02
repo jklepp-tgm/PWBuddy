@@ -7,13 +7,13 @@ import java.util.HashMap;
  * @author Jakob Klepp
  * @since 2013-05-23
  */
-public class PBRowLayout implements LayoutManager {
+public class RowLayout implements LayoutManager {
     /**
      * @see #addLayoutComponent(String, java.awt.Component)
      */
     private HashMap <Component, String> compNameMap;
 
-    public PBRowLayout(){
+    public RowLayout(){
         this.compNameMap = new HashMap<Component, String>();
     }
 

@@ -11,10 +11,10 @@ import java.util.Set;
  * @author Jakob Klepp
  * @since 2013-06-02
  */
-public class PBDataSetInputPanel extends JPanel {
+public class DataSetInputPanel extends JPanel {
     private HashMap<JLabel, JTextField> inputs;
 
-    public PBDataSetInputPanel(){
+    public DataSetInputPanel(){
         this(new HashSet<String>() {{
             this.add("Website");
             this.add("Username");
@@ -24,7 +24,7 @@ public class PBDataSetInputPanel extends JPanel {
         }});
     }
 
-    public PBDataSetInputPanel(Set<String> inputNames){
+    public DataSetInputPanel(Set<String> inputNames){
         this.inputs = new HashMap<JLabel, JTextField>();
         this.setLayout(new GridLayout(0, 2, 2, 2));
         for(String inputName : inputNames){

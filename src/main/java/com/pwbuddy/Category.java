@@ -7,23 +7,23 @@ import java.awt.*;
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class PBCategory extends JPanel implements Comparable<PBCategory>{
-    private PBCategoryModel categoryModel;
+public class Category extends JPanel implements Comparable<Category>{
+    private CategoryModel categoryModel;
     private JToggleButton toggle;
-    private PBCategoryControl categoryControl;
-    public PBCategory(String name) {
+    private CategoryControl categoryControl;
+    public Category(String name) {
         this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
-        this.categoryModel = new PBCategoryModel(this, name);
+        this.categoryModel = new CategoryModel(this, name);
         this.setLayout(new BorderLayout());
 
         this.toggle = new JToggleButton(this.getModel().getName());
         this.add(this.toggle, BorderLayout.CENTER);
 
-        this.categoryControl = new PBCategoryControl(this);
+        this.categoryControl = new CategoryControl(this);
         this.toggle.addActionListener(this.categoryControl);
     }
 
-    public PBCategoryModel getModel() {
+    public CategoryModel getModel() {
         return categoryModel;
     }
 
@@ -34,7 +34,7 @@ public class PBCategory extends JPanel implements Comparable<PBCategory>{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Container contentView = SwingUtilities.getAncestorOfClass(PBContentView.class, this); //etwas unschön
+        Container contentView = SwingUtilities.getAncestorOfClass(ContentView.class, this); //etwas unschön
         if(contentView != null){
             contentView.revalidate();
             contentView.repaint();
@@ -80,7 +80,7 @@ public class PBCategory extends JPanel implements Comparable<PBCategory>{
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBCategory o) {
+    public int compareTo(Category o) {
         return this.getModel().compareTo(o.getModel());
     }
 }

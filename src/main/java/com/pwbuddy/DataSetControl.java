@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
  * @author Jakob Klepp
  * @since 2013-05-26
  */
-public class PBDataSetControl implements ActionListener {
-    private PBDataSet dataSet;
+public class DataSetControl implements ActionListener {
+    private DataSet dataSet;
 
-    public PBDataSetControl(PBDataSet dataSet){
+    public DataSetControl(DataSet dataSet){
         this.dataSet = dataSet;
     }
 

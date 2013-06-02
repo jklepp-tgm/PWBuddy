@@ -11,9 +11,9 @@ import java.util.PriorityQueue;
  * @author Jakob Klepp
  * @since 2013-04-09
  */
-public class PBModel {
-    private PriorityQueue<PBCategory> categories;
-    private PBRootNode jsonRootNode;
+public class Model {
+    private PriorityQueue<Category> categories;
+    private RootNode jsonRootNode;
 
     /** Sollte bei jeder änderung am Dokumenten Modell um 1 inkrementiert werden */
     public static final int JSON_DOCUMENT_VERSION = 2;
@@ -21,11 +21,11 @@ public class PBModel {
     /** Der Dateipfad welcher im Normalfall verwendet werden soll */
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
 
-    public PBModel(File file){
+    public Model(File file){
         super();
-        this.categories = new PriorityQueue<PBCategory>();
+        this.categories = new PriorityQueue<Category>();
 
-        this.jsonRootNode = new PBRootNode(file);
+        this.jsonRootNode = new RootNode(file);
 
         //TODO lösen von Versionskompatiblitätsproblemen
         //Version des Json Dokuments mit der unterstützten Version vergleichen
@@ -44,11 +44,11 @@ public class PBModel {
             String categoryName = dataSetNode.getStringValue("Category");
 
             //Wird noch gefunden oder erzeugt.
-            PBCategory pbCategory = null;
+            Category pbCategory = null;
 
             //Überprüfen ob die Category des aktuellen DataSet bereits existiert
             boolean namedCategoryExists = false;
-            for (PBCategory category : this.categories) {
+            for (Category category : this.categories) {
                 if (category.getModel().getName().equals(categoryName)) {
                     namedCategoryExists = true;
                     pbCategory = category;
@@ -59,18 +59,18 @@ public class PBModel {
             //Falls die Category noch nicht existiert
             if (!namedCategoryExists) {
                 //Category hinzufügen
-                pbCategory = new PBCategory(categoryName);
+                pbCategory = new Category(categoryName);
                 this.addCategory(pbCategory);
             }
 
             //DataSet Objekt erzeugen und zur passenden Category hinzufügen
             String dataSetName = dataSetNode.getStringValue("Title");
-            PBDataSet pbDataSet = new PBDataSet(dataSetName);
+            DataSet pbDataSet = new DataSet(dataSetName);
             pbCategory.getModel().add(pbDataSet);
         }
     }
 
-    public PBModel(){
+    public Model(){
         this(new File(DEFAULT_JSON_DOCUMENT_PATH));
     }
 
@@ -80,7 +80,7 @@ public class PBModel {
      * @param category Kategorie
      * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
-    protected boolean addCategory(PBCategory category){
+    protected boolean addCategory(Category category){
         return this.categories.add(category);
     }
 
@@ -91,7 +91,7 @@ public class PBModel {
      * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
     public boolean addCategory(String categoryName){
-        return addCategory(new PBCategory(categoryName));
+        return addCategory(new Category(categoryName));
     }
 
     /**
@@ -113,7 +113,7 @@ public class PBModel {
      * @return Erfolgreich
      */
     public boolean addDataSetFromUserInput(){
-        PBDataSetInputPanel inputPanel = new PBDataSetInputPanel();
+        DataSetInputPanel inputPanel = new DataSetInputPanel();
         javax.swing.JOptionPane.showConfirmDialog(
                 null,
                 inputPanel,
@@ -139,8 +139,8 @@ public class PBModel {
             return false;
         }
 
-        PBCategory category = null;
-        for(PBCategory tempCategory : this.categories){
+        Category category = null;
+        for(Category tempCategory : this.categories){
             if(tempCategory.getModel().getName().equals(categoryName)){
                 category = tempCategory;
                 break;
@@ -148,11 +148,11 @@ public class PBModel {
         }
 
         if(category == null){
-            category = new PBCategory(categoryName);
+            category = new Category(categoryName);
             this.categories.add(category);
         }
 
-        PBDataSet dataSet = new PBDataSet(dataSetName, inputPanel.getInputs());
+        DataSet dataSet = new DataSet(dataSetName, inputPanel.getInputs());
         return category.getModel().add(dataSet);
     }
 
@@ -161,7 +161,7 @@ public class PBModel {
      *
      * @return Array mit allen Kategorien
      */
-    public Iterator<PBCategory> iterator(){
+    public Iterator<Category> iterator(){
         return categories.iterator();
     }
 }

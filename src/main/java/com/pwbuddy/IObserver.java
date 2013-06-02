@@ -4,7 +4,7 @@ package com.pwbuddy;
  * @author Jakob Klepp
  * @since 2013-06-01
  */
-public interface IPBObserver <S extends IPBObservable<S>>{
+public interface IObserver<S extends IObservable<S>>{
     /**
      * Wird vom observierten Subjekt aufgerufen
      *

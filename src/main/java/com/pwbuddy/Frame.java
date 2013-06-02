@@ -1,27 +1,25 @@
 package com.pwbuddy;
 
 import javax.swing.*;
-import java.io.*;
-import java.util.Formatter;
 
 /**
  * @author Jakob Klepp
  * @since 2013-04-09
  */
-public class PBFrame extends JFrame {
-    private PBModel m;
-    private PBView v;
-    private PBControl c;
+public class Frame extends JFrame {
+    private Model m;
+    private View v;
+    private Control c;
 
-    private PBMenuBar menu;
-    public PBFrame(){
-        this.m = new PBModel();
-        this.v = new PBView(m);
-        this.c = new PBControl(m, v);
+    private MenuBar menu;
+    public Frame(){
+        this.m = new Model();
+        this.v = new View(m);
+        this.c = new Control(m, v);
 
         this.v.setControl(c);
 
-        this.menu = new PBMenuBar();
+        this.menu = new MenuBar();
         this.setJMenuBar(menu);
 
         this.setContentPane(v);

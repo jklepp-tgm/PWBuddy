@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
  * @author Jakob Klepp
  * @since 2013-05-26
  */
-public class PBCategoryControl implements ActionListener{
-    private PBCategory category;
+public class CategoryControl implements ActionListener{
+    private Category category;
 
-    public PBCategoryControl(PBCategory category){
+    public CategoryControl(Category category){
         this.category = category;
     }
 

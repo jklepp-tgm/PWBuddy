@@ -19,11 +19,11 @@ import javax.crypto.Cipher;
  * @author Andreas Willinger, Jakob Klepp
  * @since 2013-05-28
  */
-public class PBEncryptionCore {
+public class EncryptionCore {
     private SecretKeySpec key;
     private Cipher cipher;
 
-    public PBEncryptionCore(String pkey)
+    public EncryptionCore(String pkey)
     {
         try
         {

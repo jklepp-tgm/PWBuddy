@@ -1,4 +1,4 @@
-import com.pwbuddy.PBFrame;
+import com.pwbuddy.Frame;
 
 /**
  * Startpunkt des Programmes
@@ -8,7 +8,7 @@ import com.pwbuddy.PBFrame;
  */
 public class PWBuddy {
     public static void main(String [] args){
-        new PBFrame();
+        new Frame();
 
     }
 }

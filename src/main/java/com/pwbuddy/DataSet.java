@@ -9,15 +9,15 @@ import java.util.Map;
  * @author Jakob Klepp
  * @since 2013-05-17
  */
-public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObservable<PBDataSet>{
-    private PBDataSetModel dataSetModel;
+public class DataSet extends JPanel implements Comparable <DataSet>, IObservable<DataSet> {
+    private DataSetModel dataSetModel;
     private JToggleButton toggle;
-    private PBDataSetControl dataSetControl;
+    private DataSetControl dataSetControl;
     private JLabel label;
 
-    private HashSet <IPBObserver<PBDataSet>> observers;
-    public PBDataSet(String name){
-        this.dataSetModel = new PBDataSetModel(this, name);
+    private HashSet <IObserver<DataSet>> observers;
+    public DataSet(String name){
+        this.dataSetModel = new DataSetModel(this, name);
         this.setLayout(new BorderLayout());
 
         this.label = new JLabel(".");
@@ -27,13 +27,13 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
         this.toggle = new JToggleButton(this.getModel().getName());
         this.add(toggle, BorderLayout.CENTER);
 
-        this.dataSetControl = new PBDataSetControl(this);
+        this.dataSetControl = new DataSetControl(this);
         this.toggle.addActionListener(this.dataSetControl);
 
-        this.observers = new HashSet<IPBObserver<PBDataSet>>();
+        this.observers = new HashSet<IObserver<DataSet>>();
     }
 
-    public PBDataSet(String name, Map<JLabel, JTextField> fields){
+    public DataSet(String name, Map<JLabel, JTextField> fields){
         this(name);
         JPanel panel = new JPanel(new GridLayout(0, 2, 2, 2));
         for(Map.Entry<JLabel, JTextField> entry : fields.entrySet()){
@@ -42,7 +42,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
         }
     }
 
-    public PBDataSetModel getModel() {
+    public DataSetModel getModel() {
         return dataSetModel;
     }
 
@@ -53,7 +53,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        Container contentView = SwingUtilities.getAncestorOfClass(PBContentView.class, this); //etwas unschön
+        Container contentView = SwingUtilities.getAncestorOfClass(ContentView.class, this); //etwas unschön
         if(contentView != null){
             contentView.revalidate();
             contentView.repaint();
@@ -99,7 +99,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBDataSet o) {
+    public int compareTo(DataSet o) {
         return this.getModel().compareTo(o.getModel());
     }
 
@@ -109,7 +109,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
      * @param observer welcher hinzugefügt werden soll
      */
     @Override
-    public void addPBObserver(IPBObserver observer) {
+    public void addPBObserver(IObserver observer) {
         this.observers.add(observer);
     }
 
@@ -119,7 +119,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
      * @param observer welcher entfernt werden soll
      */
     @Override
-    public void removePBObserver(IPBObserver observer) {
+    public void removePBObserver(IObserver observer) {
         this.observers.remove(observer);
     }
 
@@ -129,8 +129,8 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
      * @param eventType
      */
     @Override
-    public void notifyPBObservers(IPBObserver.PBEventType eventType) {
-        for(IPBObserver<PBDataSet> observer : this.observers){
+    public void notifyPBObservers(IObserver.PBEventType eventType) {
+        for(IObserver<DataSet> observer : this.observers){
             observer.eventOcurred(this, eventType);
         }
     }

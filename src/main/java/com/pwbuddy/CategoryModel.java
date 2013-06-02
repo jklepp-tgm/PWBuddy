@@ -6,12 +6,12 @@ import java.util.PriorityQueue;
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class PBCategoryModel extends PriorityQueue<PBDataSet> implements Comparable <PBCategoryModel>{
-    private PBCategory category;
+public class CategoryModel extends PriorityQueue<DataSet> implements Comparable <CategoryModel>{
+    private Category category;
 
     private String name;
 
-    public PBCategoryModel(PBCategory category, String name){
+    public CategoryModel(Category category, String name){
         this.category = category;
         this.name = name;
     }
@@ -77,7 +77,7 @@ public class PBCategoryModel extends PriorityQueue<PBDataSet> implements Compara
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBCategoryModel o) {
+    public int compareTo(CategoryModel o) {
         return this.getName().compareTo(o.getName());
     }
 }
