@@ -107,6 +107,11 @@ public class PBModel {
         return false;
     }
 
+    /**
+     * Fragt den Benutzer nach Eingaben und versucht daraus einen Datensatz zu erstellen
+     *
+     * @return Erfolgreich
+     */
     public boolean addDataSetFromUserInput(){
         PBDataSetInputPanel inputPanel = new PBDataSetInputPanel();
         javax.swing.JOptionPane.showConfirmDialog(
