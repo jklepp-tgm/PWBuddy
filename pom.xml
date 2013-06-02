@@ -29,9 +29,14 @@
             <version>3.3</version>
         </dependency>
         <dependency>
-            <groupId>cryptix</groupId>
-            <artifactId>cryptix</artifactId>
-            <version>3.2.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freedesktop.tango</groupId>
+            <artifactId>tango-icon-theme</artifactId>
+            <version>0.8.90</version>
         </dependency>
     </dependencies>
 </project>
