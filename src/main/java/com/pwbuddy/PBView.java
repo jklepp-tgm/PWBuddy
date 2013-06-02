@@ -1,7 +1,5 @@
 package com.pwbuddy;
 
-import sun.swing.ImageIconUIResource;
-
 import javax.swing.*;
 import java.awt.*;
 
