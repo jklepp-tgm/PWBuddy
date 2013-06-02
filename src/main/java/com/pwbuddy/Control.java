@@ -27,5 +27,6 @@ public class Control implements ActionListener{
         if(e.getSource().equals(v.getAddDataSetButton())){
             m.addDataSetFromUserInput();
         }
+        this.v.repaint();
     }
 }
