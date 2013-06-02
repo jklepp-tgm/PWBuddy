@@ -77,18 +77,33 @@ public class PBModel {
      * Fügt eine Kategorie hinzu
      *
      * @param category Kategorie
+     * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
-    protected void addCategory(PBCategory category){
-        this.categories.add(category);
+    protected boolean addCategory(PBCategory category){
+        return this.categories.add(category);
     }
 
     /**
      * Fügt eine Kategorie hinzu
      *
      * @param categoryName Name der Kategorie
+     * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
-    public void addCategory(String categoryName){
-        addCategory(new PBCategory(categoryName));
+    public boolean addCategory(String categoryName){
+        return addCategory(new PBCategory(categoryName));
+    }
+
+    /**
+     * Fragt den Benutzer nach den Namen für eine Neue Kategorie und versucht sie zu erstellen.
+     *
+     * @return Erfolgreich?
+     */
+    public boolean addCategoryFromUserInput(){
+        String categoryName = javax.swing.JOptionPane.showInputDialog("Name der Kategorie die erstellt werden soll?");
+        if(categoryName != null){
+            return this.addCategory(categoryName);
+        }
+        return false;
     }
 
     /**
