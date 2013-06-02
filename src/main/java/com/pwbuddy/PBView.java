@@ -46,4 +46,17 @@ public class PBView extends JPanel{
         this.scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scrollPane, BorderLayout.CENTER);
     }
+
+    public JButton getAddCategoryButton() {
+        return addCategoryButton;
+    }
+
+    public JButton getAddDataSetButton() {
+        return addDataSetButton;
+    }
+
+    public void setControl(PBControl c){
+        this.addDataSetButton.addActionListener(c);
+        this.addCategoryButton.addActionListener(c);
+    }
 }

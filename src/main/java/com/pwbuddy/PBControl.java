@@ -8,12 +8,24 @@ import java.awt.event.ActionListener;
  * @since 2013-04-09
  */
 public class PBControl implements ActionListener{
+    PBModel m;
+    PBView v;
+
+    public PBControl(PBModel m, PBView v) {
+        this.m = m;
+        this.v = v;
+    }
 
     /**
      * Invoked when an action occurs.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        if(e.getSource().equals(v.getAddCategoryButton())){
+            m.addCategoryFromUserInput();
+        } else
+        if(e.getSource().equals(v.getAddDataSetButton())){
+            m.addDataSetFromUserInput();
+        }
     }
 }
