@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
  * @author Jakob Klepp
  * @since 2013-04-09
  */
-public class Control implements ActionListener{
+public class Control implements ActionListener, IObserver<DataSet>{
     Model m;
     View v;
 
@@ -28,5 +28,16 @@ public class Control implements ActionListener{
             m.addDataSetFromUserInput();
         }
         this.v.repaint();
+    }
+
+    /**
+     * Wird vom observierten Subjekt aufgerufen
+     *
+     * @param subject   observierten Subjekt welchen etwas zugestoßen ist
+     * @param eventType was dem observierten Subjekt zugestßen ist
+     */
+    @Override
+    public void eventOcurred(DataSet subject, PBEventType eventType) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

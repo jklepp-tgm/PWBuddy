@@ -156,6 +156,10 @@ public class Model {
         return category.getModel().add(dataSet);
     }
 
+    public void storeToJson(){
+
+    }
+
     /**
      * Gibt ein Array mit allen Kategorien zurück.
      *
