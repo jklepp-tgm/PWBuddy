@@ -22,7 +22,6 @@ public class Model {
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
 
     public Model(File file){
-        super();
         this.categories = new PriorityQueue<Category>();
 
         this.jsonRootNode = new RootNode(file);
@@ -154,10 +153,6 @@ public class Model {
 
         DataSet dataSet = new DataSet(dataSetName, inputPanel.getInputs());
         return category.getModel().add(dataSet);
-    }
-
-    public void storeToJson(){
-
     }
 
     /**
