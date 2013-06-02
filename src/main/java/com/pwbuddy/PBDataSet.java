@@ -3,6 +3,7 @@ package com.pwbuddy;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author Jakob Klepp
@@ -30,6 +31,15 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
         this.toggle.addActionListener(this.dataSetControl);
 
         this.observers = new HashSet<IPBObserver<PBDataSet>>();
+    }
+
+    public PBDataSet(String name, Map<JLabel, JTextField> fields){
+        this(name);
+        JPanel panel = new JPanel(new GridLayout(0, 2, 2, 2));
+        for(Map.Entry<JLabel, JTextField> entry : fields.entrySet()){
+            panel.add(entry.getKey());
+            panel.add(entry.getValue());
+        }
     }
 
     public PBDataSetModel getModel() {

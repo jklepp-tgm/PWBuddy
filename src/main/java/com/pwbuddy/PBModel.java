@@ -1,6 +1,7 @@
 package com.pwbuddy;
 import argo.jdom.*;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.Iterator;
 import java.util.List;
@@ -104,6 +105,50 @@ public class PBModel {
             return this.addCategory(categoryName);
         }
         return false;
+    }
+
+    public boolean addDataSetFromUserInput(){
+        PBDataSetInputPanel inputPanel = new PBDataSetInputPanel();
+        javax.swing.JOptionPane.showConfirmDialog(
+                null,
+                inputPanel,
+                "Eingabe DataSet",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+        String dataSetName = "";
+        String categoryName = "";
+        for(JLabel label : inputPanel.getInputs().keySet()){
+            if(label.getText().equals("Website")){
+                dataSetName = inputPanel.getInputs().get(label).getText();
+            } else
+            if(label.getText().equals("Category")){
+                categoryName = inputPanel.getInputs().get(label).getText();
+            }
+            if(!dataSetName.equals("") && !categoryName.equals("")){
+                break;
+            }
+        }
+
+        if (dataSetName.equals("") || categoryName.equals("")) {
+            return false;
+        }
+
+        PBCategory category = null;
+        for(PBCategory tempCategory : this.categories){
+            if(tempCategory.getModel().getName().equals(categoryName)){
+                category = tempCategory;
+                break;
+            }
+        }
+
+        if(category == null){
+            category = new PBCategory(categoryName);
+            this.categories.add(category);
+        }
+
+        PBDataSet dataSet = new PBDataSet(dataSetName, inputPanel.getInputs());
+        return category.getModel().add(dataSet);
     }
 
     /**
