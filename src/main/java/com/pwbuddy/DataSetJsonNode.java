@@ -3,7 +3,6 @@ package com.pwbuddy;
 import argo.jdom.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,18 +49,5 @@ public class DataSetJsonNode extends AccessibleAbstractJsonObject {
         fields.put(JsonNodeFactories.string("eMail"), JsonNodeFactories.string(this.email));
         fields.put(JsonNodeFactories.string("Password"), this.password);
         return fields;
-    }
-
-    /**
-     * Gets the fields associated with this node as a list of {@code JsonFields}.  This method allows
-     * the retrieval of all fields in an object even when the fields have duplicate keys.  This method
-     * also preserves the order of the fields.
-     *
-     * @return the fields associated with this node
-     * @throws IllegalStateException if hasFields() returns false, indicating this type of node doesn't support fields.
-     */
-    @Override
-    public List<JsonField> getFieldList() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

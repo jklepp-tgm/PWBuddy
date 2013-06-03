@@ -283,24 +283,5 @@ public class RootNode extends AccessibleAbstractJsonObject {
         public Map<JsonStringNode, JsonNode> getFields() {
             return this.fields;
         }
-
-        /**
-         * Gets the fields associated with this node as a list of {@code JsonFields}.  This method allows
-         * the retrieval of all fields in an object even when the fields have duplicate keys.  This method
-         * also preserves the order of the fields.
-         *
-         * @return the fields associated with this node
-         * @throws IllegalStateException if hasFields() returns false, indicating this type of node doesn't support fields.
-         */
-        @Override
-        public List<JsonField> getFieldList() {
-            ArrayList<JsonField> fieldList = new ArrayList<JsonField>();
-
-            for(Map.Entry<JsonStringNode, JsonNode> entry : this.getFields().entrySet()){
-                fieldList.add(new JsonField(entry.getKey(), entry.getValue()));
-            }
-
-            return fieldList;
-        }
     }
 }

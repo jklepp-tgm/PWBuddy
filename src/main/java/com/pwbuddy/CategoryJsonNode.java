@@ -1,13 +1,10 @@
 package com.pwbuddy;
 
 import argo.jdom.AccessibleAbstractJsonObject;
-import argo.jdom.JsonField;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonStringNode;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,22 +45,5 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
         return fields;
-    }
-
-    /**
-     * Gets the fields associated with this node as a list of {@code JsonFields}.  This method allows
-     * the retrieval of all fields in an object even when the fields have duplicate keys.  This method
-     * also preserves the order of the fields.
-     *
-     * @return the fields associated with this node
-     * @throws IllegalStateException if hasFields() returns false, indicating this type of node doesn't support fields.
-     */
-    @Override
-    public List<JsonField> getFieldList() {
-        ArrayList<JsonField> fieldsList = new ArrayList<JsonField>();
-        for(Map.Entry<JsonStringNode, JsonNode> entry : this.getFields().entrySet()){
-            fieldsList.add(new JsonField(entry.getKey(), entry.getValue()));
-        }
-        return fieldsList;
     }
 }
