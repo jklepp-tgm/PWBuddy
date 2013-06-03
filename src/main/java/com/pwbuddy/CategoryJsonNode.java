@@ -14,11 +14,15 @@ import java.util.Map;
 public class CategoryJsonNode extends AccessibleAbstractJsonObject {
     private HashMap <JsonStringNode, DataSetJsonNode> fields;
 
+    public CategoryJsonNode(){
+        this.fields = new HashMap<JsonStringNode, DataSetJsonNode>();
+    }
+
     /**
      * @param fields JsonNodes welche keine Instanzen von DataSetJsonNode sind werden ignoriert
      */
     public CategoryJsonNode(Map<JsonStringNode, JsonNode> fields){
-        this.fields = new HashMap<JsonStringNode, DataSetJsonNode>();
+        this();
         for(Map.Entry<JsonStringNode, JsonNode> entry : fields.entrySet()){
             DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(entry.getValue());
             fields.put(entry.getKey(), dataSetJsonNode);

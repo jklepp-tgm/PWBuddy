@@ -33,37 +33,16 @@ public class Model {
             System.exit(1);
         }
 
-        //Existierende DataSets auslesen
-        RootNode.CategoriesObject categoriesObject = (RootNode.CategoriesObject) this.jsonRootNode.getNode("DataSets");
+        //Existierende Categories auslesen
+        RootNode.CategoriesObject categoriesObject = (RootNode.CategoriesObject) this.jsonRootNode.getNode("Categories");
 
-        //Über nodes in dataSetsNode iterieren um DataSet und Category Objekte zu erzeugen
-        for (JsonField dataSetField : categoriesObject.getFieldList()) {
-            String categoryName = dataSetField.getValue().getStringValue("Category");
+        //Über über Categories iterieren
+        for (JsonField categoryField : categoriesObject.getFieldList()) {
+            CategoryJsonNode categoryNode = new CategoryJsonNode(categoryField.getValue());
+            String categoryName = categoryField.getName().getText();
 
-            //Wird noch gefunden oder erzeugt.
-            Category pbCategory = null;
-
-            //Überprüfen ob die Category des aktuellen DataSet bereits existiert
-            boolean namedCategoryExists = false;
-            for (Category category : this.categories) {
-                if (category.getModel().getName().equals(categoryName)) {
-                    namedCategoryExists = true;
-                    pbCategory = category;
-                    break;
-                }
-            }
-
-            //Falls die Category noch nicht existiert
-            if (!namedCategoryExists) {
-                //Category hinzufügen
-                pbCategory = new Category(categoryName);
-                this.addCategory(pbCategory);
-            }
-
-            //DataSet Objekt erzeugen und zur passenden Category hinzufügen
-            String dataSetName = dataSetField.getName().getText();
-            DataSet pbDataSet = new DataSet(dataSetName);
-            pbCategory.getModel().add(pbDataSet);
+            //Category erzeugen.
+            Category category = new Category(categoryName, categoryNode);
         }
     }
 
@@ -88,7 +67,7 @@ public class Model {
      * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
     public boolean addCategory(String categoryName){
-        return addCategory(new Category(categoryName));
+        return addCategory(new Category(categoryName, new CategoryJsonNode()));
     }
 
     /**

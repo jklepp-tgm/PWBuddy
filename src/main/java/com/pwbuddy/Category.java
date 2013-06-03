@@ -11,8 +11,10 @@ public class Category extends JPanel implements Comparable<Category>{
     private CategoryModel categoryModel;
     private JToggleButton toggle;
     private CategoryControl categoryControl;
-    public Category(String name) {
-        this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
+    private CategoryJsonNode categoryJsonNode;
+    public Category(String name, CategoryJsonNode categoryJsonNode) {
+        this.categoryJsonNode = categoryJsonNode;
+
         this.categoryModel = new CategoryModel(this, name);
         this.setLayout(new BorderLayout());
 
