@@ -2,8 +2,10 @@ package com.pwbuddy;
 
 import argo.jdom.AccessibleAbstractJsonObject;
 import argo.jdom.JsonNode;
+import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonStringNode;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -11,7 +13,19 @@ import java.util.Map;
  * @since 2013-06-04
  */
 public class PasswordJsonNode extends AccessibleAbstractJsonObject {
-    public PasswordJsonNode(JsonNode password) {
+    private String encryptedPassword;
+    private String iv;
+
+    public PasswordJsonNode(JsonNode passwordNode) {
+        this.encryptedPassword = passwordNode.getStringValue("1C0SFADS8AEEA93");
+        this.iv = passwordNode.getStringValue("IV");
+    }
+
+    public PasswordJsonNode(byte [] password){
+        //ToDo Verschlüsselung des Passworts!
+        //Verschlüsseltes Passwort und initialisierungs Vektor in die entsprechenden Variablen speichern
+        //this.encryptedPassword =
+        //this.iv =
     }
 
     /**
@@ -24,6 +38,9 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
      */
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        HashMap<JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
+        fields.put(JsonNodeFactories.string("Crypt"), JsonNodeFactories.string(this.encryptedPassword));
+        fields.put(JsonNodeFactories.string("IV"), JsonNodeFactories.string(this.iv));
+        return fields;
     }
 }
