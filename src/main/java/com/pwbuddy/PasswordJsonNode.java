@@ -9,17 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Jakob Klep
- * @since 2013-06-02
+ * @author Jakob Klepp
+ * @since 2013-06-04
  */
-public class DataSetJsonNode extends AccessibleAbstractJsonObject {
-    //Benötigte Felder
-
-    private JsonField website;
-
-    public DataSetJsonNode(JsonNode json){
-
-    }
+public class PasswordJsonNode extends AccessibleAbstractJsonObject {
     /**
      * Gets the fields associated with this node as a map of name to value.  Note that JSON permits
      * duplicated keys in an object, though in practice this is rare, and in this case, this method
