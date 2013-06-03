@@ -12,17 +12,16 @@ import java.util.Map;
  * @since 2013-06-04
  */
 public class CategoryJsonNode extends AccessibleAbstractJsonObject {
-    private HashMap <JsonStringNode, JsonNode> fields;
+    private HashMap <JsonStringNode, DataSetJsonNode> fields;
 
     /**
      * @param fields JsonNodes welche keine Instanzen von DataSetJsonNode sind werden ignoriert
      */
     public CategoryJsonNode(Map<JsonStringNode, JsonNode> fields){
-        this.fields = new HashMap<JsonStringNode, JsonNode>();
+        this.fields = new HashMap<JsonStringNode, DataSetJsonNode>();
         for(Map.Entry<JsonStringNode, JsonNode> entry : fields.entrySet()){
-            if(entry.getValue() instanceof DataSetJsonNode){
-                this.fields.put(entry.getKey(), entry.getValue());
-            }
+            DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(entry.getValue());
+            fields.put(entry.getKey(), dataSetJsonNode);
         }
     }
 
@@ -31,7 +30,7 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
      *                   DataSetJsonNode ist werden ignoriert
      */
     public CategoryJsonNode(JsonNode objectNode){
-        this.fields = new HashMap<JsonStringNode, JsonNode>(objectNode.getFields());
+        this(objectNode.getFields());
     }
 
     /**
@@ -44,6 +43,10 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
      */
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
+        HashMap <JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
+        for(Map.Entry<JsonStringNode, DataSetJsonNode> entry : this.fields.entrySet()){
+            fields.put(entry.getKey(), entry.getValue());
+        }
         return fields;
     }
 }
