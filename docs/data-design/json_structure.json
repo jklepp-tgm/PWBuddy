@@ -4,11 +4,13 @@
         "Cat 3":
         {
             "bla":{
+
                 "Username":"blubb",
                 "Password":{
                     "Crypt":"1C0BDD78AEEA93",
                     "IV":"KSN898aSkaNOIoosjx"
                 },
+                "Website":"bla.net",
                 "e-Mail":"blub@bla.net"
             },
             "qwe":{
@@ -17,6 +19,7 @@
                     "Crypt":"1C0SFADS8AEEA93",
                     "IV":"KSN898aSkaNOIoosjx"
                 },
+                "Website":"bla.net",
                 "e-Mail":"blö@bla.net"
             }
         },
@@ -27,6 +30,7 @@
                     "Crypt":"1C0BDD78AEEA93",
                     "IV":"KSN898aSkaNOIoosjx"
                 },
+                "Website":"bla.net",
                 "e-Mail":"blö@bla.net"
             }
         }
