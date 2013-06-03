@@ -1,10 +1,8 @@
 package com.pwbuddy;
 
-import argo.jdom.AccessibleAbstractJsonObject;
-import argo.jdom.JsonField;
-import argo.jdom.JsonNode;
-import argo.jdom.JsonStringNode;
+import argo.jdom.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +12,27 @@ import java.util.Map;
  */
 public class DataSetJsonNode extends AccessibleAbstractJsonObject {
     //Benötigte Felder
+    private String website;
 
-    private JsonField website;
+    private String username;
+
+    private String email;
+
+    private PasswordJsonNode password;
+
+    public DataSetJsonNode(String website, String username, String email, JsonNode password){
+        this.website = website;
+        this.username = username;
+        this.email = email;
+        this.password = new PasswordJsonNode(password);
+    }
 
     public DataSetJsonNode(JsonNode json){
-
+        this(json.getStringValue("Website"),
+                json.getStringValue("Username"),
+                json.getStringValue("eMail"),
+                json.getNode("Password")
+        );
     }
     /**
      * Gets the fields associated with this node as a map of name to value.  Note that JSON permits
@@ -30,7 +44,12 @@ public class DataSetJsonNode extends AccessibleAbstractJsonObject {
      */
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        HashMap<JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
+        fields.put(JsonNodeFactories.string("Website"), JsonNodeFactories.string(this.website));
+        fields.put(JsonNodeFactories.string("Usernam"), JsonNodeFactories.string(this.username));
+        fields.put(JsonNodeFactories.string("eMail"), JsonNodeFactories.string(this.email));
+        fields.put(JsonNodeFactories.string("Password"), this.password);
+        return fields;
     }
 
     /**

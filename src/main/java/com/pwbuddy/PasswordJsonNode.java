@@ -13,6 +13,9 @@ import java.util.Map;
  * @since 2013-06-04
  */
 public class PasswordJsonNode extends AccessibleAbstractJsonObject {
+    public PasswordJsonNode(JsonNode password) {
+    }
+
     /**
      * Gets the fields associated with this node as a map of name to value.  Note that JSON permits
      * duplicated keys in an object, though in practice this is rare, and in this case, this method
