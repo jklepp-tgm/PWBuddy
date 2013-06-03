@@ -4,7 +4,6 @@ import argo.jdom.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.Iterator;
-import java.util.List;
 import java.util.PriorityQueue;
 
 /**
@@ -16,7 +15,7 @@ public class Model {
     private RootNode jsonRootNode;
 
     /** Sollte bei jeder änderung am Dokumenten Modell um 1 inkrementiert werden */
-    public static final int JSON_DOCUMENT_VERSION = 3;
+    public static final int JSON_DOCUMENT_VERSION = 4;
 
     /** Der Dateipfad welcher im Normalfall verwendet werden soll */
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
@@ -35,10 +34,10 @@ public class Model {
         }
 
         //Existierende DataSets auslesen
-        RootNode.DataSetsObject dataSetsObject = (RootNode.DataSetsObject) this.jsonRootNode.getNode("DataSets");
+        RootNode.CategoriesObject categoriesObject = (RootNode.CategoriesObject) this.jsonRootNode.getNode("DataSets");
 
         //Über nodes in dataSetsNode iterieren um DataSet und Category Objekte zu erzeugen
-        for (JsonField dataSetField : dataSetsObject.getFieldList()) {
+        for (JsonField dataSetField : categoriesObject.getFieldList()) {
             String categoryName = dataSetField.getValue().getStringValue("Category");
 
             //Wird noch gefunden oder erzeugt.

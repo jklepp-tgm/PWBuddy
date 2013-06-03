@@ -20,8 +20,8 @@ import java.util.*;
  * @since 2013-05-31
  */
 public class RootNode extends AccessibleAbstractJsonObject {
-    private DataSetsObject pbDataSetsObject;
-    private JsonStringNode dataSetsObjectName;
+    private CategoriesObject categoriesObject;
+    private JsonStringNode categoriesObjectName;
 
     private JsonNode version;
     private JsonStringNode versionName;
@@ -85,8 +85,8 @@ public class RootNode extends AccessibleAbstractJsonObject {
             }
         }
 
-        this.dataSetsObjectName = JsonNodeFactories.string("DataSets");
-        this.pbDataSetsObject = new DataSetsObject(rootNode.getObjectNode(this.dataSetsObjectName.getText()));
+        this.categoriesObjectName = JsonNodeFactories.string("Categories");
+        this.categoriesObject = new CategoriesObject(rootNode.getObjectNode(this.categoriesObjectName.getText()));
 
         this.versionName = JsonNodeFactories.string("Version");
         this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName.getText()));
@@ -210,7 +210,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
         JsonObjectNodeBuilder builder;
         builder = JsonNodeBuilders.anObjectBuilder();
 
-        builder.withField("DataSets", JsonNodeBuilders.anObjectBuilder());
+        builder.withField("Categories", JsonNodeBuilders.anObjectBuilder());
         builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + Model.JSON_DOCUMENT_VERSION));
 
         JsonRootNode node = builder.build();
@@ -229,7 +229,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
     public Map<JsonStringNode, JsonNode> getFields() {
         HashMap <JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
         //Muss im falle einer Dokumentstruckturänderung geändert werden.
-        fields.put(this.dataSetsObjectName, this.pbDataSetsObject);
+        fields.put(this.categoriesObjectName, this.categoriesObject);
         fields.put(this.versionName, this.version);
         return fields;
     }
@@ -253,10 +253,10 @@ public class RootNode extends AccessibleAbstractJsonObject {
         return fieldList;
     }
 
-    public class DataSetsObject extends AccessibleAbstractJsonObject {
+    public class CategoriesObject extends AccessibleAbstractJsonObject {
         private HashMap<JsonStringNode, JsonNode> fields;
 
-        public DataSetsObject(Map<JsonStringNode, JsonNode> fields){
+        public CategoriesObject(Map<JsonStringNode, JsonNode> fields){
             this.fields = new HashMap<JsonStringNode, JsonNode>();
             this.fields.putAll(fields);
         }
@@ -267,7 +267,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
          * @param objectNode Node von der die Fields übernommen werden sollen
          * @throws java.lang.IllegalStateException wenn objectNode keine fields unterstützt.
          */
-        public DataSetsObject(JsonNode objectNode){
+        public CategoriesObject(JsonNode objectNode){
             this(objectNode.getFields());
         }
 
