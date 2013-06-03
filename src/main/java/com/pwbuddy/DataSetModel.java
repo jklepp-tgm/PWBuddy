@@ -11,6 +11,8 @@ public class DataSetModel implements Comparable <DataSetModel> {
 
     private String name;
 
+    private DataSetJsonNode jsonNode;
+
     public DataSetModel(DataSet dataSet, String name){
         this.dataSet = dataSet;
         this.name = name;

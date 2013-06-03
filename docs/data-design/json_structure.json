@@ -1,21 +1,25 @@
 {
     "Datasets":
-        [
-            {
+        {
+            "bla":{
                 "Category":"Cat 3",
-                "Title":"bla",
                 "Username":"blubb",
-                "Password":"1C0BDD78AEEA93",
+                "Password":{
+                    "Crypt":"1C0BDD78AEEA93",
+                    "IV":"KSN898aSkaNOIoosjx"
+                },
                 "e-Mail":"blub@bla.net",
                 "key":"value"
             },
-            {
+            "bla2":{
                 "Category":"Cat 1",
-                "Title":"bla2",
                 "Username":"blabb",
-                "Password":"1C0BDD78AEEA93",
+                "Password":{
+                    "Crypt":"1C0BDD78AEEA93",
+                    "IV":"KSN898aSkaNOIoosjx"
+                },
                 "key":"value"
             }
-        ],
+        },
     "Version":0.1
 }
