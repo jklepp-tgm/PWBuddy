@@ -5,6 +5,8 @@ import argo.jdom.JsonField;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonStringNode;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,28 @@ import java.util.Map;
  * @since 2013-06-04
  */
 public class CategoryJsonNode extends AccessibleAbstractJsonObject {
+    private HashMap <JsonStringNode, JsonNode> fields;
+
+    /**
+     * @param fields JsonNodes welche keine Instanzen von DataSetJsonNode sind werden ignoriert
+     */
+    public CategoryJsonNode(Map<JsonStringNode, JsonNode> fields){
+        this.fields = new HashMap<JsonStringNode, JsonNode>();
+        for(Map.Entry<JsonStringNode, JsonNode> entry : fields.entrySet()){
+            if(entry.getValue() instanceof DataSetJsonNode){
+                this.fields.put(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+    /**
+     * @param objectNode sollte vom Typ OBJECT sein, Fields mit einem Value welches kein
+     *                   DataSetJsonNode ist werden ignoriert
+     */
+    public CategoryJsonNode(JsonNode objectNode){
+        this.fields = new HashMap<JsonStringNode, JsonNode>(objectNode.getFields());
+    }
+
     /**
      * Gets the fields associated with this node as a map of name to value.  Note that JSON permits
      * duplicated keys in an object, though in practice this is rare, and in this case, this method
@@ -23,7 +47,7 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
      */
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return fields;
     }
 
     /**
@@ -36,6 +60,10 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
      */
     @Override
     public List<JsonField> getFieldList() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        ArrayList<JsonField> fieldsList = new ArrayList<JsonField>();
+        for(Map.Entry<JsonStringNode, JsonNode> entry : this.getFields().entrySet()){
+            fieldsList.add(new JsonField(entry.getKey(), entry.getValue()));
+        }
+        return fieldsList;
     }
 }
