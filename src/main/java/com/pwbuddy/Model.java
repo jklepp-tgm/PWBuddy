@@ -16,7 +16,7 @@ public class Model {
     private RootNode jsonRootNode;
 
     /** Sollte bei jeder änderung am Dokumenten Modell um 1 inkrementiert werden */
-    public static final int JSON_DOCUMENT_VERSION = 2;
+    public static final int JSON_DOCUMENT_VERSION = 3;
 
     /** Der Dateipfad welcher im Normalfall verwendet werden soll */
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
@@ -35,12 +35,11 @@ public class Model {
         }
 
         //Existierende DataSets auslesen
-        JsonNode dataSetsNode = this.jsonRootNode.getNode("DataSets");
-        List <JsonNode> dataSetsList = dataSetsNode.getArrayNode();
+        RootNode.DataSetsObject dataSetsObject = (RootNode.DataSetsObject) this.jsonRootNode.getNode("DataSets");
 
         //Über nodes in dataSetsNode iterieren um DataSet und Category Objekte zu erzeugen
-        for (JsonNode dataSetNode : dataSetsList) {
-            String categoryName = dataSetNode.getStringValue("Category");
+        for (JsonField dataSetField : dataSetsObject.getFieldList()) {
+            String categoryName = dataSetField.getValue().getStringValue("Category");
 
             //Wird noch gefunden oder erzeugt.
             Category pbCategory = null;
@@ -63,7 +62,7 @@ public class Model {
             }
 
             //DataSet Objekt erzeugen und zur passenden Category hinzufügen
-            String dataSetName = dataSetNode.getStringValue("Title");
+            String dataSetName = dataSetField.getName().getText();
             DataSet pbDataSet = new DataSet(dataSetName);
             pbCategory.getModel().add(pbDataSet);
         }

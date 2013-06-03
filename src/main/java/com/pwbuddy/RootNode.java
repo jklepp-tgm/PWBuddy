@@ -20,8 +20,8 @@ import java.util.*;
  * @since 2013-05-31
  */
 public class RootNode extends AccessibleAbstractJsonObject {
-    private PBDataSetsArrayNode dataSetsArrayNode;
-    private JsonStringNode dataSetsArrayNodeName;
+    private DataSetsObject pbDataSetsObject;
+    private JsonStringNode dataSetsObjectName;
 
     private JsonNode version;
     private JsonStringNode versionName;
@@ -85,8 +85,8 @@ public class RootNode extends AccessibleAbstractJsonObject {
             }
         }
 
-        this.dataSetsArrayNodeName = JsonNodeFactories.string("DataSets");
-        this.dataSetsArrayNode = new PBDataSetsArrayNode(rootNode.getArrayNode(this.dataSetsArrayNodeName.getText()));
+        this.dataSetsObjectName = JsonNodeFactories.string("DataSets");
+        this.pbDataSetsObject = new DataSetsObject(rootNode.getObjectNode(this.dataSetsObjectName.getText()));
 
         this.versionName = JsonNodeFactories.string("Version");
         this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName.getText()));
@@ -210,7 +210,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
         JsonObjectNodeBuilder builder;
         builder = JsonNodeBuilders.anObjectBuilder();
 
-        builder.withField("DataSets", JsonNodeBuilders.anArrayBuilder());
+        builder.withField("DataSets", JsonNodeBuilders.anObjectBuilder());
         builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + Model.JSON_DOCUMENT_VERSION));
 
         JsonRootNode node = builder.build();
@@ -229,7 +229,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
     public Map<JsonStringNode, JsonNode> getFields() {
         HashMap <JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
         //Muss im falle einer Dokumentstruckturänderung geändert werden.
-        fields.put(this.dataSetsArrayNodeName, this.dataSetsArrayNode);
+        fields.put(this.dataSetsObjectName, this.pbDataSetsObject);
         fields.put(this.versionName, this.version);
         return fields;
     }
@@ -253,34 +253,54 @@ public class RootNode extends AccessibleAbstractJsonObject {
         return fieldList;
     }
 
-    public class PBDataSetsArrayNode extends AccessibleAbstractJsonArray {
-        private ArrayList <JsonNode> elements;
+    public class DataSetsObject extends AccessibleAbstractJsonObject {
+        private HashMap<JsonStringNode, JsonNode> fields;
+
+        public DataSetsObject(Map<JsonStringNode, JsonNode> fields){
+            this.fields = new HashMap<JsonStringNode, JsonNode>();
+            this.fields.putAll(fields);
+        }
 
         /**
-         * ArrayNode mit einer List befüllen
-         * gut als "Kopierkonstruktor" geeignet um Daten von einer anderen ArrayNode zu übertragen
+         * Übernimmt die Fields einer anderen (Object)Node
          *
-         * @param elements Liste mit Elementen
+         * @param objectNode Node von der die Fields übernommen werden sollen
+         * @throws java.lang.IllegalStateException wenn objectNode keine fields unterstützt.
          */
-        public PBDataSetsArrayNode(Collection <JsonNode> elements){
-            this.elements = new ArrayList<JsonNode>();
-            this.elements.addAll(elements);
+        public DataSetsObject(JsonNode objectNode){
+            this(objectNode.getFields());
         }
 
         /**
-         * @see ArrayList#add(Object)
-         */
-        public boolean addElement(JsonNode element){
-            return this.elements.add(element);
-        }
-
-        /**
-         * @return the elements associated with this node
-         * @throws IllegalStateException if hasElements() returns false, indicating this type of node doesn't support elements.
+         * Gets the fields associated with this node as a map of name to value.  Note that JSON permits
+         * duplicated keys in an object, though in practice this is rare, and in this case, this method
+         * will return a map containing a single entry of each unique key.
+         *
+         * @return the fields associated with this node
+         * @throws IllegalStateException if hasFields() returns false, indicating this type of node doesn't support fields.
          */
         @Override
-        public List<JsonNode> getElements() {
-            return this.elements;
+        public Map<JsonStringNode, JsonNode> getFields() {
+            return this.fields;
+        }
+
+        /**
+         * Gets the fields associated with this node as a list of {@code JsonFields}.  This method allows
+         * the retrieval of all fields in an object even when the fields have duplicate keys.  This method
+         * also preserves the order of the fields.
+         *
+         * @return the fields associated with this node
+         * @throws IllegalStateException if hasFields() returns false, indicating this type of node doesn't support fields.
+         */
+        @Override
+        public List<JsonField> getFieldList() {
+            ArrayList<JsonField> fieldList = new ArrayList<JsonField>();
+
+            for(Map.Entry<JsonStringNode, JsonNode> entry : this.getFields().entrySet()){
+                fieldList.add(new JsonField(entry.getKey(), entry.getValue()));
+            }
+
+            return fieldList;
         }
     }
 }
