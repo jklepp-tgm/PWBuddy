@@ -14,6 +14,7 @@ public class CategoryControl implements ActionListener{
         this.category = category;
     }
 
+
     /**
      * Invoked when an action occurs.
      */
