@@ -14,8 +14,6 @@ public class ContentView extends JPanel {
     public ContentView(Model m){
         this.m = m;
         this.setLayout(new RowLayout());
-        this.setBackground(Color.CYAN);
-
     }
 
     public Model getModel() {
