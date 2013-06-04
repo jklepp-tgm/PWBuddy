@@ -9,14 +9,13 @@ import java.util.Map;
  * @author Jakob Klepp
  * @since 2013-05-17
  */
-public class DataSet extends JPanel implements Comparable <DataSet>, IObservable<DataSet> {
+public class DataSet extends JPanel implements Comparable <DataSet> {
     private DataSetModel dataSetModel;
     private JToggleButton toggle;
     private DataSetControl dataSetControl;
     private JLabel label;
     private DataSetJsonNode dataSetJsonNode;
 
-    private HashSet <IObserver<DataSet>> observers;
     public DataSet(String name, DataSetJsonNode dataSetJsonNode){
         this.dataSetModel = new DataSetModel(this, name);
         this.setLayout(new BorderLayout());
@@ -30,8 +29,6 @@ public class DataSet extends JPanel implements Comparable <DataSet>, IObservable
 
         this.dataSetControl = new DataSetControl(this);
         this.toggle.addActionListener(this.dataSetControl);
-
-        this.observers = new HashSet<IObserver<DataSet>>();
     }
 
     public DataSetModel getModel() {
@@ -93,37 +90,5 @@ public class DataSet extends JPanel implements Comparable <DataSet>, IObservable
     @Override
     public int compareTo(DataSet o) {
         return this.getModel().compareTo(o.getModel());
-    }
-
-    /**
-     * Einen Observer hinzufügen
-     *
-     * @param observer welcher hinzugefügt werden soll
-     */
-    @Override
-    public void addPBObserver(IObserver observer) {
-        this.observers.add(observer);
-    }
-
-    /**
-     * Einen Observer entfernen
-     *
-     * @param observer welcher entfernt werden soll
-     */
-    @Override
-    public void removePBObserver(IObserver observer) {
-        this.observers.remove(observer);
-    }
-
-    /**
-     * Alle Observer über ein Ereignis benachrichtigen
-     *
-     * @param eventType
-     */
-    @Override
-    public void notifyPBObservers(IObserver.PBEventType eventType) {
-        for(IObserver<DataSet> observer : this.observers){
-            observer.eventOcurred(this, eventType);
-        }
     }
 }
