@@ -33,6 +33,7 @@ public class View extends JPanel{
 
         // ToDo NullPointerException (fetching image) abfangen
         final Image imageObject = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/org/freedesktop/tango/22x22/actions/document-new.png"));
+
         //Bild zeichnen und zum addElementPanel hinzufügen
         this.addElementPanel.add(new JPanel(){
             @Override

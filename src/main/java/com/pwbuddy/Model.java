@@ -31,7 +31,6 @@ public class Model {
 
         this.jsonRootNode = new RootNode(file);
 
-        //TODO lösen von Versionskompatiblitätsproblemen
         //Version des Json Dokuments mit der unterstützten Version vergleichen
         if(Integer.parseInt(this.jsonRootNode.getNumberValue("Version")) != JSON_DOCUMENT_VERSION){
             //Andere Version
