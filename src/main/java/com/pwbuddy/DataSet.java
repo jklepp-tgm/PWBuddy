@@ -14,9 +14,10 @@ public class DataSet extends JPanel implements Comparable <DataSet>, IObservable
     private JToggleButton toggle;
     private DataSetControl dataSetControl;
     private JLabel label;
+    private DataSetJsonNode dataSetJsonNode;
 
     private HashSet <IObserver<DataSet>> observers;
-    public DataSet(String name){
+    public DataSet(String name, DataSetJsonNode dataSetJsonNode){
         this.dataSetModel = new DataSetModel(this, name);
         this.setLayout(new BorderLayout());
 
@@ -31,15 +32,6 @@ public class DataSet extends JPanel implements Comparable <DataSet>, IObservable
         this.toggle.addActionListener(this.dataSetControl);
 
         this.observers = new HashSet<IObserver<DataSet>>();
-    }
-
-    public DataSet(String name, Map<JLabel, JTextField> fields){
-        this(name);
-        JPanel panel = new JPanel(new GridLayout(0, 2, 2, 2));
-        for(Map.Entry<JLabel, JTextField> entry : fields.entrySet()){
-            panel.add(entry.getKey());
-            panel.add(entry.getValue());
-        }
     }
 
     public DataSetModel getModel() {

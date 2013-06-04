@@ -21,7 +21,7 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
         this.iv = passwordNode.getStringValue("IV");
     }
 
-    public PasswordJsonNode(byte [] password){
+    public PasswordJsonNode(char [] password){
         //ToDo Verschlüsselung des Passworts!
         //Verschlüsseltes Passwort und initialisierungs Vektor in die entsprechenden Variablen speichern
         //this.encryptedPassword =

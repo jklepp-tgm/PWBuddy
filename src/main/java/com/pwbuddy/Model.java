@@ -89,7 +89,12 @@ public class Model {
      * @return Erfolgreich
      */
     public boolean addDataSetFromUserInput(){
-        DataSetInputPanel inputPanel = new DataSetInputPanel();
+        String[] categoryNames = new String[this.categories.size()];
+        int i = 0;
+        for(Category category : this.categories){
+            categoryNames[++i] = category.getModel().getName();
+        }
+        DataSetInputPanel inputPanel = new DataSetInputPanel(categoryNames);
         javax.swing.JOptionPane.showConfirmDialog(
                 null,
                 inputPanel,
@@ -97,23 +102,9 @@ public class Model {
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE
         );
-        String dataSetName = "";
-        String categoryName = "";
-        for(JLabel label : inputPanel.getInputs().keySet()){
-            if(label.getText().equals("Website")){
-                dataSetName = inputPanel.getInputs().get(label).getText();
-            } else
-            if(label.getText().equals("Category")){
-                categoryName = inputPanel.getInputs().get(label).getText();
-            }
-            if(!dataSetName.equals("") && !categoryName.equals("")){
-                break;
-            }
-        }
 
-        if (dataSetName.equals("") || categoryName.equals("")) {
-            return false;
-        }
+        String dataSetName = inputPanel.websiteF.getText();
+        String categoryName = (String)inputPanel.categoryF.getSelectedItem();
 
         Category category = null;
         for(Category tempCategory : this.categories){
@@ -123,12 +114,14 @@ public class Model {
             }
         }
 
-        if(category == null){
-            category = new Category(categoryName);
-            this.categories.add(category);
-        }
+        DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(
+                inputPanel.websiteF.getText(),
+                inputPanel.usernameF.getText(),
+                inputPanel.emailF.getText(),
+                new PasswordJsonNode(inputPanel.passwordF.getPassword())
+        );
 
-        DataSet dataSet = new DataSet(dataSetName, inputPanel.getInputs());
+        DataSet dataSet = new DataSet(dataSetName, dataSetJsonNode);
         return category.getModel().add(dataSet);
     }
 
