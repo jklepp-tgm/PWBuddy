@@ -95,6 +95,17 @@ public class RootNode extends AccessibleAbstractJsonObject {
     }
 
     /**
+     * Category-node hinzufügen
+     *
+     * @param categoryName Name der Kategorie
+     * @param categoryJsonNode Json node der Kategorie
+     * @return true wenn erfolgreich hinzugefügt
+     */
+    public boolean addCategoryNode(String categoryName, CategoryJsonNode categoryJsonNode){
+        return this.categoriesObject.addCategoryNode(categoryName, categoryJsonNode);
+    }
+
+    /**
      * Schreibt Json in File
      */
     public void flush(){
@@ -269,6 +280,22 @@ public class RootNode extends AccessibleAbstractJsonObject {
          */
         public CategoriesObject(JsonNode objectNode){
             this(objectNode.getFields());
+        }
+
+        /**
+         * Category-node hinzufügen
+         *
+         * @param categoryName Name der Kategorie
+         * @param categoryJsonNode Json node der Kategorie
+         * @return true wenn erfolgreich hinzugefügt
+         */
+        public boolean addCategoryNode(String categoryName, CategoryJsonNode categoryJsonNode){
+            for(JsonStringNode stringNode : this.fields.keySet()){
+                if(!stringNode.getText().equals(categoryName)){
+                    return false;
+                }
+            }
+            return this.fields.put(JsonNodeFactories.string(categoryName), categoryJsonNode) != null;
         }
 
         /**
