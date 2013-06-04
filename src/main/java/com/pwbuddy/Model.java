@@ -2,6 +2,8 @@ package com.pwbuddy;
 import argo.jdom.*;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Iterator;
 import java.util.PriorityQueue;
@@ -44,6 +46,14 @@ public class Model {
             //Category erzeugen.
             Category category = new Category(categoryName, categoryNode);
         }
+
+        //Json Baum alle 5 Sekunden sichern
+        new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jsonRootNode.flush();
+            }
+        }).start();
     }
 
     public Model(){
