@@ -34,8 +34,6 @@ public class View extends JPanel{
         // ToDo NullPointerException (fetching image) abfangen
         final Image imageObject = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/org/freedesktop/tango/22x22/actions/document-new.png"));
 
-<<<<<<< HEAD
-=======
         JPanel imagePanel;
 
         if(imageObject != null){
@@ -48,8 +46,6 @@ public class View extends JPanel{
         } else {
             imagePanel = new JPanel();
         }
-
->>>>>>> image nullpointerexception gelöst
         //Bild zeichnen und zum addElementPanel hinzufügen
         this.addElementPanel.add(imagePanel);
         this.addDataSetButton = new JButton("Datensatz");
