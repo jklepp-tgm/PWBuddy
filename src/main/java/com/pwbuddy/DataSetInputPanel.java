@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * ToDo vielleicht Felder dynamisch gestalten
  * @author Jakob Klepp
  * @since 2013-06-02
  */
