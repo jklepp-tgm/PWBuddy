@@ -91,6 +91,12 @@ public class Model {
     public boolean addCategoryFromUserInput(){
         String categoryName = javax.swing.JOptionPane.showInputDialog("Name der Kategorie die erstellt werden soll?");
 
+        for(Category category : this.categories){
+            if(category.getModel().getName().equals(categoryName)){
+                return false;
+            }
+        }
+
         if(categoryName != null){
             return this.addCategory(categoryName);
         }
