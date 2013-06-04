@@ -31,11 +31,21 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
         this.encryption = encryption;
     }
 
-    public PasswordJsonNode(char [] password, EncryptionCore encryption) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+    public PasswordJsonNode(char [] password, EncryptionCore encryption) {
         this.encryption = encryption;
 
         //Verschlüsselung des Passworts!
-        this.encryptedPassword = encryption.encrypt(new String(password));
+        try {
+            this.encryptedPassword = encryption.encrypt(new String(password));
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (BadPaddingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
         //Verschlüsseltes Passwort und initialisierungs Vektor in die entsprechenden Variablen speichern
         this.iv = encryption.getIV();

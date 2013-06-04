@@ -21,7 +21,7 @@ public class CategoryControl implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(this.category.getToggle().equals(e.getSource())){
             this.category.getModel().setOpened(this.category.getToggle().isSelected());
-            System.out.println(this.category.getModel().getName());
+            //System.out.println(this.category.getModel().getName());
             /*if(this.category.getToggle().isSelected()){
                 this.category.getToggle().setText("-");
             } else {
