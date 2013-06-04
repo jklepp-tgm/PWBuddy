@@ -1,56 +1,46 @@
 package com.pwbuddy;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class PBDataSetModel implements Comparable <PBDataSetModel> {
-    private int lineCount;
+public class Category extends JPanel implements Comparable<Category>{
+    private CategoryModel categoryModel;
+    private JToggleButton toggle;
+    private CategoryControl categoryControl;
+    private CategoryJsonNode categoryJsonNode;
+    public Category(String name, CategoryJsonNode categoryJsonNode) {
+        this.categoryJsonNode = categoryJsonNode;
 
-    private PBDataSet dataSet;
+        this.categoryModel = new CategoryModel(this, name);
+        this.setLayout(new BorderLayout());
 
-    private String name;
+        this.toggle = new JToggleButton(this.getModel().getName());
+        this.add(this.toggle, BorderLayout.CENTER);
 
-    public PBDataSetModel(PBDataSet dataSet, String name){
-        this.dataSet = dataSet;
-        this.name = name;
-        this.lineCount = 1;
+        this.categoryControl = new CategoryControl(this);
+        this.toggle.addActionListener(this.categoryControl);
     }
 
-    /**
-     * @return Anzahl der Zeilen welche vom Datensatz belegt werden.
-     */
-    public int getGridHeight(){
-        if(isOpened()){
-            return this.lineCount;
-        } else {
-            return 1; //höhe=1 für die Kopfzeile!
+    public CategoryModel getModel() {
+        return categoryModel;
+    }
+
+    public JToggleButton getToggle() {
+        return toggle;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Container contentView = SwingUtilities.getAncestorOfClass(ContentView.class, this); //etwas unschön
+        if(contentView != null){
+            contentView.revalidate();
+            contentView.repaint();
         }
-    }
-
-    /**
-     * Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden
-     *
-     * @return ist der dataSet geöffnet?
-     */
-    public boolean isOpened() {
-        return this.getDataSet().getToggle().isSelected();
-    }
-
-    public void setOpened(boolean opened) {
-        this.getDataSet().getToggle().setSelected(opened);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    protected PBDataSet getDataSet() {
-        return dataSet;
     }
 
     /**
@@ -92,7 +82,7 @@ public class PBDataSetModel implements Comparable <PBDataSetModel> {
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBDataSetModel o) {
-        return this.getName().compareTo(o.getName());
+    public int compareTo(Category o) {
+        return this.getModel().compareTo(o.getModel());
     }
 }

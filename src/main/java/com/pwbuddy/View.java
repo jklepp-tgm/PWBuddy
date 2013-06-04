@@ -1,7 +1,5 @@
 package com.pwbuddy;
 
-import sun.swing.ImageIconUIResource;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,11 +7,11 @@ import java.awt.*;
  * @author Jakob Klepp
  * @since 2013-04-09
  */
-public class PBView extends JPanel{
-    private PBModel m;
+public class View extends JPanel{
+    private Model m;
 
     //Enhält Categories und DataSets
-    private PBContentView content;
+    private ContentView content;
 
     //Macht content scrollbar
     private JScrollPane scrollPane;
@@ -23,11 +21,11 @@ public class PBView extends JPanel{
     private JButton addCategoryButton;
     private JButton addDataSetButton;
 
-    public PBView(PBModel m){
+    public View(Model m){
         super(new BorderLayout());
         this.m = m;
 
-        this.content = new PBContentView(m);
+        this.content = new ContentView(m);
 
         this.addElementPanel = new JPanel(new GridLayout(1, 3));
         this.addCategoryButton = new JButton("Kategorie");
@@ -49,5 +47,18 @@ public class PBView extends JPanel{
 
         this.scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public JButton getAddCategoryButton() {
+        return addCategoryButton;
+    }
+
+    public JButton getAddDataSetButton() {
+        return addDataSetButton;
+    }
+
+    public void setControl(Control c){
+        this.addDataSetButton.addActionListener(c);
+        this.addCategoryButton.addActionListener(c);
     }
 }

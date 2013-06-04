@@ -8,17 +8,17 @@ import java.util.Iterator;
  * @author Jakob Klepp
  * @since 2013-05-22
  */
-public class PBContentView extends JPanel {
-    private PBModel m;
+public class ContentView extends JPanel {
+    private Model m;
 
-    public PBContentView(PBModel m){
+    public ContentView(Model m){
         this.m = m;
-        this.setLayout(new PBRowLayout());
+        this.setLayout(new RowLayout());
         this.setBackground(Color.CYAN);
 
     }
 
-    public PBModel getModel() {
+    public Model getModel() {
         return m;
     }
 
@@ -29,15 +29,15 @@ public class PBContentView extends JPanel {
         this.removeAll();
 
         //Über alle categories iterieren und sie dem scrollPane hinzufügen
-        for(Iterator<PBCategory> categoryIterator = m.iterator(); categoryIterator.hasNext();){
-            PBCategory category = categoryIterator.next();
+        for(Iterator<Category> categoryIterator = m.iterator(); categoryIterator.hasNext();){
+            Category category = categoryIterator.next();
 
             //category zum scrollPane hinzufügen
             this.add(category);
 
             //Wenn eine categorie geöffnet ist soll auch ihr Inhalt gezeichnet werden
             if(category.getModel().isOpened()){
-                for (PBDataSet dataSet : category.getModel()) {
+                for (DataSet dataSet : category.getModel()) {
                     //zum scrollPane hinzufügen
                     this.add(dataSet);
                 }

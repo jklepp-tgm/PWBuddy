@@ -1,21 +1,39 @@
 {
-    "Datasets":
-        [
-            {
-                "Category":"Cat 3",
-                "Title":"bla",
+    "Categories":
+    {
+        "Cat 3":
+        {
+            "bla":{
+
                 "Username":"blubb",
-                "Password":"1C0BDD78AEEA93",
-                "e-Mail":"blub@bla.net",
-                "key":"value"
+                "Password":{
+                    "Crypt":"1C0BDD78AEEA93",
+                    "IV":"KSN898aSkaNOIoosjx"
+                },
+                "Website":"bla.net",
+                "e-Mail":"blub@bla.net"
             },
-            {
-                "Category":"Cat 1",
-                "Title":"bla2",
-                "Username":"blabb",
-                "Password":"1C0BDD78AEEA93",
-                "key":"value"
+            "qwe":{
+                "Username":"blö",
+                "Password":{
+                    "Crypt":"1C0SFADS8AEEA93",
+                    "IV":"KSN898aSkaNOIoosjx"
+                },
+                "Website":"bla.net",
+                "e-Mail":"blö@bla.net"
             }
-        ],
-    "Version":0.1
+        },
+        "Cat 1":{
+            "bla2":{
+                "Username":"blabb",
+                "Password":{
+                    "Crypt":"1C0BDD78AEEA93",
+                    "IV":"KSN898aSkaNOIoosjx"
+                },
+                "Website":"bla.net",
+                "e-Mail":"blö@bla.net"
+            }
+        }
+    },
+    "Version":4
 }

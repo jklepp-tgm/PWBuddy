@@ -1,44 +1,58 @@
 package com.pwbuddy;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class PBCategory extends JPanel implements Comparable<PBCategory>{
-    private PBCategoryModel categoryModel;
-    private JToggleButton toggle;
-    private PBCategoryControl categoryControl;
-    public PBCategory(String name) {
-        this.setBackground(new Color((int)(Math.random()*0xFFFFFF)));
-        this.categoryModel = new PBCategoryModel(this, name);
-        this.setLayout(new BorderLayout());
+public class DataSetModel implements Comparable <DataSetModel> {
+    private int lineCount;
 
-        this.toggle = new JToggleButton(this.getModel().getName());
-        this.add(this.toggle, BorderLayout.CENTER);
+    private DataSet dataSet;
 
-        this.categoryControl = new PBCategoryControl(this);
-        this.toggle.addActionListener(this.categoryControl);
+    private String name;
+
+    private DataSetJsonNode jsonNode;
+
+    public DataSetModel(DataSet dataSet, String name){
+        this.dataSet = dataSet;
+        this.name = name;
+        this.lineCount = 1;
     }
 
-    public PBCategoryModel getModel() {
-        return categoryModel;
-    }
-
-    public JToggleButton getToggle() {
-        return toggle;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Container contentView = SwingUtilities.getAncestorOfClass(PBContentView.class, this); //etwas unschön
-        if(contentView != null){
-            contentView.revalidate();
-            contentView.repaint();
+    /**
+     * @return Anzahl der Zeilen welche vom Datensatz belegt werden.
+     */
+    public int getGridHeight(){
+        if(isOpened()){
+            return this.lineCount;
+        } else {
+            return 1; //höhe=1 für die Kopfzeile!
         }
+    }
+
+    /**
+     * Wenn ein dataSet geöffnet ist soll der Inhalt gerendert werden
+     *
+     * @return ist der dataSet geöffnet?
+     */
+    public boolean isOpened() {
+        return this.getDataSet().getToggle().isSelected();
+    }
+
+    public void setOpened(boolean opened) {
+        this.getDataSet().getToggle().setSelected(opened);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    protected DataSet getDataSet() {
+        return dataSet;
     }
 
     /**
@@ -80,7 +94,7 @@ public class PBCategory extends JPanel implements Comparable<PBCategory>{
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBCategory o) {
-        return this.getModel().compareTo(o.getModel());
+    public int compareTo(DataSetModel o) {
+        return this.getName().compareTo(o.getName());
     }
 }

@@ -19,8 +19,12 @@ import java.util.*;
  * @author Jakob Klepp
  * @since 2013-05-31
  */
-public class PBRootNode extends AccessibleJsonRootNode {
-    private HashMap <JsonStringNode, JsonNode> fields;
+public class RootNode extends AccessibleAbstractJsonObject {
+    private CategoriesObject categoriesObject;
+    private JsonStringNode categoriesObjectName;
+
+    private JsonNode version;
+    private JsonStringNode versionName;
 
     private JsonFormatter jsonFormatter;
 
@@ -33,13 +37,12 @@ public class PBRootNode extends AccessibleJsonRootNode {
     private BufferedWriter bufferedWriter;
 
     /** Soll nicht verwendet werden */
-    protected PBRootNode(){}
+    protected RootNode(){}
 
     /**
      * @param file Daten werden aus diesen File eingelesen und in ebendieses geschrieben.
      */
-    public PBRootNode(File file){
-        this.fields = new HashMap<JsonStringNode, JsonNode>();
+    public RootNode(File file){
 
         this.file = file;
 
@@ -74,35 +77,25 @@ public class PBRootNode extends AccessibleJsonRootNode {
             } catch (InvalidSyntaxException e) {
                 //Json Dokument ist ungültig
                 //Backup erstellen
-                Timestamp tstamp = new Timestamp(System.currentTimeMillis());
-                File newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
+                File newFile = backupJsonDokument();
                 System.out.println("Json Dokument ungültig, default Dokument wird verwendet. Aktuelles Dokument wir nach " + newFile + "verschoben.");
-                try {
-                    Files.move(Paths.get(this.file.toURI()), Paths.get(newFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+
                 //Neues erstellen
                 rootNode = defaultRootNode;
             }
         }
 
-        //Überprüfen ob das Json Objekt eine ArrayNode "DataSets" hat
-        //Wenn nicht "DataSets" node erstellen
+        this.categoriesObjectName = JsonNodeFactories.string("Categories");
+        this.categoriesObject = new CategoriesObject(rootNode.getObjectNode(this.categoriesObjectName.getText()));
 
-        //Überprüfen ob Json Objekt eine "Version" Node hat
-        //Überprüfen ob "Version" Node mit der aktuellen Version übereinstimmt
-
-        this.fields.putAll(rootNode.getFields());
+        this.versionName = JsonNodeFactories.string("Version");
+        this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName.getText()));
 
         this.flush();
     }
 
     /**
      * Schreibt Json in File
-     *
-     * ToDo herausfinden warum anstatt des richtigen Jsondokuments nur {} geschrieben wird
-     * ToDo fixen
      */
     public void flush(){
         String json = this.jsonFormatter.format(this);
@@ -111,6 +104,29 @@ public class PBRootNode extends AccessibleJsonRootNode {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Kopiert die Json Dokumentdatei nach *alter Pfad*.*Timestamp*
+     *
+     * @return Ort wo backup erstellt wurde, null wenn kein backup erstellt werden konnte
+     */
+    public File backupJsonDokument(){
+        Timestamp tstamp = new Timestamp(System.currentTimeMillis());
+        File newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
+        boolean problemLos = false;
+        while(!problemLos){
+            try {
+                Files.copy(this.file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                problemLos = true;
+            } catch (FileAlreadyExistsException | DirectoryNotEmptyException e) {
+                tstamp = new Timestamp(System.currentTimeMillis());
+                newFile = new File(this.file.getAbsolutePath() + "." + tstamp.getTime());
+            } catch (IOException ioe) {
+                return null;
+            }
+        }
+        return newFile;
     }
 
     /**
@@ -142,7 +158,7 @@ public class PBRootNode extends AccessibleJsonRootNode {
         BufferedWriter writer = null;
         if(file == this.file){
             if(this.bufferedWriter == null){
-                FileWriter fileWriter = new FileWriter(file);
+                FileWriter fileWriter = new FileWriter(file, false);
                 this.bufferedWriter = new BufferedWriter(fileWriter);
             }
             writer = this.bufferedWriter;
@@ -194,46 +210,11 @@ public class PBRootNode extends AccessibleJsonRootNode {
         JsonObjectNodeBuilder builder;
         builder = JsonNodeBuilders.anObjectBuilder();
 
-        builder.withField("DataSets", JsonNodeBuilders.anArrayBuilder());
-        builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + PBModel.JSON_DOCUMENT_VERSION));
+        builder.withField("Categories", JsonNodeBuilders.anObjectBuilder());
+        builder.withField("Version", JsonNodeBuilders.aNumberBuilder("" + Model.JSON_DOCUMENT_VERSION));
 
         JsonRootNode node = builder.build();
         return node;
-    }
-
-    /**
-     * @return OBJECT
-     */
-    @Override
-    public JsonNodeType getType() {
-        return JsonNodeType.OBJECT;
-    }
-
-    /**
-     * k.T.
-     * @return false
-     */
-    @Override
-    public boolean hasText() {
-        return false;
-    }
-
-    /**
-     * @return the text associated with this node
-     * @throws IllegalStateException if hasText() returns false, indicating this type of node doesn't have text.
-     */
-    @Override
-    public String getText() {
-        throw new IllegalStateException("Nope, kein Text");
-    }
-
-    /**
-     * Ja hats wenn auch vielleicht 0
-     * @return true
-     */
-    @Override
-    public boolean hasFields() {
-        return true;
     }
 
     /**
@@ -246,7 +227,11 @@ public class PBRootNode extends AccessibleJsonRootNode {
      */
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
-        return this.fields;
+        HashMap <JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
+        //Muss im falle einer Dokumentstruckturänderung geändert werden.
+        fields.put(this.categoriesObjectName, this.categoriesObject);
+        fields.put(this.versionName, this.version);
+        return fields;
     }
 
     /**
@@ -268,27 +253,35 @@ public class PBRootNode extends AccessibleJsonRootNode {
         return fieldList;
     }
 
-    /**
-     * Ja hats wenn auch vielleicht 0
-     * @return true
-     */
-    @Override
-    public boolean hasElements() {
-        return true;
-    }
+    public class CategoriesObject extends AccessibleAbstractJsonObject {
+        private HashMap<JsonStringNode, JsonNode> fields;
 
-    /**
-     * Keine Garantie für Ordnung oder Unordnung
-     *
-     * @return the elements associated with this node
-     * @throws IllegalStateException if hasElements() returns false, indicating this type of node doesn't support elements.
-     */
-    @Override
-    public List<JsonNode> getElements() {
-        ArrayList <JsonNode> nodes= new ArrayList<JsonNode>();
-        for(Map.Entry <JsonStringNode, JsonNode> entry : this.getFields().entrySet()) {
-            nodes.add(entry.getValue());
+        public CategoriesObject(Map<JsonStringNode, JsonNode> fields){
+            this.fields = new HashMap<JsonStringNode, JsonNode>();
+            this.fields.putAll(fields);
         }
-        return nodes;
+
+        /**
+         * Übernimmt die Fields einer anderen (Object)Node
+         *
+         * @param objectNode Node von der die Fields übernommen werden sollen
+         * @throws java.lang.IllegalStateException wenn objectNode keine fields unterstützt.
+         */
+        public CategoriesObject(JsonNode objectNode){
+            this(objectNode.getFields());
+        }
+
+        /**
+         * Gets the fields associated with this node as a map of name to value.  Note that JSON permits
+         * duplicated keys in an object, though in practice this is rare, and in this case, this method
+         * will return a map containing a single entry of each unique key.
+         *
+         * @return the fields associated with this node
+         * @throws IllegalStateException if hasFields() returns false, indicating this type of node doesn't support fields.
+         */
+        @Override
+        public Map<JsonStringNode, JsonNode> getFields() {
+            return this.fields;
+        }
     }
 }

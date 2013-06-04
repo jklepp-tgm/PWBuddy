@@ -3,20 +3,21 @@ package com.pwbuddy;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author Jakob Klepp
  * @since 2013-05-17
  */
-public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObservable<PBDataSet>{
-    private PBDataSetModel dataSetModel;
+public class DataSet extends JPanel implements Comparable <DataSet> {
+    private DataSetModel dataSetModel;
     private JToggleButton toggle;
-    private PBDataSetControl dataSetControl;
+    private DataSetControl dataSetControl;
     private JLabel label;
+    private DataSetJsonNode dataSetJsonNode;
 
-    private HashSet <IPBObserver<PBDataSet>> observers;
-    public PBDataSet(String name){
-        this.dataSetModel = new PBDataSetModel(this, name);
+    public DataSet(String name, DataSetJsonNode dataSetJsonNode){
+        this.dataSetModel = new DataSetModel(this, name);
         this.setLayout(new BorderLayout());
 
         this.label = new JLabel(".");
@@ -26,13 +27,11 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
         this.toggle = new JToggleButton(this.getModel().getName());
         this.add(toggle, BorderLayout.CENTER);
 
-        this.dataSetControl = new PBDataSetControl(this);
+        this.dataSetControl = new DataSetControl(this);
         this.toggle.addActionListener(this.dataSetControl);
-
-        this.observers = new HashSet<IPBObserver<PBDataSet>>();
     }
 
-    public PBDataSetModel getModel() {
+    public DataSetModel getModel() {
         return dataSetModel;
     }
 
@@ -43,7 +42,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        Container contentView = SwingUtilities.getAncestorOfClass(PBContentView.class, this); //etwas unschön
+        Container contentView = SwingUtilities.getAncestorOfClass(ContentView.class, this); //etwas unschön
         if(contentView != null){
             contentView.revalidate();
             contentView.repaint();
@@ -89,39 +88,7 @@ public class PBDataSet extends JPanel implements Comparable <PBDataSet>, IPBObse
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo(PBDataSet o) {
+    public int compareTo(DataSet o) {
         return this.getModel().compareTo(o.getModel());
-    }
-
-    /**
-     * Einen Observer hinzufügen
-     *
-     * @param observer welcher hinzugefügt werden soll
-     */
-    @Override
-    public void addPBObserver(IPBObserver observer) {
-        this.observers.add(observer);
-    }
-
-    /**
-     * Einen Observer entfernen
-     *
-     * @param observer welcher entfernt werden soll
-     */
-    @Override
-    public void removePBObserver(IPBObserver observer) {
-        this.observers.remove(observer);
-    }
-
-    /**
-     * Alle Observer über ein Ereignis benachrichtigen
-     *
-     * @param eventType
-     */
-    @Override
-    public void notifyPBObservers(IPBObserver.PBEventType eventType) {
-        for(IPBObserver<PBDataSet> observer : this.observers){
-            observer.eventOcurred(this, eventType);
-        }
     }
 }

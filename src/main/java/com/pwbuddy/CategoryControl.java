@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
  * @author Jakob Klepp
  * @since 2013-05-26
  */
-public class PBCategoryControl implements ActionListener{
-    private PBCategory category;
+public class CategoryControl implements ActionListener{
+    private Category category;
 
-    public PBCategoryControl(PBCategory category){
+    public CategoryControl(Category category){
         this.category = category;
     }
 
@@ -21,7 +21,7 @@ public class PBCategoryControl implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(this.category.getToggle().equals(e.getSource())){
             this.category.getModel().setOpened(this.category.getToggle().isSelected());
-            System.out.println(this.category.getModel().getName());
+            //System.out.println(this.category.getModel().getName());
             /*if(this.category.getToggle().isSelected()){
                 this.category.getToggle().setText("-");
             } else {

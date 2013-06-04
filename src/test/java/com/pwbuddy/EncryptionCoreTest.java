@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
  * @author Jakob Klepp
  * @since 2013-05-28
  */
-public class PBEncryptionCoreTest {
-    private PBEncryptionCore encryptionCore;
+public class EncryptionCoreTest {
+    private EncryptionCore encryptionCore;
 
     private String inputString;
 
@@ -20,7 +20,7 @@ public class PBEncryptionCoreTest {
     @Before
     public void before() throws Exception {
         String password = "abc123";
-        this.encryptionCore = new PBEncryptionCore(password);
+        this.encryptionCore = new EncryptionCore(password);
         this.inputString = "bla";
         this.encryptedString = "D1TSDJ7FS4Lq+tMzQSdSzg==";
         this.initVector = "MN5Du+gB0RyEtBU3QzJrTw==";
