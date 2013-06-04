@@ -2,6 +2,7 @@ package com.pwbuddy;
 import argo.jdom.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -21,9 +22,12 @@ public class Model {
 
     /** Der Dateipfad welcher im Normalfall verwendet werden soll */
     public static final String DEFAULT_JSON_DOCUMENT_PATH = System.getProperty("user.home") + "/.pwbuddy/passwords.json";
+    private EncryptionCore encryption;
 
     public Model(File file){
         this.categories = new PriorityQueue<Category>();
+
+        this.encryption = new EncryptionCore(new String(this.getPasswordFromUser()));
 
         this.jsonRootNode = new RootNode(file);
 
@@ -40,7 +44,7 @@ public class Model {
 
         //Über über Categories iterieren
         for (JsonField categoryField : categoriesObject.getFieldList()) {
-            CategoryJsonNode categoryNode = new CategoryJsonNode(categoryField.getValue());
+            CategoryJsonNode categoryNode = new CategoryJsonNode(categoryField.getValue(), this.encryption);
             String categoryName = categoryField.getName().getText();
 
             //Category erzeugen.
@@ -102,7 +106,7 @@ public class Model {
         String[] categoryNames = new String[this.categories.size()];
         int i = 0;
         for(Category category : this.categories){
-            categoryNames[++i] = category.getModel().getName();
+            categoryNames[i++] = category.getModel().getName();
         }
         DataSetInputPanel inputPanel = new DataSetInputPanel(categoryNames);
         javax.swing.JOptionPane.showConfirmDialog(
@@ -128,11 +132,31 @@ public class Model {
                 inputPanel.websiteF.getText(),
                 inputPanel.usernameF.getText(),
                 inputPanel.emailF.getText(),
-                new PasswordJsonNode(inputPanel.passwordF.getPassword())
+                new PasswordJsonNode(inputPanel.passwordF.getPassword(), this.encryption),
+                this.encryption
         );
 
         DataSet dataSet = new DataSet(dataSetName, dataSetJsonNode);
         return category.getModel().add(dataSet);
+    }
+
+    public char[] getPasswordFromUser(){
+        JPanel askForPassword = new JPanel();
+        askForPassword.setLayout(new GridLayout(0, 2, 2, 2));
+        JPasswordField passwordField = new JPasswordField();
+        askForPassword.add(new JLabel("Masterpasswort: "));
+        askForPassword.add(passwordField);
+
+
+        javax.swing.JOptionPane.showConfirmDialog(
+                null,
+                askForPassword,
+                "Eingabe DataSet",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        return passwordField.getPassword();
     }
 
     /**

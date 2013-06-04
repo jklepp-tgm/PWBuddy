@@ -19,18 +19,19 @@ public class DataSetJsonNode extends AccessibleAbstractJsonObject {
 
     private PasswordJsonNode password;
 
-    public DataSetJsonNode(String website, String username, String email, JsonNode password){
+    public DataSetJsonNode(String website, String username, String email, JsonNode password, EncryptionCore encryption){
         this.website = website;
         this.username = username;
         this.email = email;
-        this.password = new PasswordJsonNode(password);
+        this.password = new PasswordJsonNode(password, encryption);
     }
 
-    public DataSetJsonNode(JsonNode json){
+    public DataSetJsonNode(JsonNode json, EncryptionCore encryption){
         this(json.getStringValue("Website"),
                 json.getStringValue("Username"),
                 json.getStringValue("eMail"),
-                json.getNode("Password")
+                json.getNode("Password"),
+                encryption
         );
     }
     /**

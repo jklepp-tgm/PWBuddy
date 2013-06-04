@@ -5,6 +5,10 @@ import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonStringNode;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,16 +20,25 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
     private String encryptedPassword;
     private String iv;
 
-    public PasswordJsonNode(JsonNode passwordNode) {
-        this.encryptedPassword = passwordNode.getStringValue("1C0SFADS8AEEA93");
+    private EncryptionCore encryption;
+
+    /** Zugriff verhindern */
+    private PasswordJsonNode(){}
+
+    public PasswordJsonNode(JsonNode passwordNode, EncryptionCore encryption) {
+        this.encryptedPassword = passwordNode.getStringValue("Crypt");
         this.iv = passwordNode.getStringValue("IV");
+        this.encryption = encryption;
     }
 
-    public PasswordJsonNode(char [] password){
-        //ToDo Verschlüsselung des Passworts!
+    public PasswordJsonNode(char [] password, EncryptionCore encryption) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+        this.encryption = encryption;
+
+        //Verschlüsselung des Passworts!
+        this.encryptedPassword = encryption.encrypt(new String(password));
+
         //Verschlüsseltes Passwort und initialisierungs Vektor in die entsprechenden Variablen speichern
-        //this.encryptedPassword =
-        //this.iv =
+        this.iv = encryption.getIV();
     }
 
     /**

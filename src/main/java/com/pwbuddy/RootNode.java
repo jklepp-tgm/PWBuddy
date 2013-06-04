@@ -158,7 +158,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
         BufferedWriter writer = null;
         if(file == this.file){
             if(this.bufferedWriter == null){
-                FileWriter fileWriter = new FileWriter(file);
+                FileWriter fileWriter = new FileWriter(file, false);
                 this.bufferedWriter = new BufferedWriter(fileWriter);
             }
             writer = this.bufferedWriter;

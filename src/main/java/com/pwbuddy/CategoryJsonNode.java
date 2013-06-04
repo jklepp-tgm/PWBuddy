@@ -21,10 +21,10 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
     /**
      * @param fields JsonNodes welche keine Instanzen von DataSetJsonNode sind werden ignoriert
      */
-    public CategoryJsonNode(Map<JsonStringNode, JsonNode> fields){
+    public CategoryJsonNode(Map<JsonStringNode, JsonNode> fields, EncryptionCore encryption){
         this();
         for(Map.Entry<JsonStringNode, JsonNode> entry : fields.entrySet()){
-            DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(entry.getValue());
+            DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(entry.getValue(), encryption);
             fields.put(entry.getKey(), dataSetJsonNode);
         }
     }
@@ -33,8 +33,8 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
      * @param objectNode sollte vom Typ OBJECT sein, Fields mit einem Value welches kein
      *                   DataSetJsonNode ist werden ignoriert
      */
-    public CategoryJsonNode(JsonNode objectNode){
-        this(objectNode.getFields());
+    public CategoryJsonNode(JsonNode objectNode, EncryptionCore encryption){
+        this(objectNode.getFields(), encryption);
     }
 
     /**
