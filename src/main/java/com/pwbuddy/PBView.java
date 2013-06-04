@@ -32,6 +32,8 @@ public class PBView extends JPanel{
         this.addElementPanel = new JPanel(new GridLayout(1, 3));
         this.addCategoryButton = new JButton("Kategorie");
         this.addElementPanel.add(this.addCategoryButton);
+
+        // ToDo NullPointerException (fetching image) abfangen
         final Image imageObject = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/org/freedesktop/tango/22x22/actions/document-new.png"));
         //Bild zeichnen und zum addElementPanel hinzufügen
         this.addElementPanel.add(new JPanel(){
