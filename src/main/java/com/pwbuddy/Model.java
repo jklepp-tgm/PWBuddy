@@ -47,7 +47,8 @@ public class Model {
             String categoryName = categoryField.getName().getText();
 
             //Category erzeugen.
-            Category category = new Category(categoryName, categoryNode);
+            Category category = new Category(categoryName, categoryNode, this.encryption);
+            this.categories.add(category);
         }
 
         //Json Baum alle 5 Sekunden sichern
@@ -80,7 +81,7 @@ public class Model {
      * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
     public boolean addCategory(String categoryName){
-        return addCategory(new Category(categoryName, new CategoryJsonNode()));
+        return addCategory(new Category(categoryName, new CategoryJsonNode(), this.encryption));
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.pwbuddy;
 
+import argo.jdom.JsonField;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,10 +14,20 @@ public class Category extends JPanel implements Comparable<Category>{
     private JToggleButton toggle;
     private CategoryControl categoryControl;
     private CategoryJsonNode categoryJsonNode;
-    public Category(String name, CategoryJsonNode categoryJsonNode) {
+    public Category(String name, CategoryJsonNode categoryJsonNode, EncryptionCore encryption) {
+        this.categoryModel = new CategoryModel(this, name);
         this.categoryJsonNode = categoryJsonNode;
 
-        this.categoryModel = new CategoryModel(this, name);
+        //DataSets aus CategoryJsonNode auslesen
+        for(JsonField field : this.categoryJsonNode.getFieldList()){
+            String dataSetName = field.getName().getText();
+            DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(field.getValue(), encryption);
+
+            DataSet dataSet = new DataSet(dataSetName, dataSetJsonNode);
+            this.getModel().add(dataSet); //#addDataSet(DataSet) könnte Probleme machen
+        }
+
+        //Grafisches zeug
         this.setLayout(new BorderLayout());
 
         this.toggle = new JToggleButton(this.getModel().getName());
