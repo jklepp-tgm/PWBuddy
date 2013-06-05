@@ -2,20 +2,22 @@ package com.pwbuddy;
 
 import argo.jdom.AccessibleAbstractJsonObject;
 import argo.jdom.JsonNode;
+import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonStringNode;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Jakob Klepp
  * @since 2013-06-04
  */
 public class CategoryJsonNode extends AccessibleAbstractJsonObject {
-    private HashMap <JsonStringNode, DataSetJsonNode> fields;
+    private TreeMap<JsonStringNode, DataSetJsonNode> fields;
 
     public CategoryJsonNode(){
-        this.fields = new HashMap<JsonStringNode, DataSetJsonNode>();
+        this.fields = new TreeMap<JsonStringNode, DataSetJsonNode>();
     }
 
     /**
@@ -35,6 +37,23 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
      */
     public CategoryJsonNode(JsonNode objectNode, EncryptionCore encryption){
         this(objectNode.getFields(), encryption);
+    }
+
+    /**
+     * Fügt der Kategorie-Node eine DataSet-Node hinzu
+     *
+     * @param dataSetName Name des DataSets
+     * @param dataSetJsonNode Node des DataSets
+     * @return true wenn erfolgreich hinzugefügt
+     */
+    public boolean addDataSetNode(String dataSetName, DataSetJsonNode dataSetJsonNode){
+        for(JsonStringNode stringNode : this.fields.keySet()){
+            if(stringNode.getText().equals(dataSetName)){
+                return false;
+            }
+        }
+
+        return this.fields.put(JsonNodeFactories.string(dataSetName), dataSetJsonNode) != null;
     }
 
     /**

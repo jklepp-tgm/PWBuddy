@@ -33,6 +33,18 @@ public class Category extends JPanel implements Comparable<Category>{
         return toggle;
     }
 
+    public String getName() {
+        return this.getModel().getName();
+    }
+
+    public CategoryJsonNode getCategoryJsonNode() {
+        return categoryJsonNode;
+    }
+
+    public boolean addDataSet(DataSet dataSet){
+        return this.getModel().add(dataSet) && this.getCategoryJsonNode().addDataSetNode(dataSet.getName(), dataSet.getDataSetJsonNode());
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

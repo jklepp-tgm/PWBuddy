@@ -265,10 +265,10 @@ public class RootNode extends AccessibleAbstractJsonObject {
     }
 
     public class CategoriesObject extends AccessibleAbstractJsonObject {
-        private HashMap<JsonStringNode, JsonNode> fields;
+        private TreeMap<JsonStringNode, JsonNode> fields;
 
         public CategoriesObject(Map<JsonStringNode, JsonNode> fields){
-            this.fields = new HashMap<JsonStringNode, JsonNode>();
+            this.fields = new TreeMap<JsonStringNode, JsonNode>();
             this.fields.putAll(fields);
         }
 
@@ -291,7 +291,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
          */
         public boolean addCategoryNode(String categoryName, CategoryJsonNode categoryJsonNode){
             for(JsonStringNode stringNode : this.fields.keySet()){
-                if(!stringNode.getText().equals(categoryName)){
+                if(stringNode.getText().equals(categoryName)){
                     return false;
                 }
             }

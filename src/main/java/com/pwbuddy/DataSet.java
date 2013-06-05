@@ -39,6 +39,14 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         return toggle;
     }
 
+    public String getName(){
+        return this.getModel().getName();
+    }
+
+    public DataSetJsonNode getDataSetJsonNode() {
+        return dataSetJsonNode;
+    }
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);

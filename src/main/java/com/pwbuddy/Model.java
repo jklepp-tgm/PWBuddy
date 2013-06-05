@@ -70,7 +70,7 @@ public class Model {
      * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
     protected boolean addCategory(Category category){
-        return this.categories.add(category);
+        return this.categories.add(category) && this.jsonRootNode.addCategoryNode(category.getName(), category.getCategoryJsonNode());
     }
 
     /**
@@ -143,7 +143,8 @@ public class Model {
         );
 
         DataSet dataSet = new DataSet(dataSetName, dataSetJsonNode);
-        return category.getModel().add(dataSet);
+        assert category != null;
+        return category.addDataSet(dataSet);
     }
 
     public char[] getPasswordFromUser(){
