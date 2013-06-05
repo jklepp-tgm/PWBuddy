@@ -42,7 +42,7 @@ public class ContentView extends JPanel {
             }
             if(categoryIterator.hasNext()){
                 JSeparator separator = new JSeparator();
-                separator.setPreferredSize(new Dimension(this.getSize().width, 3));
+                separator.setPreferredSize(new Dimension(this.getSize().width, 6));
                 this.add(separator);
             }
         }
