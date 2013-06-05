@@ -28,14 +28,10 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
 
         this.toggle = new JToggleButton(this.getModel().getName());
         this.toggle.setBackground(Color.GRAY);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
         c.gridy = 0;
         this.add(toggle, c);
 
         this.label = new JLabel(".");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
         c.gridy = 1;
         this.add(label, c);
         this.label.setPreferredSize(new Dimension(1,1));

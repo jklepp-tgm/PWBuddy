@@ -159,7 +159,7 @@ public class Model {
         javax.swing.JOptionPane.showConfirmDialog(
                 null,
                 askForPassword,
-                "Eingabe DataSet",
+                "Eingabe Passwort",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE
         );
