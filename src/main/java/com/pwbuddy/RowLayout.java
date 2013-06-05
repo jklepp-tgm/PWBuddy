@@ -102,6 +102,7 @@ public class RowLayout implements LayoutManager {
      */
     @Override
     public void layoutContainer(Container target) {
+      synchronized (target.getTreeLock()){
         int yPos = 0;
         Dimension dimension = this.preferredLayoutSize(target);
 
@@ -109,5 +110,6 @@ public class RowLayout implements LayoutManager {
             component.setBounds(0, yPos, dimension.width, component.getPreferredSize().height);
             yPos += component.getPreferredSize().height;
         }
+      }
     }
 }
