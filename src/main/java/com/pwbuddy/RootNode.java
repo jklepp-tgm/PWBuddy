@@ -167,22 +167,14 @@ public class RootNode extends AccessibleAbstractJsonObject {
 
         //String --> File; Wenn es sich beim file um this.file handelt soll der default writer verwendet werden
         BufferedWriter writer = null;
-        if(file == this.file){
-            if(this.bufferedWriter == null){
-                FileWriter fileWriter = new FileWriter(file, false);
-                this.bufferedWriter = new BufferedWriter(fileWriter);
-            }
-            writer = this.bufferedWriter;
-        } else {
-            FileWriter fileWriter = new FileWriter(file);
-            writer = new BufferedWriter(fileWriter);
-        }
+
+        FileWriter fileWriter = new FileWriter(file);
+        writer = new BufferedWriter(fileWriter);
+
         writer.write(string);
         writer.flush();
 
-        if(file != this.file){
-            writer.close();
-        }
+        writer.close();
     }
 
     /**

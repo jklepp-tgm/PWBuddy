@@ -27,7 +27,7 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
         this();
         for(Map.Entry<JsonStringNode, JsonNode> entry : fields.entrySet()){
             DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(entry.getValue(), encryption);
-            fields.put(entry.getKey(), dataSetJsonNode);
+            this.fields.put(entry.getKey(), dataSetJsonNode);
         }
     }
 
