@@ -18,17 +18,27 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
 
     public DataSet(String name, DataSetJsonNode dataSetJsonNode){
         this.dataSetModel = new DataSetModel(this, name);
-        this.setLayout(new BorderLayout());
+
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
 
         this.dataSetJsonNode = dataSetJsonNode;
 
-        this.label = new JLabel(".");
-        this.add(label, BorderLayout.SOUTH);
-        this.label.setPreferredSize(new Dimension(1,1));
-
         this.toggle = new JToggleButton(this.getModel().getName());
         this.toggle.setBackground(Color.GRAY);
-        this.add(toggle, BorderLayout.CENTER);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        this.add(toggle, c);
+
+        this.label = new JLabel(".");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 1;
+        this.add(label, c);
+        this.label.setPreferredSize(new Dimension(1,1));
 
         this.dataSetControl = new DataSetControl(this);
         this.toggle.addActionListener(this.dataSetControl);

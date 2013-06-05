@@ -52,7 +52,7 @@ public class RowLayout implements LayoutManager {
      */
     @Override
     public Dimension preferredLayoutSize(Container target) {
-        int height, width;
+        /*int height, width;
 
         width = 0;
 
@@ -67,7 +67,8 @@ public class RowLayout implements LayoutManager {
             }
         }
 
-        return new Dimension(width, height);
+        return new Dimension(width, height);     */
+        return new Dimension(target.getWidth(), target.getHeight());
     }
 
     /**
