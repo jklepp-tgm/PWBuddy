@@ -54,6 +54,8 @@ public class View extends JPanel{
         this.add(this.addElementPanel, BorderLayout.SOUTH);
 
         this.scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.scrollPane.getVerticalScrollBar().setUnitIncrement(12);
+        this.scrollPane.getHorizontalScrollBar().setUnitIncrement(12);
         this.add(scrollPane, BorderLayout.CENTER);
     }
 
