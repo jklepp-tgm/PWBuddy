@@ -46,7 +46,7 @@ public class DataSetJsonNode extends AccessibleAbstractJsonObject {
     public Map<JsonStringNode, JsonNode> getFields() {
         HashMap<JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
         fields.put(JsonNodeFactories.string("Website"), JsonNodeFactories.string(this.website));
-        fields.put(JsonNodeFactories.string("Usernam"), JsonNodeFactories.string(this.username));
+        fields.put(JsonNodeFactories.string("Username"), JsonNodeFactories.string(this.username));
         fields.put(JsonNodeFactories.string("eMail"), JsonNodeFactories.string(this.email));
         fields.put(JsonNodeFactories.string("Password"), this.password);
         return fields;
