@@ -10,14 +10,14 @@ import java.util.Set;
  * @author Jakob Klepp
  * @since 2013-06-02
  */
-public class DataSetInputPanel extends JPanel {
+public class DataSetIOPanel extends JPanel {
     public JTextField websiteF;
     public JTextField usernameF;
     public JTextField emailF;
     public JPasswordField passwordF;
     public JComboBox<String> categoryF;
 
-    public DataSetInputPanel(String [] categoryNames){
+    public DataSetIOPanel(String[] categoryNames){
         this.setLayout(new GridLayout(0, 2, 2, 2));
 
         this.add(new JLabel("Website: "));

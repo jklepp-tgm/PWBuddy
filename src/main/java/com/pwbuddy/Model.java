@@ -115,7 +115,7 @@ public class Model {
         for(Category category : this.categories){
             categoryNames[i++] = category.getModel().getName();
         }
-        DataSetInputPanel inputPanel = new DataSetInputPanel(categoryNames);
+        DataSetIOPanel inputPanel = new DataSetIOPanel(categoryNames);
         javax.swing.JOptionPane.showConfirmDialog(
                 null,
                 inputPanel,
