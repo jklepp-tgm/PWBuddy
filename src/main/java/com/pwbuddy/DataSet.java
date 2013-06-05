@@ -20,11 +20,14 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         this.dataSetModel = new DataSetModel(this, name);
         this.setLayout(new BorderLayout());
 
+        this.dataSetJsonNode = dataSetJsonNode;
+
         this.label = new JLabel(".");
         this.add(label, BorderLayout.SOUTH);
         this.label.setPreferredSize(new Dimension(1,1));
 
         this.toggle = new JToggleButton(this.getModel().getName());
+        this.toggle.setBackground(Color.GRAY);
         this.add(toggle, BorderLayout.CENTER);
 
         this.dataSetControl = new DataSetControl(this);

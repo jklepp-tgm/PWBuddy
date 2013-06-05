@@ -19,6 +19,7 @@ public class Category extends JPanel implements Comparable<Category>{
         this.setLayout(new BorderLayout());
 
         this.toggle = new JToggleButton(this.getModel().getName());
+        this.toggle.setBackground(Color.LIGHT_GRAY);
         this.add(this.toggle, BorderLayout.CENTER);
 
         this.categoryControl = new CategoryControl(this);
