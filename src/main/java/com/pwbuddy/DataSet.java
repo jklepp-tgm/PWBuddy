@@ -9,7 +9,7 @@ import java.util.Map;
  * @author Jakob Klepp
  * @since 2013-05-17
  */
-public class DataSet extends JLayeredPane implements Comparable <DataSet> {
+public class DataSet extends JPanel implements Comparable <DataSet> {
     private DataSetModel dataSetModel;
     private JToggleButton toggle;
     private DataSetControl dataSetControl;
