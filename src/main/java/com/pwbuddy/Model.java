@@ -97,7 +97,7 @@ public class Model {
             }
         }
 
-        if(categoryName != null){
+        if(categoryName != null && categoryName.length() > 0){
             return this.addCategory(categoryName);
         }
         return false;
