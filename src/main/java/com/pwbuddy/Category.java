@@ -61,6 +61,7 @@ public class Category extends JPanel implements Comparable<Category>{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         Container contentView = SwingUtilities.getAncestorOfClass(ContentView.class, this); //etwas unschön
         if(contentView != null){
             contentView.revalidate();
