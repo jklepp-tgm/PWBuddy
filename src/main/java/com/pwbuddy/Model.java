@@ -27,7 +27,19 @@ public class Model {
     public Model(File file){
         this.categories = new PriorityQueue<Category>();
 
-        this.encryption = new EncryptionCore(new String(this.getPasswordFromUser()));
+        char [] passwordChars = new char[0];
+        do {
+            passwordChars = this.getPasswordFromUser();
+            if(passwordChars == null){
+                System.out.println("Passworteingabe wurde abgebrochen, PWBuddy wird beendet.");
+                System.exit(0);
+            }
+            if(passwordChars.length == 0){
+                javax.swing.JOptionPane.showMessageDialog(null, "Passwort ungültig, bitte geben sie was ein.");
+            }
+        } while (passwordChars.length == 0);
+
+        this.encryption = new EncryptionCore(new String(passwordChars));
 
         this.jsonRootNode = new RootNode(file);
 
@@ -156,13 +168,17 @@ public class Model {
         askForPassword.add(passwordField);
 
 
-        javax.swing.JOptionPane.showConfirmDialog(
+        int status = javax.swing.JOptionPane.showConfirmDialog(
                 null,
                 askForPassword,
                 "Eingabe Passwort",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE
         );
+
+        if(status != 0){ //0 ... Ok Button
+            return null;
+        }
 
         return passwordField.getPassword();
     }
