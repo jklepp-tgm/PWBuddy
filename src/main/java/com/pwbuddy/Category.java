@@ -2,6 +2,7 @@ package com.pwbuddy;
 
 import argo.jdom.JsonField;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.PriorityQueue;
 
@@ -9,14 +10,19 @@ import java.util.PriorityQueue;
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class Category extends CategoryIOPanel implements Comparable<Category>{
+public class Category extends JPanel implements Comparable<Category>{
+    public JTextField categoryName;
+    public JTextField dataSetName;
+    public JButton createDataSet;
+
     private PriorityQueue<DataSet> dataSets;
     private CategoryControl categoryControl;
     private CategoryJsonNode categoryJsonNode;
     private String name;
 
     public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
-        super(m);
+        //ToDo GUI
+
         this.name = name;
         this.categoryJsonNode = categoryJsonNode;
         this.dataSets = new PriorityQueue<DataSet>();
