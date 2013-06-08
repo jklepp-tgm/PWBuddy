@@ -34,6 +34,7 @@ public class Control implements ActionListener, TreeSelectionListener {
      */
     @Override
     public void valueChanged(TreeSelectionEvent e) {
+        System.out.println(e);
         if(e.getSource() instanceof JComponent){
             this.v.setContentView((JComponent)e.getSource());
             this.v.repaint();

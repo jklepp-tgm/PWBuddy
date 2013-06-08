@@ -1,6 +1,7 @@
 package com.pwbuddy;
 
 import javax.swing.*;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
 /**
@@ -12,6 +13,7 @@ public class View extends JPanel{
     private Control c;
     private JPanel contentView;
     private JButton addCategoryButton;
+    private JTree tree;
 
     public View(Model m){
         super(new GridLayout());
@@ -19,8 +21,9 @@ public class View extends JPanel{
 
         JPanel categoriesPanel = new JPanel(new BorderLayout());
 
-        JTree tree = new JTree(m);
+        tree = new JTree(m);
         tree.addTreeSelectionListener(c);
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
         this.addCategoryButton = new JButton("+ Kategorie");
         categoriesPanel.add(this.addCategoryButton, BorderLayout.SOUTH);
@@ -49,6 +52,10 @@ public class View extends JPanel{
 
     public JButton getAddCategoryButton() {
         return addCategoryButton;
+    }
+
+    public JTree getTree() {
+        return tree;
     }
 
     @Override
