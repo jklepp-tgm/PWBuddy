@@ -21,7 +21,8 @@
                 },
                 "Website":"bla.net",
                 "e-Mail":"blö@bla.net"
-            }
+            },
+            "opened":true
         },
         "Cat 1":{
             "bla2":{
@@ -32,8 +33,9 @@
                 },
                 "Website":"bla.net",
                 "e-Mail":"blö@bla.net"
-            }
+            } ,
+            "opened":false
         }
     },
-    "Version":4
+    "Version":5
 }
