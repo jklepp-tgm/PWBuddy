@@ -4,50 +4,40 @@ import argo.jdom.JsonField;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.PriorityQueue;
 
 /**
  * @author Jakob Klepp
  * @since 2013-05-14
  */
-public class Category extends JPanel implements Comparable<Category>{
-    private CategoryModel categoryModel;
-    private JToggleButton toggle;
+public class Category extends CategoryIOPanel implements Comparable<Category>{
+    private PriorityQueue<DataSet> dataSets;
     private CategoryControl categoryControl;
     private CategoryJsonNode categoryJsonNode;
-    public Category(String name, CategoryJsonNode categoryJsonNode, EncryptionCore encryption) {
-        this.categoryModel = new CategoryModel(this, name);
+    private String name;
+
+    public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
+        super(m);
+        this.name = name;
         this.categoryJsonNode = categoryJsonNode;
+        this.dataSets = new PriorityQueue<DataSet>();
 
         //DataSets aus CategoryJsonNode auslesen
         for(JsonField field : this.categoryJsonNode.getFieldList()){
             String dataSetName = field.getName().getText();
-            DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(field.getValue(), encryption);
+            DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(field.getValue(), m.getEncryption());
 
-            DataSet dataSet = new DataSet(dataSetName, dataSetJsonNode);
-            this.getModel().add(dataSet); //#addDataSet(DataSet) könnte Probleme machen
+            DataSet dataSet = new DataSet(dataSetName, dataSetJsonNode, m);
+            this.dataSets.add(dataSet); //#addDataSet(DataSet) könnte Probleme machen
         }
-
-        //Grafisches zeug
-        this.setLayout(new BorderLayout());
-
-        this.toggle = new JToggleButton(this.getModel().getName());
-        this.toggle.setBackground(Color.LIGHT_GRAY);
-        this.add(this.toggle, BorderLayout.CENTER);
-
-        this.categoryControl = new CategoryControl(this);
-        this.toggle.addActionListener(this.categoryControl);
     }
 
-    public CategoryModel getModel() {
-        return categoryModel;
-    }
-
-    public JToggleButton getToggle() {
-        return toggle;
+    public PriorityQueue<DataSet> getDataSets() {
+        return dataSets;
     }
 
     public String getName() {
-        return this.getModel().getName();
+        return this.name;
     }
 
     public CategoryJsonNode getCategoryJsonNode() {
@@ -55,7 +45,7 @@ public class Category extends JPanel implements Comparable<Category>{
     }
 
     public boolean addDataSet(DataSet dataSet){
-        return this.getModel().add(dataSet) && this.getCategoryJsonNode().addDataSetNode(dataSet.getName(), dataSet.getDataSetJsonNode());
+        return this.dataSets.add(dataSet) && this.getCategoryJsonNode().addDataSetNode(dataSet.getName(), dataSet.getDataSetJsonNode());
     }
 
     @Override
@@ -103,6 +93,6 @@ public class Category extends JPanel implements Comparable<Category>{
      */
     @Override
     public int compareTo(Category o) {
-        return this.getModel().compareTo(o.getModel());
+        return this.name.compareTo(o.getName());
     }
 }

@@ -59,7 +59,7 @@ public class Model {
             String categoryName = categoryField.getName().getText();
 
             //Category erzeugen.
-            Category category = new Category(categoryName, categoryNode, this.encryption);
+            Category category = new Category(categoryName, categoryNode, this);
             this.categories.add(category);
         }
 
@@ -93,7 +93,11 @@ public class Model {
      * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
     public boolean addCategory(String categoryName){
-        return addCategory(new Category(categoryName, new CategoryJsonNode(), this.encryption));
+        return addCategory(new Category(categoryName, new CategoryJsonNode(), this));
+    }
+
+    public EncryptionCore getEncryption() {
+        return encryption;
     }
 
     public char[] getPasswordFromUser(){
@@ -120,11 +124,11 @@ public class Model {
     }
 
     /**
-     * Gibt ein Array mit allen Kategorien zurück.
+     * Gibt eine Collection mit allen Kategorien zurück.
      *
-     * @return Array mit allen Kategorien
+     * @return Collection mit allen Kategorien
      */
-    public Iterator<Category> iterator(){
-        return categories.iterator();
+    public PriorityQueue <Category> getCategories(){
+        return categories;
     }
 }

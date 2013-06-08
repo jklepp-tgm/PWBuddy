@@ -9,14 +9,13 @@ import java.util.Map;
  * @author Jakob Klepp
  * @since 2013-05-17
  */
-public class DataSet extends JPanel implements Comparable <DataSet> {
+public class DataSet extends DataSetIOPanel implements Comparable <DataSet> {
     private DataSetModel dataSetModel;
-    private JToggleButton toggle;
     private DataSetControl dataSetControl;
-    private JLabel label;
     private DataSetJsonNode dataSetJsonNode;
 
-    public DataSet(String name, DataSetJsonNode dataSetJsonNode){
+    public DataSet(String name, DataSetJsonNode dataSetJsonNode, Model m){
+        super(m);
         this.dataSetModel = new DataSetModel(this, name);
 
         this.setLayout(new GridBagLayout());
@@ -25,27 +24,10 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         c.gridx = 0;
 
         this.dataSetJsonNode = dataSetJsonNode;
-
-        this.toggle = new JToggleButton(this.getModel().getName());
-        this.toggle.setBackground(Color.GRAY);
-        c.gridy = 0;
-        this.add(toggle, c);
-
-        this.label = new JLabel(".");
-        c.gridy = 1;
-        this.add(label, c);
-        this.label.setPreferredSize(new Dimension(1,1));
-
-        this.dataSetControl = new DataSetControl(this);
-        this.toggle.addActionListener(this.dataSetControl);
     }
 
     public DataSetModel getModel() {
         return dataSetModel;
-    }
-
-    public JToggleButton getToggle() {
-        return toggle;
     }
 
     public String getName(){
