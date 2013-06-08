@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.PriorityQueue;
 
 /**
- * @author Jakob Klepp
+ * @author Jakob Klepp, Andreas Willinger
  * @since 2013-04-09
  */
 public class Model implements TreeModel {

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.PriorityQueue;
 
 /**
- * @author Jakob Klepp
+ * @author Jakob Klepp, Andreas Willinger
  * @since 2013-05-14
  */
 public class Category extends JPanel implements Comparable<Category>{
