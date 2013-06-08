@@ -1,5 +1,6 @@
 package com.pwbuddy;
 
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,9 @@ public class Control implements ActionListener, TreeSelectionListener {
      */
     @Override
     public void valueChanged(TreeSelectionEvent e) {
-
+        if(e.getSource() instanceof JComponent){
+            this.v.setContentView((JComponent)e.getSource());
+            this.v.repaint();
+        }
     }
 }
