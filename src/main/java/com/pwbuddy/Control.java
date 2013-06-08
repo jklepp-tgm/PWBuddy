@@ -33,6 +33,6 @@ public class Control implements ActionListener, TreeSelectionListener {
      */
     @Override
     public void valueChanged(TreeSelectionEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 }

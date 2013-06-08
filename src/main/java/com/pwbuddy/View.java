@@ -10,6 +10,7 @@ import java.awt.*;
 public class View extends JPanel{
     private Model m;
     private Control c;
+    private JPanel contentView;
     private JButton addCategoryButton;
 
     public View(Model m){
@@ -28,7 +29,7 @@ public class View extends JPanel{
         JScrollPane treeScroll = new JScrollPane(categoriesPanel);
         treeScroll.setBackground(Color.CYAN);
 
-        ContentView contentView = new ContentView(m);
+        this.contentView = new JPanel();
         JScrollPane contentScroll = new JScrollPane(contentView);
         contentScroll.setBackground(Color.BLUE);
 
@@ -41,5 +42,10 @@ public class View extends JPanel{
 
     public void setControl(Control control) {
         this.c = control;
+    }
+
+    public void setContentView(JComponent panel){
+        this.contentView.removeAll();
+        this.contentView.add(panel);
     }
 }
