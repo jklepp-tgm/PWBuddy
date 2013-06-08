@@ -108,4 +108,12 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
     public int compareTo(DataSet o) {
         return this.getName().compareTo(o.getName());
     }
+
+    /**
+     * Für JTree
+     * @return Name des DataSet
+     */
+    public String toString(){
+        return this.getName();
+    }
 }

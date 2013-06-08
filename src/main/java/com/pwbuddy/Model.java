@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**
@@ -143,7 +144,7 @@ public class Model implements TreeModel {
      */
     @Override
     public Object getRoot() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return this;
     }
 
     /**
@@ -160,7 +161,13 @@ public class Model implements TreeModel {
      */
     @Override
     public Object getChild(Object parent, int index) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if(parent == this){
+
+        } else
+        if(parent instanceof Category){
+
+        }
+        return null;
     }
 
     /**
@@ -174,7 +181,13 @@ public class Model implements TreeModel {
      */
     @Override
     public int getChildCount(Object parent) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        if(parent == this){
+            return this.categories.size();
+        } else
+        if(this.categories.contains(parent)) { //Daraus lässt sich auch schließen das es sich um ein Category Objekt handelt
+            return ((Category)parent).getDataSets().size();
+        }
+        return 0;
     }
 
     /**
@@ -190,7 +203,10 @@ public class Model implements TreeModel {
      */
     @Override
     public boolean isLeaf(Object node) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        if(node instanceof DataSet){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -221,7 +237,25 @@ public class Model implements TreeModel {
      */
     @Override
     public int getIndexOfChild(Object parent, Object child) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        if(parent instanceof Category && ((Category)parent).getDataSets().contains(child)) {
+            int posCounter = 0;
+            //DataSets mit child vergleichen
+            Iterator<DataSet> iterator = ((Category)parent).getDataSets().iterator();
+            while(iterator.hasNext() && iterator.next() != child){
+                posCounter ++;
+            }
+            return posCounter;
+        } else
+        if(parent == this && this.categories.contains(child)) {
+            int posCounter = 0;
+            //Categories mit child vergleichen
+            Iterator<Category> iterator = this.categories.iterator();
+            while(iterator.hasNext() && iterator.next() != child){
+                posCounter ++;
+            }
+            return posCounter;
+        }
+        return -1;
     }
 
     /**
@@ -233,7 +267,7 @@ public class Model implements TreeModel {
      */
     @Override
     public void addTreeModelListener(TreeModelListener l) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //Tu nix
     }
 
     /**
@@ -245,7 +279,11 @@ public class Model implements TreeModel {
      */
     @Override
     public void removeTreeModelListener(TreeModelListener l) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //Tu nix
     }
     //</editor-fold>
+
+    public String toString(){
+        return "Allgemein";
+    }
 }

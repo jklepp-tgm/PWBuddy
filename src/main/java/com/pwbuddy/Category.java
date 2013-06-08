@@ -26,6 +26,7 @@ public class Category extends JPanel implements Comparable<Category>{
         this.name = name;
         this.categoryJsonNode = categoryJsonNode;
         this.dataSets = new PriorityQueue<DataSet>();
+        //ToDO DataSets in dataSets einlesen
 
         //DataSets aus CategoryJsonNode auslesen
         for(JsonField field : this.categoryJsonNode.getFieldList()){
@@ -99,5 +100,13 @@ public class Category extends JPanel implements Comparable<Category>{
     @Override
     public int compareTo(Category o) {
         return this.name.compareTo(o.getName());
+    }
+
+    /**
+     * Für JTree
+     * @return Name der Category
+     */
+    public String toString(){
+        return this.getName();
     }
 }
