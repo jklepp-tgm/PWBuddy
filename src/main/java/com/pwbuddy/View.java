@@ -9,66 +9,31 @@ import java.awt.*;
  */
 public class View extends JPanel{
     private Model m;
-
-    //Enhält Categories und DataSets
-    private ContentView content;
-
-    //Macht content scrollbar
-    private JScrollPane scrollPane;
-
-    //Bietet Bedienelemente zum hinzufügen und entfernen von Categories und Elementen
-    private JPanel addElementPanel;
+    private Control c;
     private JButton addCategoryButton;
-    private JButton addDataSetButton;
 
     public View(Model m){
-        super(new BorderLayout());
+        super(new GridLayout());
         this.m = m;
 
-        this.content = new ContentView(m);
+        JTree tree = new JTree();
+        tree.addTreeSelectionListener(c);
+        JScrollPane treeScroll = new JScrollPane(tree);
+        treeScroll.setBackground(Color.CYAN);
 
-        this.addElementPanel = new JPanel(new GridLayout(1, 3));
-        this.addCategoryButton = new JButton("Kategorie");
-        this.addElementPanel.add(this.addCategoryButton);
+        ContentView contentView = new ContentView(m);
+        JScrollPane contentScroll = new JScrollPane(contentView);
+        contentScroll.setBackground(Color.BLUE);
 
-        // ToDo NullPointerException (fetching image) abfangen
-        final Image imageObject = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/org/freedesktop/tango/22x22/actions/document-new.png"));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeScroll, contentScroll);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerLocation(150);
 
-        JPanel imagePanel;
-
-        if(imageObject != null){
-            imagePanel = new JPanel(){
-                @Override
-                protected void paintComponent(Graphics g){
-                    g.drawImage(imageObject, 0, 0, null);
-                }
-            };
-        } else {
-            imagePanel = new JPanel();
-        }
-        //Bild zeichnen und zum addElementPanel hinzufügen
-        this.addElementPanel.add(imagePanel);
-        this.addDataSetButton = new JButton("Datensatz");
-        this.addElementPanel.add(addDataSetButton);
-
-        this.add(this.addElementPanel, BorderLayout.SOUTH);
-
-        this.scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.scrollPane.getVerticalScrollBar().setUnitIncrement(12);
-        this.scrollPane.getHorizontalScrollBar().setUnitIncrement(12);
-        this.add(scrollPane, BorderLayout.CENTER);
+        this.add(splitPane);
     }
 
-    public JButton getAddCategoryButton() {
-        return addCategoryButton;
-    }
 
-    public JButton getAddDataSetButton() {
-        return addDataSetButton;
-    }
-
-    public void setControl(Control c){
-        this.addDataSetButton.addActionListener(c);
-        this.addCategoryButton.addActionListener(c);
+    public void setControl(Control control) {
+        this.c = control;
     }
 }
