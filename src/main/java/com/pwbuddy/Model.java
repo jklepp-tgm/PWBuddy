@@ -162,10 +162,10 @@ public class Model implements TreeModel {
     @Override
     public Object getChild(Object parent, int index) {
         if(parent == this){
-
+            return this.categories.toArray()[index];
         } else
         if(parent instanceof Category){
-
+            return ((Category)parent).getDataSets().toArray()[index];
         }
         return null;
     }
