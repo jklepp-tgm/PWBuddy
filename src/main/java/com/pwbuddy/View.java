@@ -16,9 +16,16 @@ public class View extends JPanel{
         super(new GridLayout());
         this.m = m;
 
+        JPanel categoriesPanel = new JPanel(new BorderLayout());
+
         JTree tree = new JTree();
         tree.addTreeSelectionListener(c);
-        JScrollPane treeScroll = new JScrollPane(tree);
+        categoriesPanel.add(tree, BorderLayout.CENTER);
+
+        this.addCategoryButton = new JButton("+ Kategorie");
+        categoriesPanel.add(this.addCategoryButton, BorderLayout.SOUTH);
+
+        JScrollPane treeScroll = new JScrollPane(categoriesPanel);
         treeScroll.setBackground(Color.CYAN);
 
         ContentView contentView = new ContentView(m);
@@ -31,7 +38,6 @@ public class View extends JPanel{
 
         this.add(splitPane);
     }
-
 
     public void setControl(Control control) {
         this.c = control;
