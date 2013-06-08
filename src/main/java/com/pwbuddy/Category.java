@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.PriorityQueue;
 
 /**
+ * ToDO boolean opened in json speichern und auslesen
  * @author Jakob Klepp, Andreas Willinger
  * @since 2013-05-14
  */
