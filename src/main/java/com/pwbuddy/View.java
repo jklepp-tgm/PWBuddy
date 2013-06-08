@@ -19,7 +19,7 @@ public class View extends JPanel{
 
         JPanel categoriesPanel = new JPanel(new BorderLayout());
 
-        JTree tree = new JTree();
+        JTree tree = new JTree(m);
         tree.addTreeSelectionListener(c);
 
         this.addCategoryButton = new JButton("+ Kategorie");
