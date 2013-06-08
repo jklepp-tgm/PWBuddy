@@ -21,19 +21,17 @@ public class View extends JPanel{
 
         JTree tree = new JTree();
         tree.addTreeSelectionListener(c);
-        categoriesPanel.add(tree, BorderLayout.CENTER);
 
         this.addCategoryButton = new JButton("+ Kategorie");
         categoriesPanel.add(this.addCategoryButton, BorderLayout.SOUTH);
 
-        JScrollPane treeScroll = new JScrollPane(categoriesPanel);
-        treeScroll.setBackground(Color.CYAN);
+        JScrollPane treeScroll = new JScrollPane(tree);
+        categoriesPanel.add(treeScroll, BorderLayout.CENTER);
 
         this.contentView = new JPanel();
         JScrollPane contentScroll = new JScrollPane(contentView);
-        contentScroll.setBackground(Color.BLUE);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeScroll, contentScroll);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, categoriesPanel, contentScroll);
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(150);
 
