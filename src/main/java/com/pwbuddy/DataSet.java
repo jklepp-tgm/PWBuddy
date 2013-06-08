@@ -1,37 +1,26 @@
 package com.pwbuddy;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Map;
 
 /**
  * @author Jakob Klepp
  * @since 2013-05-17
  */
 public class DataSet extends DataSetIOPanel implements Comparable <DataSet> {
-    private DataSetModel dataSetModel;
     private DataSetControl dataSetControl;
     private DataSetJsonNode dataSetJsonNode;
+    private String name;
 
     public DataSet(String name, DataSetJsonNode dataSetJsonNode, Model m){
         super(m);
-        this.dataSetModel = new DataSetModel(this, name);
 
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
+        this.name = name;
 
         this.dataSetJsonNode = dataSetJsonNode;
     }
 
-    public DataSetModel getModel() {
-        return dataSetModel;
-    }
-
     public String getName(){
-        return this.getModel().getName();
+        return this.name;
     }
 
     public DataSetJsonNode getDataSetJsonNode() {
@@ -83,6 +72,6 @@ public class DataSet extends DataSetIOPanel implements Comparable <DataSet> {
      */
     @Override
     public int compareTo(DataSet o) {
-        return this.getModel().compareTo(o.getModel());
+        return this.getName().compareTo(o.getName());
     }
 }

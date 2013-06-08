@@ -20,8 +20,5 @@ public class CategoryControl implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(this.category.getToggle().equals(e.getSource())){
-            this.category.getModel().setOpened(this.category.getToggle().isSelected());
-        }
     }
 }

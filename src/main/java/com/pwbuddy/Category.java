@@ -2,7 +2,6 @@ package com.pwbuddy;
 
 import argo.jdom.JsonField;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.PriorityQueue;
 
