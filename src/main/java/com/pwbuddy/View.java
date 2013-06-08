@@ -48,4 +48,13 @@ public class View extends JPanel{
         this.contentView.removeAll();
         this.contentView.add(panel);
     }
+
+    public JButton getAddCategoryButton() {
+        return addCategoryButton;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g){
+
+    }
 }
