@@ -171,7 +171,7 @@ public class Model {
         int status = javax.swing.JOptionPane.showConfirmDialog(
                 null,
                 askForPassword,
-                "Eingabe Passwort",
+                "Masterpasswort eingeben",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE
         );
