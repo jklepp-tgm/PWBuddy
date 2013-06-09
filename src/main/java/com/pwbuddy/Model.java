@@ -79,8 +79,28 @@ public class Model implements TreeModel {
         this(new File(DEFAULT_JSON_DOCUMENT_PATH));
     }
 
+    /**
+     * Sichert den Inhalt der JsonRoot node in der Datei
+     * @see com.pwbuddy.RootNode#flush()
+     */
     public void flush(){
         this.jsonRootNode.flush();
+    }
+
+    /**
+     * Schreibt alle Änderungen in den Json Baum und speichert ihn in der Datei
+     * @see com.pwbuddy.RootNode#flush()
+     * @see com.pwbuddy.DataSet#flush()
+     * @see com.pwbuddy.Category#flush()
+     */
+    public void flushAll(){
+        for(Category category : this.categories){
+            for(DataSet dataSet : category.getDataSets()){
+                dataSet.flush();
+            }
+            category.flush();
+        }
+        this.flush();
     }
 
     /**
