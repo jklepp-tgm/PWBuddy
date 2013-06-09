@@ -220,7 +220,7 @@ public class Model implements TreeModel {
      */
     @Override
     public void valueForPathChanged(TreePath path, Object newValue) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        //Tu nix
     }
 
     /**

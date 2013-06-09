@@ -42,7 +42,9 @@ public class View extends JPanel{
     }
 
     public void setControl(Control control) {
+        this.tree.removeTreeSelectionListener(this.c);
         this.c = control;
+        this.tree.addTreeSelectionListener(this.c);
     }
 
     public void setContentView(JComponent panel){
