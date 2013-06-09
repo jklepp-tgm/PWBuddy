@@ -27,7 +27,6 @@ public class Category extends JPanel implements Comparable<Category>{
     private Model m;
 
     public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
-        //ToDo GUI auf TableLayout umstellen
         //GUI
         this.setLayout(new TableLayout(new double[][]{
                 {TableLayout.FILL, TableLayout.PREFERRED, 10, TableLayout.PREFERRED, TableLayout.FILL},
