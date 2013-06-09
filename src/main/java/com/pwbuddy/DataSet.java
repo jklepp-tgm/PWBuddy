@@ -21,7 +21,7 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         String[] categoryNames = new String[m.getCategories().size()];
         int i = 0;
         for(Iterator<Category> iterator = m.getCategories().iterator(); iterator.hasNext();){
-            categoryNames[i++] = iterator.next().getName();
+            categoryNames[i++] = iterator.next().toString();
         }
 
         this.setLayout(new GridLayout(0, 2, 2, 2));
@@ -49,10 +49,6 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         this.name = name;
 
         this.dataSetJsonNode = dataSetJsonNode;
-    }
-
-    public String getName(){
-        return this.name;
     }
 
     public DataSetJsonNode getDataSetJsonNode() {
@@ -117,6 +113,6 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
      * @return Name des DataSet
      */
     public String toString(){
-        return this.getName();
+        return this.name;
     }
 }

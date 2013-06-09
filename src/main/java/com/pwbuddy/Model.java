@@ -110,7 +110,7 @@ public class Model implements TreeModel {
      * @return Erfolgreich? Ein möglicher grund für Misserfolg ist wenn eine entsprechende Kategorie bereits besteht
      */
     protected boolean addCategory(Category category){
-        return this.categories.add(category) && this.jsonRootNode.addCategoryNode(category.getName(), category.getCategoryJsonNode());
+        return this.categories.add(category) && this.jsonRootNode.addCategoryNode(category.toString(), category.getCategoryJsonNode());
     }
 
     /**

@@ -56,16 +56,12 @@ public class Category extends JPanel implements Comparable<Category>{
         return dataSets;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public CategoryJsonNode getCategoryJsonNode() {
         return categoryJsonNode;
     }
 
     public boolean addDataSet(DataSet dataSet){
-        return this.dataSets.add(dataSet) && this.getCategoryJsonNode().addDataSetNode(dataSet.getName(), dataSet.getDataSetJsonNode());
+        return this.dataSets.add(dataSet) && this.getCategoryJsonNode().addDataSetNode(dataSet.toString(), dataSet.getDataSetJsonNode());
     }
 
     public void flush(){
@@ -125,6 +121,6 @@ public class Category extends JPanel implements Comparable<Category>{
      * @return Name der Category
      */
     public String toString(){
-        return this.getName();
+        return this.name;
     }
 }
