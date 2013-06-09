@@ -1,6 +1,8 @@
 package com.pwbuddy;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * @author Jakob Klepp
@@ -25,8 +27,29 @@ public class Frame extends JFrame {
         this.setContentPane(v);
         this.setSize(650, 450);
         this.setTitle("PWBuddy");
-        //ToDo m.flushAll() aufrufen bevor das Programm beendet wird! sonst kann es zu Datenverlust kommen
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        //Programm "sicher" beenden
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            /**
+             * Invoked when a window has been closed.
+             */
+            @Override
+            public void windowClosed(WindowEvent e) {
+                System.exit(0);
+            }
+
+            /**
+             * Invoked when a window is in the process of being closed.
+             * The close operation can be overridden at this point.
+             */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                setVisible(false);
+                m.flushAll();
+                dispose();
+            }
+        });
         this.setVisible(true);
     }
 }
