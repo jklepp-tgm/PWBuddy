@@ -58,7 +58,11 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
     }
 
     public void flush(){
-        //Todo änderungen in json sichern
+        this.dataSetJsonNode.name = this.name.getText();
+        this.dataSetJsonNode.website = this.website.getText();
+        this.dataSetJsonNode.username = this.username.getText();
+        this.dataSetJsonNode.email = this.email.getText();
+        //ToDo this.password in PasswordJsonNode speichern
     }
 
 
