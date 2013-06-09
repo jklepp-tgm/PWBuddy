@@ -7,7 +7,9 @@ import argo.jdom.JsonStringNode;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,17 +40,52 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
         try {
             this.encryptedPassword = encryption.encrypt(new String(password));
         } catch (InvalidKeyException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (BadPaddingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
         //Verschlüsseltes Passwort und initialisierungs Vektor in die entsprechenden Variablen speichern
         this.iv = encryption.getIV();
+    }
+
+    public void setPassword(char [] password) {
+        try {
+            this.encryptedPassword = encryption.encrypt(new String(password));
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+        //Verschlüsseltes Passwort und initialisierungs Vektor in die entsprechenden Variablen speichern
+        this.iv = encryption.getIV();
+    }
+
+    public char[] getPassword() {
+        char [] password = null;
+        try {
+            password = this.encryption.decrypt(this.encryptedPassword, this.iv).toCharArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+
+        return password;
     }
 
     /**
