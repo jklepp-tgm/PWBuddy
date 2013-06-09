@@ -17,7 +17,8 @@ import javax.crypto.Cipher;
 /**
  * Verschlüsselungs Kern
  *
- * @author Andreas Willinger, Jakob Klepp
+ * @author Andreas Willinger
+ * @author Jakob Klepp
  * @since 2013-05-28
  */
 

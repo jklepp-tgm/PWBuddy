@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Jakob Klep
+ * @author Jakob Klepp
  * @since 2013-06-02
  */
 public class DataSetJsonNode extends AccessibleAbstractJsonObject {

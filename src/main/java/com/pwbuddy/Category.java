@@ -8,7 +8,8 @@ import java.util.PriorityQueue;
 
 /**
  * ToDO boolean opened in json speichern und auslesen
- * @author Jakob Klepp, Andreas Willinger
+ * @author Jakob Klepp
+ * @author Andreas Willinger
  * @since 2013-05-14
  */
 public class Category extends JPanel implements Comparable<Category>{
@@ -20,6 +21,8 @@ public class Category extends JPanel implements Comparable<Category>{
     private CategoryControl categoryControl;
     private CategoryJsonNode categoryJsonNode;
     private String name;
+
+    private Model m;
 
     public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
         //ToDo GUI auf GridBagLayout umstellen
@@ -38,6 +41,7 @@ public class Category extends JPanel implements Comparable<Category>{
         this.add(this.createDataSet);
 
         this.name = name;
+        this.m = m;
         this.categoryJsonNode = categoryJsonNode;
         this.dataSets = new PriorityQueue<DataSet>();
         //ToDO DataSets in dataSets einlesen
@@ -65,7 +69,10 @@ public class Category extends JPanel implements Comparable<Category>{
     }
 
     public void flush(){
-        //Todo änderungen in json sichern
+        if(!this.categoryName.getText().equals(this.name)){
+            this.name = this.categoryName.getText();
+            this.m.flush(); //Sollte den Namen auch auf anderen stellen updaten
+        }
     }
 
     @Override

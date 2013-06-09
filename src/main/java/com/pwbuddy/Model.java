@@ -13,7 +13,8 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 /**
- * @author Jakob Klepp, Andreas Willinger
+ * @author Jakob Klepp
+ * @author Andreas Willinger
  * @since 2013-04-09
  */
 public class Model implements TreeModel {
@@ -44,7 +45,7 @@ public class Model implements TreeModel {
 
         this.encryption = new EncryptionCore(new String(passwordChars));
 
-        this.jsonRootNode = new RootNode(file);
+        this.jsonRootNode = new RootNode(file, this);
 
         //Version des Json Dokuments mit der unterstützten Version vergleichen
         if(Integer.parseInt(this.jsonRootNode.getNumberValue("Version")) != JSON_DOCUMENT_VERSION){

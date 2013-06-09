@@ -42,7 +42,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
     /**
      * @param file Daten werden aus diesen File eingelesen und in ebendieses geschrieben.
      */
-    public RootNode(File file){
+    public RootNode(File file, Model m){
 
         this.file = file;
 
@@ -86,7 +86,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
         }
 
         this.categoriesObjectName = JsonNodeFactories.string("Categories");
-        this.categoriesObject = new CategoriesObject(rootNode.getObjectNode(this.categoriesObjectName.getText()));
+        this.categoriesObject = new CategoriesObject(rootNode.getObjectNode(this.categoriesObjectName.getText()), m);
 
         this.versionName = JsonNodeFactories.string("Version");
         this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName.getText()));
@@ -109,6 +109,7 @@ public class RootNode extends AccessibleAbstractJsonObject {
      * Schreibt Json in File
      */
     public void flush(){
+        this.categoriesObject.flush();
         String json = this.jsonFormatter.format(this);
         try {
             this.writeStringToFile(this.file, json);
@@ -258,8 +259,9 @@ public class RootNode extends AccessibleAbstractJsonObject {
 
     public class CategoriesObject extends AccessibleAbstractJsonObject {
         private TreeMap<JsonStringNode, JsonNode> fields;
+        private Model m;
 
-        public CategoriesObject(Map<JsonStringNode, JsonNode> fields){
+        public CategoriesObject(Map<JsonStringNode, JsonNode> fields, Model m){
             this.fields = new TreeMap<JsonStringNode, JsonNode>();
             this.fields.putAll(fields);
         }
@@ -270,8 +272,8 @@ public class RootNode extends AccessibleAbstractJsonObject {
          * @param objectNode Node von der die Fields übernommen werden sollen
          * @throws java.lang.IllegalStateException wenn objectNode keine fields unterstützt.
          */
-        public CategoriesObject(JsonNode objectNode){
-            this(objectNode.getFields());
+        public CategoriesObject(JsonNode objectNode, Model m){
+            this(objectNode.getFields(), m);
         }
 
         /**
@@ -301,6 +303,15 @@ public class RootNode extends AccessibleAbstractJsonObject {
         @Override
         public Map<JsonStringNode, JsonNode> getFields() {
             return this.fields;
+        }
+
+        /**
+         * Stellt sicher das alle Categories korrekt abgelegt sind
+         */
+        public void flush(){
+            for(Map.Entry<JsonStringNode, JsonNode> entry : this.getFields().entrySet()){
+
+            }
         }
     }
 }

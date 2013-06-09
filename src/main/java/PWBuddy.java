@@ -3,7 +3,8 @@ import com.pwbuddy.Frame;
 /**
  * Startpunkt des Programmes
  *
- * @author Jakob Klepp, Andreas Willinger
+ * @author Jakob Klepp
+ * @author Andreas Willinger
  * @since  2013-04-09
  */
 public class PWBuddy {
