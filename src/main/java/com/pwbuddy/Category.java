@@ -6,9 +6,6 @@ import info.clearthought.layout.TableLayoutConstants;
 import info.clearthought.layout.TableLayoutConstraints;
 
 import javax.swing.*;
-import javax.swing.event.DocumentAdapter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.PriorityQueue;
 
