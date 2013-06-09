@@ -136,6 +136,8 @@ public class Model implements TreeModel {
     }
 
     //<editor-fold desc="TreeModel">
+    private MainPanel mainPanel = new MainPanel();
+
     /**
      * Returns the root of the tree.  Returns <code>null</code>
      * only if the tree has no nodes.
@@ -144,7 +146,7 @@ public class Model implements TreeModel {
      */
     @Override
     public Object getRoot() {
-        return this;
+        return mainPanel;
     }
 
     /**
@@ -161,7 +163,7 @@ public class Model implements TreeModel {
      */
     @Override
     public Object getChild(Object parent, int index) {
-        if(parent == this){
+        if(parent == mainPanel){
             return this.categories.toArray()[index];
         } else
         if(parent instanceof Category){
@@ -181,7 +183,7 @@ public class Model implements TreeModel {
      */
     @Override
     public int getChildCount(Object parent) {
-        if(parent == this){
+        if(parent == mainPanel){
             return this.categories.size();
         } else
         if(this.categories.contains(parent)) { //Daraus lässt sich auch schließen das es sich um ein Category Objekt handelt
@@ -246,7 +248,7 @@ public class Model implements TreeModel {
             }
             return posCounter;
         } else
-        if(parent == this && this.categories.contains(child)) {
+        if(parent == mainPanel && this.categories.contains(child)) {
             int posCounter = 0;
             //Categories mit child vergleichen
             Iterator<Category> iterator = this.categories.iterator();
@@ -282,8 +284,4 @@ public class Model implements TreeModel {
         //Tu nix
     }
     //</editor-fold>
-
-    public String toString(){
-        return "Allgemein";
-    }
 }
