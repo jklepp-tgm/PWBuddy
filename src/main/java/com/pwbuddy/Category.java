@@ -7,6 +7,8 @@ import info.clearthought.layout.TableLayoutConstraints;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.PriorityQueue;
 
 /**
@@ -44,6 +46,26 @@ public class Category extends JPanel implements Comparable<Category>{
         this.add(this.dataSetName, new TableLayoutConstraints(3, 3, 3, 3));
 
         this.createDataSet = new JButton("Datensatz erstellen");
+        this.createDataSet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!Category.this.dataSetName.getText().equals("")){
+                    PasswordJsonNode passwordJsonNode = new PasswordJsonNode(new char[0], Category.this.m.getEncryption());
+                    DataSetJsonNode dataSetJsonNode = new DataSetJsonNode(Category.this.dataSetName.getText(), "", "", "", passwordJsonNode, Category.this.m.getEncryption());
+                    DataSet dataSet = new DataSet("", dataSetJsonNode, Category.this.m);
+                    dataSet.categoryName.setSelectedItem(Category.this.toString());
+                    Category.this.addDataSet(dataSet);
+                    Container contentView = SwingUtilities.getAncestorOfClass(View.class, Category.this);
+                    if(contentView != null){
+                        View view = (View) contentView;
+                        view.setContentView(dataSet);
+                        contentView.revalidate();
+                        contentView.repaint();
+                    }
+                    Category.this.dataSetName.setText("");
+                }
+            }
+        });
         this.add(this.createDataSet, new TableLayoutConstraints(1, 5, 3, 5));
 
         this.categoryName.setText(name);

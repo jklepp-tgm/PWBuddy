@@ -25,7 +25,7 @@ public class Frame extends JFrame {
         this.setJMenuBar(menu);
 
         this.setContentPane(v);
-        this.setSize(650, 450);
+        this.setSize(420, 195);
         this.setTitle("PWBuddy");
 
         //Programm "sicher" beenden
