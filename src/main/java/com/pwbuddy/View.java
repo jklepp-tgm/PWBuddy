@@ -33,7 +33,7 @@ public class View extends JPanel{
         JScrollPane treeScroll = new JScrollPane(tree);
         categoriesPanel.add(treeScroll, BorderLayout.CENTER);
 
-        this.contentView = new JPanel();
+        this.contentView = new JPanel(new GridLayout(1,1));
         JScrollPane contentScroll = new JScrollPane(contentView);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, categoriesPanel, contentScroll);

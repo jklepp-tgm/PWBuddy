@@ -26,16 +26,43 @@ public class Category extends JPanel implements Comparable<Category>{
     public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
         //ToDo GUI auf GridBagLayout umstellen
         //GUI
-        this.setLayout(new GridLayout(0, 2, 2, 2));
+        this.setLayout(new GridBagLayout());
+        this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-        this.add(new JLabel("Name: "));
+        GridBagConstraints constraints = new GridBagConstraints();
+        //constraints.anchor = GridBagConstraints.NORTH;
+        //constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1;
+        constraints.weighty = 1;
+        //constraints.insets = new Insets(2,2,2,2);
+
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
+        this.add(new JLabel("Name: "), constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        constraints.gridwidth = 1;
         this.categoryName = new JTextField();
-        this.add(this.categoryName);
+        this.add(this.categoryName, constraints);
 
+        constraints.anchor = GridBagConstraints.PAGE_END;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
         this.add(new JLabel("Datensatz Name: "));
+
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
         this.dataSetName = new JTextField();
+        //constraints.insets.top = 20;
         this.add(this.dataSetName);
 
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridwidth = 2;
         this.createDataSet = new JButton("Datensatz erstellen");
         this.add(this.createDataSet);
 
