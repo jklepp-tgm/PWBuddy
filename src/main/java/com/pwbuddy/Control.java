@@ -14,9 +14,12 @@ public class Control implements ActionListener, TreeSelectionListener {
     Model m;
     View v;
 
+    JComponent lastComp;
+
     public Control(Model m, View v) {
         this.m = m;
         this.v = v;
+        this.lastComp = null;
     }
 
     /**
@@ -34,9 +37,17 @@ public class Control implements ActionListener, TreeSelectionListener {
      */
     @Override
     public void valueChanged(TreeSelectionEvent e) {
+        if(this.lastComp instanceof Category) {
+            Category category = (Category) lastComp;
+            category.flush();
+        } else
+        if(this.lastComp instanceof DataSet) {
+            DataSet dataSet = (DataSet) lastComp;
+            dataSet.flush();
+        }
         JTree source = (JTree)e.getSource();
-        JComponent comp = (JComponent)source.getLastSelectedPathComponent();
-        this.v.setContentView(comp);
+        this.lastComp = (JComponent)source.getLastSelectedPathComponent();
+        this.v.setContentView(this.lastComp);
         this.v.repaint();
         this.v.revalidate();
     }

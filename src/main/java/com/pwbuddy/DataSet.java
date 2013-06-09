@@ -61,6 +61,11 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         return dataSetJsonNode;
     }
 
+    public void flush(){
+        //Todo änderungen in json sichern
+    }
+
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);

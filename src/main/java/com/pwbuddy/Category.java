@@ -68,6 +68,10 @@ public class Category extends JPanel implements Comparable<Category>{
         return this.dataSets.add(dataSet) && this.getCategoryJsonNode().addDataSetNode(dataSet.getName(), dataSet.getDataSetJsonNode());
     }
 
+    public void flush(){
+        //Todo änderungen in json sichern
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
