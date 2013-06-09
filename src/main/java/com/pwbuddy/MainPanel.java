@@ -3,8 +3,8 @@ package com.pwbuddy;
 import javax.swing.*;
 
 /**
- * @author jakob
- * @version 2013-06-09
+ * @author Jakob Klepp
+ * @since 2013-06-09
  */
 public class MainPanel extends JPanel {
 
