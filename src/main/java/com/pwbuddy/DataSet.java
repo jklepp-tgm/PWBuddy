@@ -9,13 +9,13 @@ import java.util.Iterator;
  * @since 2013-05-17
  */
 public class DataSet extends JPanel implements Comparable <DataSet> {
+    public JTextField name;
     public JTextField website;
     public JTextField username;
     public JTextField email;
     public JPasswordField password;
     public JComboBox<String> categoryName;
     private DataSetJsonNode dataSetJsonNode;
-    private String name;
 
     public DataSet(String name, DataSetJsonNode dataSetJsonNode, Model m){
         String[] categoryNames = new String[m.getCategories().size()];
@@ -24,31 +24,33 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
             categoryNames[i++] = iterator.next().toString();
         }
 
+        this.dataSetJsonNode = dataSetJsonNode;
+
         this.setLayout(new GridLayout(0, 2, 2, 2));
 
+        this.add(new JLabel("Name: "));
+        this.name = new JTextField(dataSetJsonNode.name);
+        this.add(this.name);
+
         this.add(new JLabel("Website: "));
-        this.website = new JTextField();
-        this.add(website);
+        this.website = new JTextField(dataSetJsonNode.website);
+        this.add(this.website);
 
         this.add(new JLabel("Username: "));
-        this.username = new JTextField();
-        this.add((username));
+        this.username = new JTextField(dataSetJsonNode.username);
+        this.add(this.username);
 
         this.add(new JLabel("E-Mail: "));
-        this.email = new JTextField();
-        this.add(email);
+        this.email = new JTextField(dataSetJsonNode.email);
+        this.add(this.email);
 
         this.add(new JLabel("Passwort: "));
-        this.password = new JPasswordField();
-        this.add(password);
+        this.password = new JPasswordField(); //ToDo aus PasswordJsonNode setzten
+        this.add(this.password);
 
         this.add(new JLabel("Kategorie"));
         this.categoryName = new JComboBox<String>(categoryNames);
-        this.add(categoryName);
-
-        this.name = name;
-
-        this.dataSetJsonNode = dataSetJsonNode;
+        this.add(this.categoryName);
     }
 
     public DataSetJsonNode getDataSetJsonNode() {
@@ -113,6 +115,6 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
      * @return Name des DataSet
      */
     public String toString(){
-        return this.name;
+        return this.name.getText();
     }
 }

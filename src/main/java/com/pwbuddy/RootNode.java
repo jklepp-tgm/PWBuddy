@@ -36,13 +36,10 @@ public class RootNode extends AccessibleAbstractJsonObject {
      */
     private BufferedWriter bufferedWriter;
 
-    /** Soll nicht verwendet werden */
-    protected RootNode(){}
-
     /**
      * @param file Daten werden aus diesen File eingelesen und in ebendieses geschrieben.
      */
-    public RootNode(File file, Model m){
+    public RootNode(File file){
 
         this.file = file;
 
@@ -86,12 +83,10 @@ public class RootNode extends AccessibleAbstractJsonObject {
         }
 
         this.categoriesObjectName = JsonNodeFactories.string("Categories");
-        this.categoriesObject = new CategoriesObject(rootNode.getObjectNode(this.categoriesObjectName.getText()), m);
+        this.categoriesObject = new CategoriesObject(rootNode.getObjectNode(this.categoriesObjectName.getText()));
 
         this.versionName = JsonNodeFactories.string("Version");
         this.version = JsonNodeFactories.number(rootNode.getNumberValue(this.versionName.getText()));
-
-        this.flush();
     }
 
     /**
@@ -108,8 +103,8 @@ public class RootNode extends AccessibleAbstractJsonObject {
     /**
      * Schreibt Json in File
      */
-    public void flush(){
-        this.categoriesObject.flush();
+    public void flush(Model m){
+        this.categoriesObject.flush(m);
         String json = this.jsonFormatter.format(this);
         try {
             this.writeStringToFile(this.file, json);
@@ -259,9 +254,8 @@ public class RootNode extends AccessibleAbstractJsonObject {
 
     public class CategoriesObject extends AccessibleAbstractJsonObject {
         private TreeMap<JsonStringNode, JsonNode> fields;
-        private Model m;
 
-        public CategoriesObject(Map<JsonStringNode, JsonNode> fields, Model m){
+        public CategoriesObject(Map<JsonStringNode, JsonNode> fields){
             this.fields = new TreeMap<JsonStringNode, JsonNode>();
             this.fields.putAll(fields);
         }
@@ -272,8 +266,8 @@ public class RootNode extends AccessibleAbstractJsonObject {
          * @param objectNode Node von der die Fields übernommen werden sollen
          * @throws java.lang.IllegalStateException wenn objectNode keine fields unterstützt.
          */
-        public CategoriesObject(JsonNode objectNode, Model m){
-            this(objectNode.getFields(), m);
+        public CategoriesObject(JsonNode objectNode){
+            this(objectNode.getFields());
         }
 
         /**
@@ -308,9 +302,10 @@ public class RootNode extends AccessibleAbstractJsonObject {
         /**
          * Stellt sicher das alle Categories korrekt abgelegt sind
          */
-        public void flush(){
-            for(Map.Entry<JsonStringNode, JsonNode> entry : this.getFields().entrySet()){
-
+        public void flush(Model m) {
+            this.fields.clear();
+            for(Category category : m.getCategories()) {
+                this.fields.put(JsonNodeFactories.string(category.toString()), category.getCategoryJsonNode());
             }
         }
     }

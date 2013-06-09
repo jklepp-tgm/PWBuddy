@@ -45,7 +45,7 @@ public class Model implements TreeModel {
 
         this.encryption = new EncryptionCore(new String(passwordChars));
 
-        this.jsonRootNode = new RootNode(file, this);
+        this.jsonRootNode = new RootNode(file);
 
         //Version des Json Dokuments mit der unterstützten Version vergleichen
         if(Integer.parseInt(this.jsonRootNode.getNumberValue("Version")) != JSON_DOCUMENT_VERSION){
@@ -66,14 +66,6 @@ public class Model implements TreeModel {
             Category category = new Category(categoryName, categoryNode, this);
             this.categories.add(category);
         }
-
-        //Json Baum alle 5 Sekunden sichern
-        new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jsonRootNode.flush();
-            }
-        }).start();
     }
 
     public Model(){
@@ -82,15 +74,15 @@ public class Model implements TreeModel {
 
     /**
      * Sichert den Inhalt der JsonRoot node in der Datei
-     * @see com.pwbuddy.RootNode#flush()
+     * @see com.pwbuddy.RootNode#flush(Model)
      */
     public void flush(){
-        this.jsonRootNode.flush();
+        this.jsonRootNode.flush(this);
     }
 
     /**
      * Schreibt alle Änderungen in den Json Baum und speichert ihn in der Datei
-     * @see com.pwbuddy.RootNode#flush()
+     * @see com.pwbuddy.RootNode#flush(Model)
      * @see com.pwbuddy.DataSet#flush()
      * @see com.pwbuddy.Category#flush()
      */

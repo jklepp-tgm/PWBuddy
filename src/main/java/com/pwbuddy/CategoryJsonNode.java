@@ -72,4 +72,11 @@ public class CategoryJsonNode extends AccessibleAbstractJsonObject {
         }
         return fields;
     }
+
+    public void flush(Category category){
+        this.fields.clear();
+        for(DataSet dataSet : category.getDataSets()) {
+            this.fields.put(JsonNodeFactories.string(dataSet.toString()), dataSet.getDataSetJsonNode());
+        }
+    }
 }

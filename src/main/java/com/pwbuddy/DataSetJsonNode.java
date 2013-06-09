@@ -11,15 +11,14 @@ import java.util.Map;
  */
 public class DataSetJsonNode extends AccessibleAbstractJsonObject {
     //Benötigte Felder
-    private String website;
+    public String name;
+    public String website;
+    public String username;
+    public String email;
+    public PasswordJsonNode password;
 
-    private String username;
-
-    private String email;
-
-    private PasswordJsonNode password;
-
-    public DataSetJsonNode(String website, String username, String email, JsonNode password, EncryptionCore encryption){
+    public DataSetJsonNode(String name, String website, String username, String email, JsonNode password, EncryptionCore encryption){
+        this.name = name;
         this.website = website;
         this.username = username;
         this.email = email;
@@ -27,7 +26,8 @@ public class DataSetJsonNode extends AccessibleAbstractJsonObject {
     }
 
     public DataSetJsonNode(JsonNode json, EncryptionCore encryption){
-        this(json.getStringValue("Website"),
+        this(json.getStringValue("Name"),
+                json.getStringValue("Website"),
                 json.getStringValue("Username"),
                 json.getStringValue("eMail"),
                 json.getNode("Password"),
@@ -45,6 +45,7 @@ public class DataSetJsonNode extends AccessibleAbstractJsonObject {
     @Override
     public Map<JsonStringNode, JsonNode> getFields() {
         HashMap<JsonStringNode, JsonNode> fields = new HashMap<JsonStringNode, JsonNode>();
+        fields.put(JsonNodeFactories.string("Name"), JsonNodeFactories.string(this.name));
         fields.put(JsonNodeFactories.string("Website"), JsonNodeFactories.string(this.website));
         fields.put(JsonNodeFactories.string("Username"), JsonNodeFactories.string(this.username));
         fields.put(JsonNodeFactories.string("eMail"), JsonNodeFactories.string(this.email));
