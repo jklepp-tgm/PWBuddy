@@ -79,6 +79,10 @@ public class Model implements TreeModel {
         this(new File(DEFAULT_JSON_DOCUMENT_PATH));
     }
 
+    public void flush(){
+        this.jsonRootNode.flush();
+    }
+
     /**
      * Fügt eine Kategorie hinzu
      *

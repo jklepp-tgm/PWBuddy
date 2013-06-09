@@ -45,6 +45,7 @@ public class Control implements ActionListener, TreeSelectionListener {
             DataSet dataSet = (DataSet) lastComp;
             dataSet.flush();
         }
+        this.m.flush();
         JTree source = (JTree)e.getSource();
         this.lastComp = (JComponent)source.getLastSelectedPathComponent();
         this.v.setContentView(this.lastComp);
