@@ -22,7 +22,8 @@ public class View extends JPanel{
 
         JPanel categoriesPanel = new JPanel(new BorderLayout());
 
-        tree = new JTree(m);
+        tree = new JTree();
+        tree.setModel(m);
         tree.addTreeSelectionListener(c);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 

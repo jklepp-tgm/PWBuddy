@@ -59,8 +59,10 @@ public class Control implements ActionListener, TreeSelectionListener {
         this.m.flush();
         JTree source = (JTree)e.getSource();
         this.lastComp = (JComponent)source.getLastSelectedPathComponent();
-        this.v.setContentView(this.lastComp);
-        this.v.repaint();
-        this.v.revalidate();
+        if(this.lastComp != null) {
+            this.v.setContentView(this.lastComp);
+            this.v.repaint();
+            this.v.revalidate();
+        }
     }
 }

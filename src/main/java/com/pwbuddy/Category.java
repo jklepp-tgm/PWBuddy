@@ -20,7 +20,6 @@ public class Category extends JPanel implements Comparable<Category>{
     private PriorityQueue<DataSet> dataSets;
     private CategoryControl categoryControl;
     private CategoryJsonNode categoryJsonNode;
-    private String name;
 
     private Model m;
 
@@ -40,11 +39,10 @@ public class Category extends JPanel implements Comparable<Category>{
         this.createDataSet = new JButton("Datensatz erstellen");
         this.add(this.createDataSet);
 
-        this.name = name;
+        this.categoryName.setText(name);
         this.m = m;
         this.categoryJsonNode = categoryJsonNode;
         this.dataSets = new PriorityQueue<DataSet>();
-        //ToDO DataSets in dataSets einlesen
 
         //DataSets aus CategoryJsonNode auslesen
         for(JsonField field : this.categoryJsonNode.getFieldList()){
@@ -69,10 +67,7 @@ public class Category extends JPanel implements Comparable<Category>{
     }
 
     public void flush(){
-        if(!this.categoryName.getText().equals(this.name)){
-            this.name = this.categoryName.getText();
-            this.m.flush(); //Sollte den Namen auch auf anderen stellen updaten
-        }
+        this.m.flush(); //Sollte den Namen auch auf anderen stellen updaten
     }
 
     @Override
@@ -128,6 +123,6 @@ public class Category extends JPanel implements Comparable<Category>{
      * @return Name der Category
      */
     public String toString(){
-        return this.name;
+        return this.categoryName.getText();
     }
 }
