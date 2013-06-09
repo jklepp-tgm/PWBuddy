@@ -25,6 +25,7 @@ public class Frame extends JFrame {
         this.setContentPane(v);
         this.setSize(650, 450);
         this.setTitle("PWBuddy");
+        //ToDo m.flushAll() aufrufen bevor das Programm beendet wird! sonst kann es zu Datenverlust kommen
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
