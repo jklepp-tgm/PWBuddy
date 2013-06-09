@@ -22,6 +22,7 @@ public class Category extends JPanel implements Comparable<Category>{
     private String name;
 
     public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
+        //ToDo GUI auf GridBagLayout umstellen
         //GUI
         this.setLayout(new GridLayout(0, 2, 2, 2));
 
