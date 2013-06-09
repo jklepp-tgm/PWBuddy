@@ -33,17 +33,17 @@ public class EncryptionCoreTest {
     /**
      * PBEncryptionCore#encrypt(String)
      *
-     * @throws Exception Muh ... PBEncryptionCore
+     * Testet ob man wieder das gleiche bekommt wenn etwas ver und wieder entschlüsselt wird
      *
-     * Funktioniert nicht Initialisierungsvektor Random
-     * TODO Wieder aktivieren wenn IV festgelegt werden kann
+     * @throws Exception Muh ... PBEncryptionCore
      */
-    //@Test
+    @Test
     public void testEncrypt() throws Exception {
         String out = this.encryptionCore.encrypt(this.inputString);
-        assertSame("Teste Verschlüsselung", this.encryptedString, out);
 
-        this.initVector = this.encryptionCore.getIV();
+        String initVector = this.encryptionCore.getIV();
+
+        assertEquals("Teste Verschlüsselung", this.encryptionCore.decrypt(out, initVector), this.inputString);
     }
 
     /**
