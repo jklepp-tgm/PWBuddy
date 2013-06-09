@@ -1,8 +1,14 @@
 package com.pwbuddy;
 
 import argo.jdom.JsonField;
+import info.clearthought.layout.TableLayout;
+import info.clearthought.layout.TableLayoutConstants;
+import info.clearthought.layout.TableLayoutConstraints;
 
 import javax.swing.*;
+import javax.swing.event.DocumentAdapter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.PriorityQueue;
 
@@ -24,47 +30,25 @@ public class Category extends JPanel implements Comparable<Category>{
     private Model m;
 
     public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
-        //ToDo GUI auf GridBagLayout umstellen
+        //ToDo GUI auf TableLayout umstellen
         //GUI
-        this.setLayout(new GridBagLayout());
-        this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        this.setLayout(new TableLayout(new double[][]{
+                {TableLayout.FILL, TableLayout.PREFERRED, 10, TableLayout.PREFERRED, TableLayout.FILL},
+                {30, TableLayout.PREFERRED, 30, TableLayout.PREFERRED, 5, TableLayout.PREFERRED, 30}
+        }));
 
-        GridBagConstraints constraints = new GridBagConstraints();
-        //constraints.anchor = GridBagConstraints.NORTH;
-        //constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-        //constraints.insets = new Insets(2,2,2,2);
-
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.gridwidth = 1;
-        this.add(new JLabel("Name: "), constraints);
-
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        constraints.gridwidth = 1;
+        this.add(new JLabel("Name: "), new TableLayoutConstraints(1, 1, 1, 1));
         this.categoryName = new JTextField();
-        this.add(this.categoryName, constraints);
+        this.add(this.categoryName, new TableLayoutConstraints(3, 1, 3, 1));
 
-        constraints.anchor = GridBagConstraints.PAGE_END;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
-        this.add(new JLabel("Datensatz Name: "));
+        this.add(new JSeparator(), new TableLayoutConstraints(1, 2, 3, 2, TableLayoutConstants.CENTER, TableLayoutConstants.CENTER));
 
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        constraints.gridwidth = 1;
+        this.add(new JLabel("Datensatz Name: "), new TableLayoutConstraints(1, 3, 1, 3));
         this.dataSetName = new JTextField();
-        //constraints.insets.top = 20;
-        this.add(this.dataSetName);
+        this.add(this.dataSetName, new TableLayoutConstraints(3, 3, 3, 3));
 
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 2;
         this.createDataSet = new JButton("Datensatz erstellen");
-        this.add(this.createDataSet);
+        this.add(this.createDataSet, new TableLayoutConstraints(1, 5, 3, 5));
 
         this.categoryName.setText(name);
         this.m = m;
