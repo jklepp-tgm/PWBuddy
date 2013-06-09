@@ -106,7 +106,7 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
      */
     @Override
     public int compareTo(DataSet o) {
-        return this.getName().compareTo(o.getName());
+        return this.toString().compareTo(o.toString());
     }
 
     /**

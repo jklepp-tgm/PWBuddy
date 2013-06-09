@@ -113,7 +113,7 @@ public class Category extends JPanel implements Comparable<Category>{
      */
     @Override
     public int compareTo(Category o) {
-        return this.name.compareTo(o.getName());
+        return this.toString().compareTo(o.toString());
     }
 
     /**
