@@ -14,8 +14,6 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
     public JTextField email;
     public JPasswordField password;
     public JComboBox<String> categoryName;
-
-    private DataSetControl dataSetControl;
     private DataSetJsonNode dataSetJsonNode;
     private String name;
 
