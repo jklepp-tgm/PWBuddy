@@ -45,7 +45,7 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         this.add(this.email);
 
         this.add(new JLabel("Passwort: "));
-        this.password = new JPasswordField(); //ToDo aus PasswordJsonNode setzten
+        this.password = new CustomPasswordField(this.dataSetJsonNode.password);
         this.add(this.password);
 
         this.add(new JLabel("Kategorie"));
@@ -62,7 +62,6 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         this.dataSetJsonNode.website = this.website.getText();
         this.dataSetJsonNode.username = this.username.getText();
         this.dataSetJsonNode.email = this.email.getText();
-        //ToDo this.password in PasswordJsonNode speichern
     }
 
 
