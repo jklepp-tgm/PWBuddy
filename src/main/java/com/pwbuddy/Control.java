@@ -3,6 +3,7 @@ package com.pwbuddy;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,7 +28,17 @@ public class Control implements ActionListener, TreeSelectionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.v.repaint();
+        System.out.println(e);
+        if(e.getSource().equals(v.getAddCategoryButton())){
+            //Neue Kategorie erstellen
+            CategoryJsonNode categoryJsonNode = new CategoryJsonNode();
+            Category category = new Category("", categoryJsonNode, m);
+            this.m.addCategory(category);
+            this.v.setContentView(category);
+            this.v.getTree().setModel(this.m);
+            this.v.repaint();
+            this.v.revalidate();
+        }
     }
 
     /**
