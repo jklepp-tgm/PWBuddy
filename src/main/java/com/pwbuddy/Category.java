@@ -22,7 +22,19 @@ public class Category extends JPanel implements Comparable<Category>{
     private String name;
 
     public Category(String name, CategoryJsonNode categoryJsonNode, Model m) {
-        //ToDo GUI
+        //GUI
+        this.setLayout(new GridLayout(0, 2, 2, 2));
+
+        this.add(new JLabel("Name: "));
+        this.categoryName = new JTextField();
+        this.add(this.categoryName);
+
+        this.add(new JLabel("Datensatz Name: "));
+        this.dataSetName = new JTextField();
+        this.add(this.dataSetName);
+
+        this.createDataSet = new JButton("Datensatz erstellen");
+        this.add(this.createDataSet);
 
         this.name = name;
         this.categoryJsonNode = categoryJsonNode;
