@@ -24,9 +24,6 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
 
     private EncryptionCore encryption;
 
-    /** Zugriff verhindern */
-    private PasswordJsonNode(){}
-
     public PasswordJsonNode(JsonNode passwordNode, EncryptionCore encryption) {
         this.encryptedPassword = passwordNode.getStringValue("Crypt");
         this.iv = passwordNode.getStringValue("IV");
