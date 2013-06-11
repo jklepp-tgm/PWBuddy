@@ -3,6 +3,8 @@ package com.pwbuddy;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * @author Jakob Klepp
@@ -10,48 +12,60 @@ import javax.swing.event.DocumentListener;
  */
 public class CustomPasswordField extends JPasswordField {
     private PasswordJsonNode passwordJsonNode;
+    private boolean showPassword;
 
     public CustomPasswordField(PasswordJsonNode passwordJsonNode) {
         super(new String(passwordJsonNode.getPassword()));
 
         this.passwordJsonNode = passwordJsonNode;
 
-        super.getDocument().addDocumentListener(new PasswordDocumentListener());
+        this.showPassword = false;
+
+        this.getDocument().addDocumentListener(new PasswordDocumentListener());
+        this.addMouseListener(new PasswordMouseListener());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public char getEchoChar() {
+        if(showPassword)
+            return 0; //Zeichen anzeigen! siehe JPasswordField#getEchoChar()
+        return super.getEchoChar();
     }
 
     public class PasswordDocumentListener implements DocumentListener {
 
         /**
-         * Gives notification that there was an insert into the document.  The
-         * range given by the DocumentEvent bounds the freshly inserted region.
-         *
-         * @param e the document event
+         * {@inheritDoc}
          */
         @Override
-        public void insertUpdate(DocumentEvent e) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
+        public void insertUpdate(DocumentEvent e) {}
 
         /**
-         * Gives notification that a portion of the document has been
-         * removed.  The range is given in terms of what the view last
-         * saw (that is, before updating sticky positions).
-         *
-         * @param e the document event
+         * {@inheritDoc}
          */
         @Override
-        public void removeUpdate(DocumentEvent e) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
+        public void removeUpdate(DocumentEvent e) {}
 
         /**
-         * Gives notification that an attribute or set of attributes changed.
-         *
-         * @param e the document event
+         * {@inheritDoc}
          */
         @Override
         public void changedUpdate(DocumentEvent e) {
             passwordJsonNode.setPassword(getPassword());
+        }
+    }
+
+    public class PasswordMouseListener extends MouseAdapter {
+        /**
+         * {@inheritDoc}
+         */
+        public void mousePressed(MouseEvent e) {
+            if(e.getComponent().equals(CustomPasswordField.this)) {
+                CustomPasswordField.this.showPassword = !CustomPasswordField.this.showPassword;
+            }
         }
     }
 }
