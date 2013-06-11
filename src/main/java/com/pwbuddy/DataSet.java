@@ -16,6 +16,7 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
     public JPasswordField password;
     public JComboBox<String> categoryName;
     private DataSetJsonNode dataSetJsonNode;
+    private Model m;
 
     public DataSet(String name, DataSetJsonNode dataSetJsonNode, Model m){
         String[] categoryNames = new String[m.getCategories().size()];
@@ -25,6 +26,7 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
         }
 
         this.dataSetJsonNode = dataSetJsonNode;
+        this.m = m;
 
         this.setLayout(new GridLayout(0, 2, 2, 2));
 
@@ -68,6 +70,7 @@ public class DataSet extends JPanel implements Comparable <DataSet> {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+        //ToDo categoryName an die aktuell existierenden Kategorien anpassen
     }
 
     /**
