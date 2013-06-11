@@ -13,13 +13,16 @@ import java.awt.event.MouseEvent;
 public class CustomPasswordField extends JPasswordField {
     private PasswordJsonNode passwordJsonNode;
     private boolean showPassword;
+    private char defaultEchoChar;
 
     public CustomPasswordField(PasswordJsonNode passwordJsonNode) {
-        super(new String(passwordJsonNode.getPassword()));
-
         this.passwordJsonNode = passwordJsonNode;
 
+        char [] passwordChars = this.passwordJsonNode.getPassword();
+        this.setText(new String(passwordChars));
+
         this.showPassword = false;
+        this.defaultEchoChar = this.getEchoChar();
 
         this.getDocument().addDocumentListener(new PasswordDocumentListener());
         this.addMouseListener(new PasswordMouseListener());
@@ -35,26 +38,35 @@ public class CustomPasswordField extends JPasswordField {
         return super.getEchoChar();
     }
 
+    public void savePassword() {
+        char [] passwordChars = this.getPassword();
+        passwordJsonNode.setPassword(passwordChars);
+    }
+
     public class PasswordDocumentListener implements DocumentListener {
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public void insertUpdate(DocumentEvent e) {}
+        public void insertUpdate(DocumentEvent e) {
+            CustomPasswordField.this.savePassword();
+        }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public void removeUpdate(DocumentEvent e) {}
+        public void removeUpdate(DocumentEvent e) {
+            CustomPasswordField.this.savePassword();
+        }
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void changedUpdate(DocumentEvent e) {
-            passwordJsonNode.setPassword(getPassword());
+            CustomPasswordField.this.savePassword();
         }
     }
 
@@ -65,7 +77,11 @@ public class CustomPasswordField extends JPasswordField {
         public void mousePressed(MouseEvent e) {
             if(e.getComponent().equals(CustomPasswordField.this)) {
                 CustomPasswordField.this.showPassword = !CustomPasswordField.this.showPassword;
+                CustomPasswordField.this.setEchoChar(CustomPasswordField.this.showPassword?0:CustomPasswordField.this.defaultEchoChar);
             }
+            CustomPasswordField.this.savePassword();
+            CustomPasswordField.this.revalidate();
+            CustomPasswordField.this.repaint();
         }
     }
 }
