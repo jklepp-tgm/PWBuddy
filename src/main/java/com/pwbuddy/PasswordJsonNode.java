@@ -50,9 +50,9 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
         this.iv = encryption.getIV();
     }
 
-    public void setPassword(char [] password) {
+    public void setPassword(String password) {
         try {
-            this.encryptedPassword = encryption.encrypt(new String(password));
+            this.encryptedPassword = encryption.encrypt(password);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -66,10 +66,10 @@ public class PasswordJsonNode extends AccessibleAbstractJsonObject {
         this.iv = encryption.getIV();
     }
 
-    public char[] getPassword() {
-        char [] password = null;
+    public String getPassword() {
+        String password = null;
         try {
-            password = this.encryption.decrypt(this.encryptedPassword, this.iv).toCharArray();
+            password = this.encryption.decrypt(this.encryptedPassword, this.iv);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InvalidAlgorithmParameterException e) {

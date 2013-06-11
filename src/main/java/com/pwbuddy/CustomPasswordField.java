@@ -18,8 +18,8 @@ public class CustomPasswordField extends JPasswordField {
     public CustomPasswordField(PasswordJsonNode passwordJsonNode) {
         this.passwordJsonNode = passwordJsonNode;
 
-        char [] passwordChars = this.passwordJsonNode.getPassword();
-        this.setText(new String(passwordChars));
+        String passwordString = this.passwordJsonNode.getPassword();
+        this.setText(new String(passwordString));
 
         this.showPassword = false;
         this.defaultEchoChar = this.getEchoChar();
@@ -39,8 +39,8 @@ public class CustomPasswordField extends JPasswordField {
     }
 
     public void savePassword() {
-        char [] passwordChars = this.getPassword();
-        passwordJsonNode.setPassword(passwordChars);
+        String passwordString = this.getText();
+        passwordJsonNode.setPassword(passwordString);
     }
 
     public class PasswordDocumentListener implements DocumentListener {
