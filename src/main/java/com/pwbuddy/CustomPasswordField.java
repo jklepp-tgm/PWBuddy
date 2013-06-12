@@ -19,7 +19,7 @@ public class CustomPasswordField extends JPasswordField {
         this.passwordJsonNode = passwordJsonNode;
 
         String passwordString = this.passwordJsonNode.getPassword();
-        this.setText(new String(passwordString));
+        this.setText(passwordString);
 
         this.showPassword = false;
         this.defaultEchoChar = this.getEchoChar();
